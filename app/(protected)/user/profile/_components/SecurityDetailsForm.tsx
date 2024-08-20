@@ -48,7 +48,7 @@ export const SecurityDetailsForm = ( {editModal, changeModal}: {editModal: strin
        newPasswordConfirmation: undefined,
        isTwoFactorEnabled: undefined
       },
-    })     
+    })     f
 
     const onSubmit = (values: z.infer<typeof settingsSecurityDetailsSchema>) => {
         startTransition(() => {

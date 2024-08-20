@@ -11,6 +11,54 @@ import Link from "next/link";
 import { signUpSchema } from "@/lib/schema";
 import { signIn } from "@/auth";
 import { DEFAULT_LOGGED_IN_REDIRRECT } from "@/routes";
+import { states } from "@/lib/jigawa";
+import { localGovernment } from "@/lib/jigawa";
+import { Gender } from "@prisma/client";
+import { Textarea } from "@/components/ui/textarea"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
+
+const employmentStatus = [
+  {
+    id: 1,
+    name: "Student ",
+  },
+  {
+    id: 2,
+    name: "Employed ",
+  },
+  {
+    id: 3,
+    name: "Unemployed ",
+  }
+]
+
+const maritalStatus = [
+  {
+    id: 1,
+    name: "Single ",
+  },
+  {
+    id: 2,
+    name: "Married ",
+  },
+  {
+    id: 3,
+    name: "Divorced",
+  }
+]
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -23,7 +71,6 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-// import { register, regsiter } from "@/actions/regsiter";
 import { FormSuccess } from "../FormSuccess";
 import { FormError } from "../FormError";
 import { regsiter } from "@/actions/register";
@@ -47,8 +94,18 @@ export function SignUpForm() {
    const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
-      fullName: "",
+      firstName: "",
+      lastName: "",
+      otherNames: "",
       email: "",
+      state: "",
+      maritalStatus: "",
+      localGovernment: "",
+      occupation: "",
+      employmentStatus: "",
+      address: "",
+      city: '',
+      gender: undefined,
       phone: "",
       password: "",
       passwordConfirmation: ""
@@ -57,6 +114,8 @@ export function SignUpForm() {
  
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof signUpSchema>) {
+
+    console.log(values)
     setError('')
     setSuccess('')
 
@@ -79,22 +138,80 @@ export function SignUpForm() {
   return (
     <div className=" flex mt-20 flex-col">
      
-      <Form {...form}>
+     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
-        <FormField
+      <fieldset className=" border  border-primary rounded-lg flex py-10 flex-col text-center space-y-4 px-6 align-middle justify-center">
+        <legend className=" flex px-2 py-1 text-primary font-poppins font-semibold" >Personal Information</legend>
+      <div className=" grid text-start grid-cols-1 gap-2 md:grid-cols-2">
+       <FormField
           control={form.control}
-          name="fullName"
+          name="firstName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Full Name </FormLabel>
+              <FormLabel>First Name</FormLabel>
               <FormControl>
-                <Input disabled={isPending} className=" outline-yellow-500" placeholder="Full Name" {...field} />
+                <Input disabled={isPending} className=" outline-green-500" placeholder="Abdulrahman" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <div className=" grid grid-cols-2 gap-2">
+         <FormField
+          control={form.control}
+          name="lastName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Last Name </FormLabel>
+              <FormControl>
+                <Input disabled={isPending} className=" outline-green-500" placeholder="Dauda" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+       </div>
+       <div className="grid text-start grid-cols-1 w-full lg:grid-cols-2 gap-2">
+        <FormField
+          control={form.control}
+          name="otherNames"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Other Name(s)</FormLabel>
+              <FormControl className=" w-full">
+                <Input disabled={isPending} className=" outline-green-500 w-full" placeholder="Optional" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+         <FormField
+          control={form.control}
+          name="gender"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Gender</FormLabel>
+              <FormControl className=" w-full">
+              <Select 
+                    onValueChange={field.onChange} 
+                    disabled={isPending}
+                    defaultValue={field.value}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select Your Gender" />
+                      </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value={Gender.MALE}> Male </SelectItem>
+                            <SelectItem value={Gender.FEMALE}> Female </SelectItem>
+                            <SelectItem value={Gender.OTHER}> Other </SelectItem>
+                        </SelectContent>
+                    </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        </div>
+        <div className="grid text-start grid-cols-1 md:grid-cols-2 gap-2">
         <FormField
           control={form.control}
           name="email"
@@ -102,7 +219,7 @@ export function SignUpForm() {
             <FormItem>
               <FormLabel>Email Address</FormLabel>
               <FormControl>
-                <Input disabled={isPending} className=" outline-yellow-500" placeholder="Email Address" {...field} />
+                <Input disabled={isPending} className=" outline-green-500" placeholder="jigawa@mail.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -115,15 +232,183 @@ export function SignUpForm() {
             <FormItem>
               <FormLabel>Phone Number</FormLabel>
               <FormControl>
-                <Input disabled={isPending} className=" outline-yellow-500" placeholder="(234) 000 000 000" {...field} />
+                <Input disabled={isPending} className=" outline-green-500" placeholder="(234) 000 000 000" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-
         </div>
-       <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
+      <div className=" grid grid-cols-2 gap-2 text-start ">
+          <FormField 
+              control={form.control}
+              name="state"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>State of Residence</FormLabel>
+                  <FormControl>
+                    <Select 
+                    onValueChange={field.onChange} 
+                    disabled={isPending}
+                    defaultValue={field.value}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select Your State" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {
+                          states.map((state) => {
+                            return (
+                              <SelectItem key={state.id} value={state.name}> {state.name} </SelectItem>
+                            )
+                          })
+                        }
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="localGovernment"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Local Government</FormLabel>
+                  <FormControl>
+                  <Select onValueChange={field.onChange} disabled={isPending} defaultValue={field.value}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder=" Local Government" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {
+                          localGovernment.map((state) => {
+                            return (
+                              <SelectItem   key={state.id} value={state.name}> {state.name} </SelectItem>
+                            )
+                          })
+                        }
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+      </div>
+      <div className=" grid grid-cols-1 w-full items-start text-start">
+        <FormField 
+              control={form.control}
+              name="address"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Your Full Address</FormLabel>
+                  <FormControl>
+                  <Textarea
+                      placeholder="No. 3 Gagarawa Avenue, Jigawa Dutse. "
+                      className="resize-none w-full"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          
+      </div>
+      </fieldset>
+
+      <fieldset className=" border  border-primary rounded-lg space-y-4 flex py-10 px-6 flex-col text-center items-center align-middle justify-center">
+        <legend className=" flex px-2 py-1 text-primary font-poppins font-semibold" > Optional ( Data )</legend>
+        <div className="grid text-start grid-cols-1 w-full lg:grid-cols-2 gap-2">
+          <FormField 
+              control={form.control}
+              name="city"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>City (Optional) </FormLabel>
+                  <FormControl>
+                    <Input type="text" disabled={isPending} className=" outline-green-500" placeholder="Jigawa, Dutse ( Optional ) " {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+             <FormField
+          control={form.control}
+          name="maritalStatus"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Marital Status ( Optional ) </FormLabel>
+              <FormControl>
+              <Select 
+                    onValueChange={field.onChange} 
+                    disabled={isPending}
+                    defaultValue={field.value}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Marital Status" />
+                      </SelectTrigger>
+                        <SelectContent>
+                            {
+                              maritalStatus.map((emp) => {
+                                return <SelectItem key={emp.id} value={emp.name}> { emp.name } </SelectItem>
+                              })
+                            }
+                        </SelectContent>
+                    </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+       </div>
+      <div className=" grid text-start w-full grid-cols-1 gap-2 md:grid-cols-2">
+       <FormField
+          control={form.control}
+          name="employmentStatus"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Employment Status ( Optional )</FormLabel>
+              <FormControl>
+              <Select 
+                    onValueChange={field.onChange} 
+                    disabled={isPending}
+                    defaultValue={field.value}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Eployment Status" />
+                      </SelectTrigger>
+                        <SelectContent>
+                            {
+                              employmentStatus.map((emp) => {
+                                return <SelectItem key={emp.id} value={emp.name}> { emp.name } </SelectItem>
+                              })
+                            }
+                        </SelectContent>
+                    </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="occupation"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Occupation (Optional) </FormLabel>
+              <FormControl>
+                <Input disabled={isPending} className=" outline-green-500" placeholder="Occupation ( Optional )" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+       </div>
+      </fieldset>
+
+      <fieldset className=" border  border-primary px-6 rounded-lg flex py-10 flex-col text-center items-center align-middle justify-center">
+      <legend className=" flex px-2 py-1 text-primary font-poppins font-semibold" >Security Information</legend>
+       <div className="grid text-start w-full grid-cols-1 lg:grid-cols-2 gap-2">
        <FormField 
           control={form.control}
           name="password"
@@ -131,9 +416,8 @@ export function SignUpForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input type="password" disabled={isPending} className=" outline-yellow-500" placeholder="Passsord" {...field} />
+                <Input type="password" disabled={isPending} className=" outline-green-500" placeholder="Passsord" {...field} />
               </FormControl>
-
               <FormMessage />
             </FormItem>
           )}
@@ -145,13 +429,16 @@ export function SignUpForm() {
             <FormItem>
               <FormLabel>Password Confirmation</FormLabel>
               <FormControl>
-                <Input type="password"disabled={isPending} className=" outline-yellow-500" placeholder="Confirm Password" {...field} />
+                <Input type="password"disabled={isPending} className=" outline-green-500" placeholder="Confirm Password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
        </div>
+      </fieldset>
+
+      
        <div className="flex items-center space-x-2">
       <Checkbox id="terms" 
        checked={terms}
@@ -166,7 +453,7 @@ export function SignUpForm() {
     </div>
           <FormSuccess message={success} />
           <FormError message={error} />
-       <Button type="submit" disabled={isPending} className=" bg-black hover:bg-black/80 text-primary w-full">Create an Account</Button>
+       <Button type="submit" disabled={isPending} className=" bg-primary hover:bg-jgreen text-white w-full">Create your Account</Button>
       </form>
     </Form>
    <div className=" flex flex-col space-y-4 py-6">
@@ -174,11 +461,14 @@ export function SignUpForm() {
         <p className=""> Already have an account ? </p>
         <span className=" font-semibold">Log In</span>
     </Link>
-   <fieldset className=" border-t-2 flex flex-col text-center items-center align-middle justify-center">
-      <legend className=" self-center flex px-2 text-sm text-gray-600" >or log in with</legend>
-      <div className=" py-4 w-full ">
-       Hello World
-      </div>
+    <fieldset className=" border py-4  border-primary rounded-lg flex flex-col text-center items-center align-middle justify-center">
+      <legend className=" flex px-2 text-sm text-primary font-semibold" >Ministry of Justice Staff?</legend>
+        <Link href={'/staff-registration'} className=" flex space-x-3 w-ful py-2 delay-75 duration-150 ease-in-out transition-colorstext-center items-center  hover:text-primary font-semibold justify-center">
+              <p>Justice Staff Registration</p>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 transition-all delay-75 duration-150 ease-in-out translate-x-3 ">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+              </svg>
+        </Link>
     </fieldset>
    </div>
     </div>

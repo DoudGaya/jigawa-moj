@@ -6,10 +6,6 @@ export const states = [
         id: 1,
         name: 'Jigawa',
     },
-    {
-        id: 1,
-        name: 'Kano',
-    },
 ]
 
 

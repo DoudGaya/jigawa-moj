@@ -14,7 +14,7 @@ if (env === 'production') {
 
 export const sendTwoFactorEmail = async (email: string, token: string) => {
     await resend.emails.send({
-        from: "Stablebricks <noreply@stablebricks.com>",
+        from: "Jigawa State Ministry of Justice <norepl@stablebricks.com>",
         to: email,
         subject: "Confirm Your Email",
         html: `<p> Your 2FA code is ${token}`
@@ -25,7 +25,7 @@ export const sendPasswordResetEmail = async ( email: string, token: string) => {
     const resetLink =  `${baseUrl}/new-password?token=${token}`
 
     await resend.emails.send({
-        from: 'Stablebricks <noreply@stablebricks.com>',
+        from: 'Jigawa State Ministry of Justice <norepl@stablebricks.com>',
         to: email,
         subject: "Forgot Password Request",
         html: `<p>Click the link to <a href="${resetLink}">Reset your password</a></p>`
@@ -39,9 +39,9 @@ export const sendVrificationEmail = async (
 
     const confirmationLink = `${baseUrl}/email-verification?token=${token}`
     await resend.emails.send({
-        from: 'Stablebricks <noreply@stablebricks.com>',
+        from: 'Jigawa State Ministry of Justice <norepl@stablebricks.com>',
         to: email,
-        subject: "Verify your Stablebricks Account",
+        subject: "Verify your Account",
         html: `<p>Click the link to <a href="${confirmationLink}">Confirm your Email </a></p>`
     })
 

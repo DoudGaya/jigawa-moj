@@ -21,7 +21,7 @@ import { DarkButton } from './DarkButton'
     {
         id: 1,
         name: 'Home',
-        url: "https://moj.jg.gov.ng/",
+        url: "/",
         icon: ""
     },
     {
@@ -168,14 +168,21 @@ export const PublicNavigations = () => {
                         </div>
                     </div>
                    ) :
-                  <div className=" flex flex-col space-y-3">
-                     <Link href={'/register'} className="">
-                        <SheetTrigger className='py-2 font-poppins font-semibold text-lg w-full rounded-lg bg-black text-primary '>Register</SheetTrigger>
-                    </Link>
+                 <div className=' flex flex-col space-y-3'>
+                     <div className=" flex flex-col space-y-3">
+                    
                     <Link href={'/login'} className="">
-                        <SheetTrigger className='py-2 font-poppins font-semibold text-lg w-full rounded-lg border-2 border-black text-black'>Log In</SheetTrigger>
+                        <SheetTrigger className='py-2 font-poppins font-semibold text-lg w-full rounded-lg border-2 bg-primary text-white'>Log In</SheetTrigger>
+                    </Link>
+
+                    <Link href={'/register'} className="">
+                        <SheetTrigger className='py-2 font-poppins font-semibold text-lg w-full rounded-lg border-2 border-primary text-primary '> Public Registration</SheetTrigger>
+                    </Link>
+                    <Link href={'/staff-registration'} className="">
+                        <SheetTrigger className='py-2 font-poppins font-semibold text-lg w-full rounded-lg border-2 border-primary text-primary'>Staff Registration</SheetTrigger>
                     </Link>
                   </div>
+                 </div>
                    }
                 </div>
               </div>

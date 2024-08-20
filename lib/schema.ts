@@ -44,22 +44,51 @@ export const loginSchema = z.object({
   
 
   export const signUpSchema = z.object({
-    fullName: z.string().min(2, {
-      message: "Please provide your Full Name",
+    firstName: z.string().min(2, { //
+      message: "Please provide your First Name",
     }),
+
+    lastName: z.string().min(2, { //
+      message: "Please provide your Last Name",
+    }),
+
+    otherNames: z.string().optional(), // 
+   
     email: z.string().min(3, {
       message: "Email address must be less than 2 characters",
     }),
+
+    state: z.string().min(2, {
+      message: "Please Select your state",
+    }),
+
+    maritalStatus: z.string().optional(),
+    employmentStatus: z.string().optional(),
+    gender: z.enum(["MALE","FEMALE", "OTHER"]),
     password: z.string().min(6, {
       message: "Password must be at least 6 characters",
-    }),
-    phone: z.string().min(2, {
-      message: "Password confirmation must match characters.",
     }),
     passwordConfirmation: z.string().min(6, {
       message: "Password confirmation must match",
     }),
+
+    phone: z.string().min(2, {
+      message: "Password confirmation must match characters.",
+    }),
+    city: z.string().optional(),
+
+    address: z.string().min(2, {
+      message: "Password confirmation must match characters.",
+    }),
+
+    occupation: z.string().optional(),
+
+    localGovernment: z.string().min(2, {
+      message: "Please provide your Local Government",
+    }),
   })
+
+
 
   export const StaffSchema = z.object({
 
@@ -71,14 +100,20 @@ export const loginSchema = z.object({
       message: "Please provide your Last Name",
     }),
 
-    OtherNames: z.string().optional(), // 
-    state: z.string().min(2, {
-      message: "Please Select your state",
+    otherNames: z.string().optional(), // 
+
+
+    state: z.string().min(2, { // 
+      message: "Please Select your State of residence",
     }),
+
+    isTwoFactorEnabled: z.boolean().optional(),
 
     email: z.string().min(3, {
       message: "Email address must be less than 2 characters",
     }),
+
+    gender: z.enum(["MALE","FEMALE", "OTHER"]),
 
     password: z.string().min(6, {
       message: "Password must be at least 6 characters",
@@ -89,29 +124,49 @@ export const loginSchema = z.object({
     }),
 
     phone: z.string().min(2, {
-      message: "Password confirmation must match characters.",
-    }),
-
-    position: z.string().min(2, {
-      message: "Password confirmation must match characters.",
+      message: "Provide Your Phone Number",
     }),
 
     localGovernment: z.string().min(2, {
       message: "Please provide your Local Government",
     }),
 
+    // emplyment specifics
+
+    jobTitle: z.string().min(2, {
+      message: "Job Title is required",
+    }),
+
+
     staffNumber: z.string().min(2, {
+      message: "Please provide your staff number",
+    }),
+
+    employerName: z.string().min(2, {
+      message: "Please provide your employer name",
+    }),
+    position: z.string().min(2, {
+      message: "Please provide your work position",
+    }),
+
+    department: z.string().min(2, {
       message: "Please provide your Local Government",
     }),
 
-    staffRole: z.string().min(2, {
-      message: "Please provide your Local Government",
+    step: z.string().min(2, {
+      message: "Step is required",
+    }),
+
+    employmentLocation: z.string().min(2, {
+      message: "Location of employment is required",
     }),
 
     salaryStructure: z.string().min(2, {
-      message: "Please provide your Local Government",
+      message: "Please provide your salary structure",
     }),
-    role: z.enum(["USER","ADMIN", "STAFF", "COURT"]).default("STAFF"),
+    salaryGrade: z.string().min(2, {
+      message: "Please provide your Salary grade",
+    }),
   })
 
   const CustomerSchema = z.object({

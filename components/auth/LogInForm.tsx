@@ -41,8 +41,6 @@ export function LoginForm() {
   const [success, setSuccess] = useState<string | undefined>('')
   const searchParams = useSearchParams()
   const urlError = searchParams.get("error") === "OAuthAccountNotLinked" ? "Email already been used with another provider" : ""
-
-
    const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -51,17 +49,6 @@ export function LoginForm() {
     },
   })
 
-
-  // const googleSignIn = (provider: "google") => {
-  //   signIn(provider, {
-  //     callbackUrl: DEFAULT_LOGGED_IN_REDIRRECT
-  //   })
-  // }
-
-
-  // function requestNewOTP (values: z.infer<typeof loginSchema>) {
-  //   console.log(values)
-  // }
 
   function onSubmit(values: z.infer<typeof loginSchema>) {
     setError('')
@@ -88,11 +75,13 @@ export function LoginForm() {
   }
 
   return (
-    <div className=" flex flex-col w-full">
+    <div className=" flex mt-6 flex-col w-full ">
       <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
+      <fieldset className=" border  border-primary rounded-lg flex py-6 flex-col text-center space-y-4 px-6 align-middle justify-center">
+        <legend className=" flex px-2 py-1 text-primary font-poppins font-semibold" >Log in Form</legend>
         {showTwoFactor && (
-          <div className=" w-full flex flex-col items-center justify-center text-center">
+          <div className=" w-full flex flex-col justify-start items-start text-start">
           <FormField
            control={form.control}
            name="code"
@@ -122,11 +111,12 @@ export function LoginForm() {
         }
         { !showTwoFactor && (
          <>
-          <FormField
+        <div className=" flex items-start text-start w-full flex-col space-y-2">
+        <FormField
            control={form.control}
            name="email"
            render={({ field }) => (
-             <FormItem>
+             <FormItem className=" w-full">
                <FormLabel>Email Address</FormLabel>
                <FormControl>
                  <Input type="email" disabled={isPending} className=" outline-yellow-500" placeholder="Email Address" {...field} />
@@ -139,33 +129,36 @@ export function LoginForm() {
            control={form.control}
            name="password"
            render={({ field }) => (
-             <FormItem>
+             <FormItem className=" w-full">
                <FormLabel>Password</FormLabel>
                <FormControl>
                  <Input type="password" disabled={isPending} className=" outline-yellow-500" placeholder="Password" {...field} />
                </FormControl>
-               <Button asChild size={'sm'} variant={'link'} className=" px-0 font-normal text-sm text-black ">
-                 <Link href={'/forgot-password'}>Forgot Password</Link>
-               </Button>
                <FormMessage />
              </FormItem>
            )}
          />
+        </div>
          </>
         )
-
-
         }
-        <FormError message={error ||  urlError} />
+         <FormError message={error ||  urlError} />
         <FormSuccess message={success} />
-       <Button type="submit" disabled={isPending} className=" bg-black text-primary hover:bg-black/90 w-full"> {showTwoFactor ? "Confirm OTP" : "Log In"} </Button>
+       <Button type="submit" disabled={isPending} className=" bg-primary text-white hover:bg-black/90 w-full"> {showTwoFactor ? "Confirm OTP" : "Log In"} </Button>
+      </fieldset>
       </form>
     </Form>
     <div className=" py-6">
-    <Link href="/register" className=" flex justify-between space-x-2">
-        <p className=""> Don't have an account ? </p>
+    <Link href="/register" className=" flex justify-between text-sm space-x-2">
+        <p className=" hover:underline"> Don't have an account ? </p>
         <span className=" font-semibold">Register</span>
     </Link>
+
+      <div className="">
+        <Button asChild size={'sm'} variant={'link'} className=" px-0 font-normal text-sm text-black ">
+            <Link href={'/forgot-password'}>Forgot Password</Link>
+        </Button>
+      </div>
       <fieldset className=" border-t-2 flex flex-col text-center items-center align-middle justify-center">
         <legend className=" self-center flex px-2 text-sm text-gray-600" >or log in with</legend>
          

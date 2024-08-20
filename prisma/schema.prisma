@@ -19,7 +19,8 @@ model User {
   password            String?
   phone               String?
   state               String?
-  localGovernment     String
+  gender              Gender?
+  localGovernment     String?
   emailVerified       DateTime?    @map("email_verified")
   image               String?
   role                UserRole     @default(USER)
@@ -32,6 +33,12 @@ model User {
   @@map("user")
 }
 
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
 
 
 model Account {
@@ -153,14 +160,14 @@ model Files {
 }
 
 model Customer {
-  id                  String @id @default(auto()) @map("_id") @db.ObjectId
-  state               String
-  localGovernment     String
-  city                String
-  address             String
-  occupation          String
-  user                User @relation(fields: [userId], references: [id], onDelete: Cascade )
-  userId              String      @db.ObjectId @unique
+  id                  String          @id @default(auto()) @map("_id") @db.ObjectId
+  city                String?
+  address             String?
+  occupation          String?
+  employmentStatus    String?
+  maritalStatus       String?
+  user                User              @relation(fields: [userId], references: [id], onDelete: Cascade )
+  userId              String            @db.ObjectId @unique
   transactions        Transaction[]
   filings             Filing[]
   cases               Case[]
@@ -233,10 +240,17 @@ model Infrastructure {
 
 model Staff {
   id                  String    @id @default(auto()) @map("_id") @db.ObjectId
-  staffNumber         String
-  staffRole           String
-  salaryStructure     String
-  position            String  
+  staffNumber         String?
+  staffRole           String?
+  salaryStructure     String?
+  jobTitle            String? 
+  department          String?
+  employerName        String?
+  employmentLocation  String?
+  position            String?
+  salaryGrade         String?
+  step                String?
+  dateOfEmployment    DateTime?
   user                User      @relation(fields: [userId], references: [id], onDelete: Cascade) 
   userId              String    @db.ObjectId @unique
   court               Court?    @relation(fields: [courtId], references: [id])
@@ -256,14 +270,14 @@ enum StaffRole {
 
 
 model Filing {
-  id          String        @id @default(auto()) @map("_id") @db.ObjectId
-  case        Case          @relation(fields: [caseId], references: [id])
-  caseId      String        @db.ObjectId
-  documentUrl String
-  uploadedBy  Customer      @relation(fields: [userId], references: [id])
-  userId      String        @db.ObjectId @unique
-  filedAt     DateTime      @default(now())
-  status      FilingStatus  
+  id                  String        @id @default(auto()) @map("_id") @db.ObjectId
+  case                Case          @relation(fields: [caseId], references: [id])
+  caseId              String        @db.ObjectId
+  documentUrl         String
+  uploadedBy          Customer      @relation(fields: [userId], references: [id])
+  userId              String        @db.ObjectId @unique
+  filedAt             DateTime      @default(now())
+  status              FilingStatus  
   @@map("filing")
 }
 
