@@ -1,0 +1,276 @@
+
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id                  String      @id @default(auto()) @map("_id") @db.ObjectId
+  firstName           String? 
+  lastName            String? 
+  otherNames          String?
+  email               String?      @unique
+  password            String?
+  phone               String?
+  state               String?
+  localGovernment     String
+  emailVerified       DateTime?    @map("email_verified")
+  image               String?
+  role                UserRole     @default(USER)
+  accounts            Account[]
+  court               Court?
+  customer            Customer?
+  staff               Staff?
+  isTwoFactorEnabled Boolean @default(false)
+  TwoFactorConfirmation TwoFactorConfirmation?
+  @@map("user")
+}
+
+
+
+model Account {
+  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId             String  @db.ObjectId
+  type               String
+  provider           String
+  providerAccountId  String  @map("provider_account_id")
+  refresh_token      String? @db.String
+  access_token       String? @db.String
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String? @db.String
+  session_state      String?
+  user               User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([provider, providerAccountId])
+  @@map("account")
+}
+
+
+enum UserRole {
+  ADMIN
+  COURT
+  STAFF
+  USER
+}
+
+model VerificationToken {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  email     String
+  token     String @unique
+  expires   DateTime
+  @@unique([email, token])
+}
+
+model PasswordResetToken {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  email     String
+  token     String @unique
+  expires   DateTime
+  @@unique([email, token])
+}
+
+model twoFactorToken {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  email     String
+  token     String @unique
+  expires   DateTime
+  @@unique([email, token])
+}
+
+model TwoFactorConfirmation {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String @db.ObjectId
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([userId])
+}
+
+
+model Case {
+  id                                String         @id @default(auto()) @map("_id") @db.ObjectId
+  title                             String
+  description                       String
+  customer                          Customer       @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  customerId                        String         @db.ObjectId @unique            
+  caseNumber                        Int
+  court                             Court?         @relation(fields: [courtId], references: [id])
+  courtId                           String         @db.ObjectId
+  judge                             Staff?         @relation(fields: [judgeId], references: [id])
+  judgeId                           String         @db.ObjectId
+  files                             Files[]
+  caseType                          CaseType
+  filings                           Filing[]
+  verdict                           String
+  plaintiffsAttorney                PlaintiffsAttorney[] 
+  defendentAttoney                  DefendentAttoney[]
+  caseStatus                        CaseStatus
+  transaction                       Transaction?
+  hearingTime                       DateTime?
+  createdAt                         DateTime        @default(now())
+  updatedAt                         DateTime        @updatedAt
+  @@map("case")
+}
+
+
+
+model PlaintiffsAttorney {
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
+  surname           String?
+  firstName         String
+  phoneNumber       String
+  email             String
+  case              Case @relation(fields: [caseId], references: [id], onDelete: Cascade) 
+  caseId            String @db.ObjectId
+  @@map("plaintiffattoney")
+}
+
+model DefendentAttoney {
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
+  surname           String?
+  firstName         String
+  phoneNumber       String
+  email             String
+  case              Case @relation(fields: [caseId], references: [id], onDelete: Cascade) 
+  caseId            String @db.ObjectId
+  @@map("defendentattoney")
+}
+
+
+model Files {
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  fileTitle       String?
+  fileDescription String?
+  fileUrl         String
+  case            Case @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  caseId          String @db.ObjectId @unique
+  @@map("file")
+}
+
+model Customer {
+  id                  String @id @default(auto()) @map("_id") @db.ObjectId
+  state               String
+  localGovernment     String
+  city                String
+  address             String
+  occupation          String
+  user                User @relation(fields: [userId], references: [id], onDelete: Cascade )
+  userId              String      @db.ObjectId @unique
+  transactions        Transaction[]
+  filings             Filing[]
+  cases               Case[]
+  @@map("customer")
+}
+
+model Transaction {
+  id                  String     @id @default(auto()) @map("_id") @db.ObjectId
+  amount              String
+  paymentRef          String
+  paymentFor          String
+  paymentStatus       PaymentStatus
+  case                Case @relation( fields: [caseId], references: [id], onDelete: Cascade)
+  caseId              String @db.ObjectId @unique
+  customer            Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  customerId          String @db.ObjectId
+  paymentDate         DateTime @default(now())
+  @@map("transaction")
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+}
+
+
+enum CaseStatus {
+  PENDING
+  ACTIVE
+  CLOSED
+  ON_APPEAL
+}
+
+enum CaseType {
+  Criminal
+  Civil
+  Family
+  Other
+}
+
+model Court {
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  name                String
+  type                String
+  function            String
+  location            String
+  localGovernment     String
+  State               String
+  User                User @relation(fields: [userId], references: [id])
+  userId              String @db.ObjectId @unique
+  capacity            Int
+  infrastructure      Infrastructure[]
+  staffs              Staff[]
+  cases               Case[]
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  @@map("court")
+}
+
+model Infrastructure {
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  name            String
+  number          Int
+  court           Court @relation(fields: [courtId], references: [id], onDelete: Cascade)
+  courtId         String @db.ObjectId
+  @@map("infrastructure")
+}
+
+
+model Staff {
+  id                  String    @id @default(auto()) @map("_id") @db.ObjectId
+  staffNumber         String
+  staffRole           String
+  salaryStructure     String
+  position            String  
+  user                User      @relation(fields: [userId], references: [id], onDelete: Cascade) 
+  userId              String    @db.ObjectId @unique
+  court               Court?    @relation(fields: [courtId], references: [id])
+  courtId             String?   @db.ObjectId
+  handledCases        Case[]    
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  @@map("staff")
+}
+
+
+enum StaffRole {
+  JUDGES
+  ADMIN
+  LAWYER
+}
+
+
+model Filing {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  case        Case          @relation(fields: [caseId], references: [id])
+  caseId      String        @db.ObjectId
+  documentUrl String
+  uploadedBy  Customer      @relation(fields: [userId], references: [id])
+  userId      String        @db.ObjectId @unique
+  filedAt     DateTime      @default(now())
+  status      FilingStatus  
+  @@map("filing")
+}
+
+
+enum FilingStatus {
+  Submitted
+  UnderReview
+  Accepted
+  Rejected
+}
