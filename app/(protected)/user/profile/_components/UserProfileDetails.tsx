@@ -28,20 +28,11 @@ export const UserProfileDetails = ({ changeModal }) => {
                             )}
                         </div>
                 <div className=" flex flex-col items-center justify-center">
-                    <p className=' text-xs'>Private Investor </p>
+                    <p className=' text-xs'>Customer </p>
                     <h3 className=' font-poppins text-lg font-semibold text-primary'> { user.name } </h3>
                 </div>
                 </div>
-                <div className=" divide-x rounded-md bg-[#FFFCF8] dark:bg-stone-900 py-1 px-3 border-2 border-gray-200/50 grid gap-2 grid-cols-2">
-                    <div className=" flex flex-col justify-center w-full text-center">
-                        <p className=' text-2xl font-semibold font-poppins'>20</p>
-                        <span className=' text-xs font-poppins'>active project</span>
-                    </div>
-                    <div className=" flex flex-col justify-center w-full text-center">
-                        <p className=' text-2xl font-semibold font-poppins'>30</p>
-                        <span className=' text-xs font-poppins'>Investment</span>
-                    </div>
-                </div> 
+                
            </div>
            <div className=" flex flex-col w-full space-y-3">
             {/* PERSONAL DETAILS */}

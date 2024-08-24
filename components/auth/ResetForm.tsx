@@ -59,10 +59,11 @@ export function ResetForm() {
 
 
   return (
-    <div className=" flex flex-col w-full">
+    <div className=" flex flex-col w-full px-10">
       <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
-        <FormField
+      <fieldset className=" border  border-primary rounded-lg flex py-6 flex-col text-center space-y-4 px-6 align-middle justify-center">
+      <FormField
           control={form.control}
           name="email"
           render={({ field }) => (
@@ -78,7 +79,9 @@ export function ResetForm() {
 
         <FormError message={error} />
         <FormSuccess message={success} />
-       <Button type="submit" disabled={isPending} className=" text-primary bg-black hover:bg-gray-900/80 w-full">Reset Password</Button>
+       <Button type="submit" disabled={isPending} className=" text-white bg-primary hover:bg-jgreen w-full">Reset Password</Button>
+
+      </fieldset>
       </form>
 
     </Form>

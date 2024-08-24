@@ -3,7 +3,7 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import logo from '@/public/img/nigeria.png'
-import { useSession } from 'next-auth/react'
+import { useCurrentUser } from '@/hooks/use-current-user'
 
 
 import {
@@ -49,8 +49,10 @@ import { DarkButton } from './DarkButton'
   ]
 
 export const PublicNavigations = () => {
-    const session = useSession()
-    const user = session.data?.user.name
+
+    const user = useCurrentUser()
+    
+
   return (
 <>
     <div className=' w-full bg-white hidden lg:flex border-b fixed z-10 left-0 top-0 py-4'>
@@ -75,7 +77,7 @@ export const PublicNavigations = () => {
                         </Link>
                       
                     </div>
-                   {
+                    {
                     user ? (
                         <div className=" px-3 flex items-center ">
                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6">
@@ -167,8 +169,8 @@ export const PublicNavigations = () => {
                             {/* <p className='font-poppins font-semibold'>Dark Mode</p> */}
                         </div>
                     </div>
-                   ) :
-                 <div className=' flex flex-col space-y-3'>
+                   ) : (
+                    <div className=' flex flex-col space-y-3'>
                      <div className=" flex flex-col space-y-3">
                     
                     <Link href={'/login'} className="">
@@ -183,6 +185,8 @@ export const PublicNavigations = () => {
                     </Link>
                   </div>
                  </div>
+                   )
+                 
                    }
                 </div>
               </div>

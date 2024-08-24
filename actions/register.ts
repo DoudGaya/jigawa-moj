@@ -34,13 +34,9 @@ export const regsiter = async (values: z.infer<typeof signUpSchema>) => {
          } = fieldValidation.data
 
 
-         console.log(values)
-
-
     if (password !== passwordConfirmation) return {error: "Password doesn not match"}
 
     const hashedPassword = await bcrypt.hash(password, 10)
-    
     
     const emailExist = await getUserByEmail(email)
     
@@ -76,7 +72,6 @@ export const regsiter = async (values: z.infer<typeof signUpSchema>) => {
     await sendVrificationEmail(verificationToken.email, verificationToken.token)
     return {success: "Check your email to verify your account!"}
 }
-
 
 export const staffRegistration = async (values: z.infer<typeof StaffSchema>) => {
     const fieldValidation = StaffSchema.safeParse(values);

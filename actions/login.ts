@@ -13,6 +13,14 @@ import { generateVerificationToken,
 import { sendVrificationEmail, sendTwoFactorEmail } from '@/lib/mail'
 import { getTwoFactorConfirmationByUserId } from '@/data/two-factor-confirmation'
 
+
+interface RoleRoutes {
+    ADMIN: string
+    CUSTOMER: string
+    STAFF: string
+    LOGISTICS: string
+}
+
 export const login = async (values: z.infer<typeof loginSchema>) => {
     const fieldValidation = loginSchema.safeParse(values);
     if (!fieldValidation.success) {
@@ -80,13 +88,21 @@ export const login = async (values: z.infer<typeof loginSchema>) => {
         }
     }
 
+    const roleBasedRedirects: RoleRoutes = {
+        ADMIN: '/admin/dashboard',
+        CUSTOMER: '/customer/home',
+        STAFF: '/staff/dashboard',
+        LOGISTICS: '/logistics/home',
+    };
+
+
 
     try {
         await signIn("credentials", {
             email, 
             password,
-            redirect: true,
-            redirrectTo: DEFAULT_LOGGED_IN_REDIRRECT,
+            // @ts-ignore
+            redirectTo: roleBasedRedirects[existingUser.role] || DEFAULT_LOGGED_IN_REDIRRECT
         })
     } catch (error) {
         if (error instanceof AuthError) {

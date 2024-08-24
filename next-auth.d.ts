@@ -4,7 +4,8 @@ import NextAuth, {type DefaultSession} from "next-auth";
 
 export type ExtendedUser = DefaultSession["user"] & {
     id: string;
-    name: string;
+    firstName: string;
+    lastName: string
     email: string | null;
     phone: string
     password: string | null;

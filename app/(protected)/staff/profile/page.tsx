@@ -2,7 +2,9 @@ import React from 'react'
 
 const page = () => {
   return (
-    <div>page</div>
+    <div className=' py-28'>
+      Profile Settings
+    </div>
   )
 }
 

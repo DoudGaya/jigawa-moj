@@ -6,6 +6,8 @@ import { useSearchParams } from 'next/navigation'
 import { emailVerification } from '@/actions/email-verification'
 import { FormError } from '@/components/FormError'
 import { FormSuccess } from '@/components/FormSuccess'
+import Image from 'next/image'
+import jigawa from '@/public/img/icons/jigawa-icon.png'
 
 const EmailVerification = () => {
 
@@ -39,8 +41,9 @@ const EmailVerification = () => {
 
   return (
     <div>
-      <div className=" max-w-3xl flex items-center space-y-2 justify-center flex-col text-center bg-white">
-        <h1 className=' text-2xl font-semibold'>Welcome to StableBricks</h1>
+      <div className=" max-w-3xl flex items-center space-y-2 justify-center flex-col text-center px-4 py-6 rounded-md drop-shadow-sm bg-white">
+        <Image src={jigawa} alt='' className=' h-16 w-16 rounded-full border-2 border-primary' />
+        <h1 className=' text-xl font-poppins font-semibold'>Welcome to Jigawa State Ministry of Justice</h1>
           {!success && !error && (
             <div className=" flex space-y-2 items-center text-center flex-col py-3">
               <p>Confirming your Email</p>

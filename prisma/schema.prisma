@@ -91,6 +91,18 @@ model twoFactorToken {
   @@unique([email, token])
 }
 
+
+model Probate {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  case            Case     @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  caseId          String   @db.ObjectId @unique
+  assets          String   // Details of the assets
+  beneficiaries   String  // Details of beneficiaries or next of kin
+  appeal          String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
 model TwoFactorConfirmation {
   id        String @id @default(auto()) @map("_id") @db.ObjectId
   userId    String @db.ObjectId
@@ -118,6 +130,8 @@ model Case {
   defendentAttoney                  DefendentAttoney[]
   caseStatus                        CaseStatus
   transaction                       Transaction?
+  inmate                            Inmate?
+  probate                           Probate?
   hearingTime                       DateTime?
   createdAt                         DateTime        @default(now())
   updatedAt                         DateTime        @updatedAt
@@ -244,6 +258,7 @@ model Staff {
   staffRole           String?
   salaryStructure     String?
   jobTitle            String? 
+  isJudge             Boolean?
   department          String?
   employerName        String?
   employmentLocation  String?
@@ -266,6 +281,23 @@ enum StaffRole {
   JUDGES
   ADMIN
   LAWYER
+}
+
+
+model Inmate {
+  id                    String @id @default(auto()) @map("_id") @db.ObjectId
+  firstName             String
+  lastName              String
+  age                   String
+  maritalStatus         String
+  dateOfIncarceration   DateTime
+  relativePhone         String
+  relativeFullName      String
+  phoneNumber           String
+  relativeaddress       String
+  expectedReleaseDate   DateTime
+  case                  Case @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  caseId                String @unique @db.ObjectId
 }
 
 

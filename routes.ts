@@ -39,4 +39,3 @@ export const apiRoutesPrefix = '/api/auth'
 
 
 export const DEFAULT_LOGGED_IN_REDIRRECT = '/user/dashboard'
-export const ADMIN_LOGGED_IN_REDIRRECT = '/admin/dashboard'

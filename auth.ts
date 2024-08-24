@@ -7,8 +7,7 @@ import { UserRole } from "@prisma/client"
 import { getTwoFactorConfirmationByUserId } from "./data/two-factor-confirmation"
 import { redirect } from "next/navigation"
 import { getAccountByUserId } from "./actions/account"
-
-
+import { DEFAULT_LOGGED_IN_REDIRRECT } from "./routes"
  
 export const { auth, handlers, signIn, signOut } = NextAuth({
     pages: {
@@ -34,18 +33,17 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
             // @ts-ignore
             const existingUser = await getUserById(user.id)
             if (!existingUser?.emailVerified) return false 
-
+            
             // TODO: 2FA Authenication
             if (existingUser.isTwoFactorEnabled) {
                 
                 const twofactorConfirmation = await getTwoFactorConfirmationByUserId(existingUser.id)
                 if (!twofactorConfirmation) return false
-
+                
                 await db.twoFactorConfirmation.delete({
                     where: {id: twofactorConfirmation.id }
                 })
             }
-
 
             return true
         }, 
@@ -60,7 +58,8 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
             }
 
              if (session.user) {
-                 session.user.name = token.name as string
+                 session.user.firstName = token.firstName as string
+                 session.user.lastName = token.lastName as string
                  session.user.email = token.email as string
                  session.user.phone = token.phone as string
                  session.user.image = token.image as string 
@@ -73,11 +72,10 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
             if (!token.sub) return token;
             const existingUser = await getUserById(token.sub)
             if (!existingUser) return token
-
             const existingAccount = await getAccountByUserId(existingUser.id) 
-
             token.isOAuth = !!existingAccount
-            token.name = existingUser.name
+            token.firstName = existingUser.firstName
+            token.lastName   = existingUser.lastName
             token.email = existingUser.email
             token.phone = existingUser.phone
             token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled

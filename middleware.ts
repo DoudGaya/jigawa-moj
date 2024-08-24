@@ -10,6 +10,7 @@ const { auth } = NextAuth(authConfig)
 export default auth((req) => {
    const { nextUrl } = req  
 
+
    const isLoggedIn = !!req.auth
 
    const isAPIAuthRoute = nextUrl.pathname.startsWith(apiRoutesPrefix)
@@ -22,9 +23,6 @@ export default auth((req) => {
 
    if( isAuthRoutes ) {
       if ( isLoggedIn ) {
-
-        // handle ADMIN/USER redirrect 
-
         return Response.redirect(new URL(DEFAULT_LOGGED_IN_REDIRRECT, nextUrl))
       }
     return null;
@@ -34,8 +32,6 @@ export default auth((req) => {
     return Response.redirect(new URL("/", nextUrl))
    }
 })
-
-
 
 export const config = {
   matcher: [ '/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)' ],

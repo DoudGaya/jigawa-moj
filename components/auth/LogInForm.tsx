@@ -161,7 +161,6 @@ export function LoginForm() {
       </div>
       <fieldset className=" border-t-2 flex flex-col text-center items-center align-middle justify-center">
         <legend className=" self-center flex px-2 text-sm text-gray-600" >or log in with</legend>
-         
         </fieldset>
       </div>
   
