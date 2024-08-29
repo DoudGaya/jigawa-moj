@@ -1,31 +1,49 @@
-interface Project {
-    id: string 
-    title: string
-    length: string
-    description: string
-    duration: DateTime
-    valuation: string
-    state: string
-    city: string
-    location: string 
-    sharePrice: number 
-    roi: number
-}
+import { Gender, UserRole, User, Court, Case, Infrastructure } from '@prisma/client';
 
-interface User {
+interface CustomerType {
     id: string
-    fullName: string 
+    city: string
+    address: string
+    occupation: string
+    employmentStatus:string
+    maritalStatus: string
+    userId: string
+  }
+
+
+  interface CourtWithAllRecords {
+    id: string;
+    name: string;
+    function: string;
+    location: string | null;
+    localGovernment: string | null;
+    jurisdiction: string | null;
+    city: string | null;
+    level: string | null;
+    userId: string;
+    capacity: string | null;
+    createdAt: Date;
+    updatedAt: Date;
+    user: User
+    cases: Case[]
+    infrastructure: Infrastructure[]
+    staffs: User[]
+  }
+
+  interface UserCustomer {
+    id: string
+    firstName: string
+    lastName: string
+    otherNames:string
     email: string
     password: string
-    image: string 
-}
-
-interface Investment {
-    id: string
-    projectId: Project
-    userId: User
-    amount: number 
-    investmentDate: string 
-    payDay: string
-
-}
+    phone: string
+    state: string
+    gender: Gender
+    localGovernment: string
+    emailVerified: DateConstructor
+    image: string
+    role: UserRole
+    isTwoFactorEnabled: boolean
+    customer: CustomerType
+  }

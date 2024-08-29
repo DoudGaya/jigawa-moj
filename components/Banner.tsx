@@ -9,6 +9,7 @@ import image1 from '@/public/img/carousel/image1.jpg'
 import image2 from '@/public/img/carousel/image2.jpg'
 import image3 from '@/public/img/carousel/image3.jpg'
 import image4 from '@/public/img/carousel/image4.jpg'
+import { useCurrentUser } from "@/hooks/use-current-user"
 import Link from "next/link"
 
 const caroselImages = [
@@ -28,8 +29,7 @@ import {
 
 export const Banner = () => {
 
-    
-
+    const user = useCurrentUser()
   return (
     <>  
     <div className=" h-[100vh] flex flex-col bg-white w-full text-center overflow-hidden" >
@@ -60,7 +60,11 @@ export const Banner = () => {
                 <CarouselNext />
             </Carousel>
         <h1 className=' text-2xl md:text-3xl font-poppins text-[#1E1815] max-w-3xl mx-auto font-semibold'>Welcome to Jigawa State Ministry of Justice <span className=" text-primary"> eFiling </span>Facility</h1>
-       <div className=" flex flex-col space-y-1">
+      {
+        user ? (
+            <p className=" font-poppins text-md my-4 font-semibold">Welcome back {user.firstName}, Go to <Link className=" text-primary" href={'/user/dashboard'}> Dashboard </Link> </p>
+        ) : (
+            <div className=" flex flex-col space-y-1">
             <div className=" grid md:grid-cols-2 grid-cols-1 w-full  max-w-4xl gap-x-6 gap-y-2 my-6 mx-auto">
                 <Link href={'/staff-registration'} className=" py-2 delay-75 duration-150 ease-in-out transition-colors rounded-md border  border-primary text-center items-center hover:bg-primary hover:text-white font-semibold justify-center">
                     <p>Justice Staff Registration</p>
@@ -71,6 +75,8 @@ export const Banner = () => {
             </div>
             <p className=" font-semibold">Already have an account <Link href={'/login'} className=" text-primary underline ">Log In</Link> </p>
        </div>
+        )
+      }
        </div>
       
     </div>

@@ -18,7 +18,7 @@ export default async function AdmninLayout({ children }: { children: React.React
    } else {
     return (
       <SessionProvider session={session}>
-        <div className="flex h-screen bg-slate-50 dark:bg-black md:flex-row md:overflow-hidden">
+        <div className="flex h-screen bg-slate-100 dark:bg-black md:flex-row md:overflow-hidden">
           <AdminDashboardSideBar/>
           <div className="flex flex-col w-full md:overflow-y-auto ">
             <TopNav />

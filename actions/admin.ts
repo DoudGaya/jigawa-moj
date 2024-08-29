@@ -19,6 +19,9 @@ export const getAllCount  = async () => {
     return {
         customers,
         staffs,
+        courts,
+        probates,
+        transactions,
         cases,
         inmates,
         judges,

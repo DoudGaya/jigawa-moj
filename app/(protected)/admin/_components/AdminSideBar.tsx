@@ -13,9 +13,10 @@ import {
     SheetHeader,
     SheetTitle,
     SheetTrigger,
-  } from "@/components/ui/sheet"
-  
-  const privateLinks = [
+} from "@/components/ui/sheet"
+
+
+const privateLinks = [
     {
         id: 1,
         name: 'Dashboard',
@@ -106,7 +107,7 @@ import {
           </svg>
         )
     },
-  ]
+]
 
   const publicLinks = [
     {

@@ -9,15 +9,12 @@ import { handleUsersProfileImages } from './images'
 
 export const profileRecordsUpdate = async (values: z.infer<typeof SettingsSchema>) => {
 
-
-
-
     const user = await currentUser();
-    if (!user) {
+  
+  if (!user) {
         return {error: "Unauthorized"}
     }
 
-    console.log(user)
 
     if ( user.isOAuth ) {
         values.email = undefined 
@@ -26,11 +23,7 @@ export const profileRecordsUpdate = async (values: z.infer<typeof SettingsSchema
     const dbUser = await getUserById(user.id);
     if (!dbUser) {
         return {error: "Unauthorized"}
-    }
-
-
-
-    if (values.image) {
+    }    if (values.image) {
         // @ts-ignore
         const imagePath = await handleUsersProfileImages(values)
         if (!imagePath) {

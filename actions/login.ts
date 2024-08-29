@@ -18,7 +18,7 @@ interface RoleRoutes {
     ADMIN: string
     CUSTOMER: string
     STAFF: string
-    LOGISTICS: string
+    COURT: string
 }
 
 export const login = async (values: z.infer<typeof loginSchema>) => {
@@ -29,9 +29,7 @@ export const login = async (values: z.infer<typeof loginSchema>) => {
  
     const { email, password, code } = fieldValidation.data
 
-
-    const existingUser = await getUserByEmail(email) 
-
+    const existingUser = await getUserByEmail(email)
    
     if (!existingUser || !existingUser.email || !existingUser.password) {
         return {error: "Email does not exist!" }
@@ -40,7 +38,7 @@ export const login = async (values: z.infer<typeof loginSchema>) => {
     if (!existingUser.emailVerified) {
         const verificationToken = generateVerificationToken(existingUser.email)
         await sendVrificationEmail((await verificationToken).email, (await verificationToken).token)
-        return {success: "Check your email to verify your account!"}
+        return { success: "Check your email to verify your account!" }
     }
 
     if (existingUser.isTwoFactorEnabled && existingUser.email) {
@@ -90,9 +88,9 @@ export const login = async (values: z.infer<typeof loginSchema>) => {
 
     const roleBasedRedirects: RoleRoutes = {
         ADMIN: '/admin/dashboard',
-        CUSTOMER: '/customer/home',
+        CUSTOMER: '/user/dashobard',
         STAFF: '/staff/dashboard',
-        LOGISTICS: '/logistics/home',
+        COURT: '/court/dashboard',
     };
 
 
