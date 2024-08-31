@@ -14,6 +14,7 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet"
+import { ScrollArea } from '@/components/ui/scroll-area'
 
 
 const privateLinks = [
@@ -149,7 +150,9 @@ export const AdminDashboardSideBar = ( ) => {
         <p className=' font-semibold text-sm'>Jigawa | Justice</p>
     </Link>
     <hr className=' border-b-1.5 border-primary ' />
-    <div className=" flex flex-col py-4 px-2 space-y-3">
+   <ScrollArea>
+   <div className=" flex flex-col py-4 px-2 space-y-3">
+        
         {
             privateLinks.map((single) => {
                 return (
@@ -174,6 +177,7 @@ export const AdminDashboardSideBar = ( ) => {
             })
         }
     </div>
+   </ScrollArea>
     </div>
     <Sheet>
     <div className=" w-full md:hidden border-b flex justify-between shadow-sm z-10 items-center fixed left-0 top-0 bg-white px-8 py-3">

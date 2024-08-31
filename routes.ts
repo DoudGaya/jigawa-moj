@@ -7,7 +7,8 @@ export const publicRoutes = [
     '/contact',
     '/blog/:slug',
     '/email-verification',
-    '/loading-uis'
+    '/loading-uis',
+    '/user-uis'
 ]
 
 
