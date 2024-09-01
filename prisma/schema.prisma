@@ -9,7 +9,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
   id                  String      @id @default(auto()) @map("_id") @db.ObjectId
   firstName           String? 
@@ -27,6 +26,7 @@ model User {
   accounts            Account[]
   court               Court?
   customer            Customer?
+  filings             Filing[]
   staff               Staff?
   isTwoFactorEnabled Boolean @default(false)
   TwoFactorConfirmation TwoFactorConfirmation?
@@ -94,13 +94,19 @@ model twoFactorToken {
 
 model Probate {
   id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  case            Case     @relation(fields: [caseId], references: [id], onDelete: Cascade)
-  caseId          String   @db.ObjectId @unique
-  assets          String   // Details of the assets
-  beneficiaries   String  // Details of beneficiaries or next of kin
-  appeal          String?
+  assets          Asset[]   
+  beneficiaries   String  
+  filing          Filing?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+}
+
+model Asset {
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  name            String?
+  value           String?
+  probate         Probate @relation(fields: [probateId], references: [id],  onDelete: Cascade)
+  probateId       String  @db.ObjectId @unique
 }
 
 model TwoFactorConfirmation {
@@ -114,10 +120,10 @@ model TwoFactorConfirmation {
 model Case {
   id                                String         @id @default(auto()) @map("_id") @db.ObjectId
   title                             String
-  description                       String
+  description                       String?
   customer                          Customer       @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  customerId                        String         @db.ObjectId @unique            
-  caseNumber                        Int
+  customerId                        String         @db.ObjectId @unique          
+  caseNumber                        Int            
   court                             Court?         @relation(fields: [courtId], references: [id])
   courtId                           String         @db.ObjectId
   judge                             Staff?         @relation(fields: [judgeId], references: [id])
@@ -129,9 +135,8 @@ model Case {
   plaintiffsAttorney                PlaintiffsAttorney[] 
   defendentAttoney                  DefendentAttoney[]
   caseStatus                        CaseStatus
-  transaction                       Transaction?
+  transaction                       Transaction[]
   inmate                            Inmate?
-  probate                           Probate?
   hearingTime                       DateTime?
   createdAt                         DateTime        @default(now())
   updatedAt                         DateTime        @updatedAt
@@ -183,7 +188,6 @@ model Customer {
   user                User              @relation(fields: [userId], references: [id], onDelete: Cascade )
   userId              String            @db.ObjectId @unique
   transactions        Transaction[]
-  filings             Filing[]
   cases               Case[]
   @@map("customer")
 }
@@ -284,7 +288,6 @@ enum StaffRole {
   LAWYER
 }
 
-
 model Inmate {
   id                    String @id @default(auto()) @map("_id") @db.ObjectId
   firstName             String
@@ -301,17 +304,24 @@ model Inmate {
   caseId                String @unique @db.ObjectId
 }
 
-
 model Filing {
   id                  String        @id @default(auto()) @map("_id") @db.ObjectId
-  case                Case          @relation(fields: [caseId], references: [id])
+  case                Case?         @relation(fields: [caseId], references: [id])
   caseId              String        @db.ObjectId @unique
-  documentUrl         String
-  uploadedBy          Customer      @relation(fields: [userId], references: [id])
+  probate             Probate?      @relation(fields: [probateId], references: [id])
+  probateId           String        @db.ObjectId @unique
+  filingType          FilingType
+  user                User          @relation(fields: [userId], references: [id])
   userId              String        @db.ObjectId @unique
   filedAt             DateTime      @default(now())
   status              FilingStatus
   @@map("filing")
+}
+
+
+enum FilingType {
+  CASE
+  PROBATE
 }
 
 

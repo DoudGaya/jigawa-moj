@@ -1,3 +1,4 @@
+import { CaseType } from "@prisma/client"
 import { z } from "zod"
 
 
@@ -21,6 +22,41 @@ const infrastructure = z.object({
   name: z.string().optional(),
   number: z.string().optional()
 })
+
+const fileUpload = z.object({
+  title: z.string().optional(),
+  description: z.string().optional(),
+  url: z.string().optional()
+})
+
+
+
+
+export const customerCreateCase = z.object({
+  title: z.string().min(3, {
+    message: "Title must be more than 3 characters"
+  }),
+  description: z.string().min(3, {
+    message: "Title must be more than 3 characters"
+  }),
+  files: z.array(fileUpload).optional(),
+  caseType: z.enum(['Criminal', 'Civil', 'Family', 'Other']),
+})
+
+
+
+export const customerCreateProbate = z.object({
+  title: z.string().min(3, {
+    message: "Title must be more than 3 characters"
+  }),
+  description: z.string().min(3, {
+    message: "Title must be more than 3 characters"
+  }),
+  files: z.array(fileUpload).optional(),
+  caseType: z.enum(['Criminal', 'Civil', 'Family', 'Other']),
+})
+
+
 
 export const CourtRegisterSchema = z.object({
 
@@ -73,7 +109,7 @@ export const CourtRegisterSchema = z.object({
   level: z.string().min(3, {
     message: "Court Must have a level"
   }),
-  infrastructure: z.array(infrastructure),
+  infrastructure: z.array(infrastructure).optional(),
   location: z.string().min(2, {
     message: "Location must be more than 2 characters"
   }),
