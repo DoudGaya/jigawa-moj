@@ -2,6 +2,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import jigawa from '@/public/img/icons/jigawa-icon.png'
 import { usePathname } from 'next/navigation'
 
 import {
@@ -92,16 +93,16 @@ export const UserDashboardSideBar = ( ) => {
 
   return (
 <>
-    <div className=' w-full hidden md:flex flex-col border-r dark:border-gray-600 md:w-[16rem] py-6 drop-shadow-sm px-4 dark:text-white bg-white dark:bg-black'>
-    <div className=" pb-2">
-        {/* <Image src={logo} alt='Stablebricks logo' className=' h-10 dark:hidden block object-contain' />
-        <Image src={logoWhite} alt='Stablebricks logo' className=' h-10 hidden dark:block object-contain' /> */}
+    <div className=' w-full hidden md:flex flex-col border-r dark:border-gray-600 md:w-[16rem] py-3 drop-shadow-sm px-4 dark:text-white bg-white dark:bg-black'>
+    <div className="flex space-x-2 items-center hover:bg-gray-100/80 cursor-pointer p-2 rounded-md ">
+        <Image src={jigawa} alt='Stablebricks logo' className='w-10 border-primary rounded-full border-2 h-10 block object-contain' />
+        <p className=' font-poppins font-semibold text-xs'>Justice | Jigawa</p>
     </div>
     <div className=" flex flex-col py-4 px-2 space-y-3">
         {
             privateLinks.map((single) => {
                 return (
-                    <Link href={single.url} key={single.id} className={` hover:text-primary ${single.url == pathname && ' bg-primary dark:bg-primary dark:text-black text-white' } rounded-md text-sm space-x-2 w-full py-3 px-4 flex flex-row`}>
+                    <Link href={single.url} key={single.id} className={`hover:text-primary ${single.url == pathname &&' bg-primary dark:bg-primary dark:text-black text-white'} rounded-md text-sm space-x-2 w-full py-3 px-4 flex flex-row`}>
                         <span>{single.icon}</span>
                         <span>{single.name}</span>
                     </Link>

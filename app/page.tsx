@@ -7,7 +7,7 @@ export default function Home() {
   return (
   <>
   <PublicNavigations />
-  <Banner />
+    <Banner />
   <Footer />
   </>
   );

@@ -111,8 +111,20 @@ export const createManyCustomers = async () => {
 }
 
 
-export const getCustomerByCustomerId = async (id: string) => {
 
+
+
+export const getCustomerByUserId = async (id: string) => {
+    const customer = await db.user.findFirst({
+        where: {
+            id: id
+        }, 
+        include: {
+            customer: true
+        }
+    })
+
+    return customer
 }
 
 
@@ -124,3 +136,6 @@ export const updateCustomerDetailsById = async () => {
 export const deleteCustomerDetailsById = () => {
 
 }
+
+
+// customer actions 

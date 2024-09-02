@@ -58,7 +58,7 @@ export const PublicNavigations = () => {
     <div className=' w-full bg-white hidden lg:flex border-b fixed z-10 left-0 top-0 py-4'>
         <nav className=" max-w-6xl mx-auto w-full flex justify-between">
         <Link href={'/'} className=" flex flex-row space-x-3 items-center">
-            <Image src={logo} alt='stable Bricks Logo' className=' h-12 w-12 rounded-full' />
+            <Image src={logo} alt='stable Bricks Logo' className=' md:h-8 md:w-8 rounded-full' />
             <p className=' font-poppins font-semibold '>Jigawa State Ministry of Justice</p>
         </Link>
             <div className=" flex divide-x-2 divide-primary items-center">  

@@ -4,10 +4,11 @@
  */
 export const publicRoutes = [
     '/',
-    '/about',
     '/contact',
     '/blog/:slug',
-    '/email-verification'
+    '/email-verification',
+    '/loading-uis',
+    '/user-uis'
 ]
 
 

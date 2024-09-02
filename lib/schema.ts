@@ -1,6 +1,5 @@
 import { z } from "zod"
 
-
 export const SettingsSchema = z.object({
   name: z.optional(z.string()),
   email: z.optional(z.string()),
@@ -20,6 +19,39 @@ export const settingsSecurityDetailsSchema = z.object({
 const infrastructure = z.object({
   name: z.string().optional(),
   number: z.string().optional()
+})
+
+const fileUpload = z.object({
+  title: z.string().optional(),
+  description: z.string().optional(),
+  url: z.string().optional(),
+})
+
+
+
+
+export const customerCreateCase = z.object({
+  title: z.string().min(3, {
+    message: "Title must be more than 3 characters"
+  }),
+  description: z.string().min(3, {
+    message: "Title must be more than 3 characters"
+  }),
+  files: z.array(fileUpload).optional(),
+  caseType: z.enum(['Criminal', 'Civil', 'Family', 'Other']),
+})
+
+
+
+export const customerCreateProbate = z.object({
+  title: z.string().min(3, {
+    message: "Title must be more than 3 characters"
+  }),
+  description: z.string().min(3, {
+    message: "Title must be more than 3 characters"
+  }),
+  files: z.array(fileUpload).optional(),
+  caseType: z.enum(['Criminal', 'Civil', 'Family', 'Other']),
 })
 
 export const CourtRegisterSchema = z.object({
@@ -73,7 +105,7 @@ export const CourtRegisterSchema = z.object({
   level: z.string().min(3, {
     message: "Court Must have a level"
   }),
-  infrastructure: z.array(infrastructure),
+  infrastructure: z.array(infrastructure).optional(),
   location: z.string().min(2, {
     message: "Location must be more than 2 characters"
   }),
@@ -82,8 +114,6 @@ export const CourtRegisterSchema = z.object({
     message: 'Must be a minimum of two digits'
   }),
 })
-
-
 
 
 export const loginSchema = z.object({
@@ -237,10 +267,6 @@ export const loginSchema = z.object({
     salaryGrade: z.string().min(2, {
       message: "Please provide your Salary grade",
     }),
-  })
-
-  const CustomerSchema = z.object({
-
   })
 
   
