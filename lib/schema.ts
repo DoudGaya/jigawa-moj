@@ -1,6 +1,4 @@
-import { CaseType } from "@prisma/client"
 import { z } from "zod"
-
 
 export const SettingsSchema = z.object({
   name: z.optional(z.string()),
@@ -26,7 +24,7 @@ const infrastructure = z.object({
 const fileUpload = z.object({
   title: z.string().optional(),
   description: z.string().optional(),
-  url: z.string().optional()
+  url: z.string().optional(),
 })
 
 
@@ -55,8 +53,6 @@ export const customerCreateProbate = z.object({
   files: z.array(fileUpload).optional(),
   caseType: z.enum(['Criminal', 'Civil', 'Family', 'Other']),
 })
-
-
 
 export const CourtRegisterSchema = z.object({
 
@@ -118,8 +114,6 @@ export const CourtRegisterSchema = z.object({
     message: 'Must be a minimum of two digits'
   }),
 })
-
-
 
 
 export const loginSchema = z.object({
@@ -273,10 +267,6 @@ export const loginSchema = z.object({
     salaryGrade: z.string().min(2, {
       message: "Please provide your Salary grade",
     }),
-  })
-
-  const CustomerSchema = z.object({
-
   })
 
   

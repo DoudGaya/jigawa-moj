@@ -111,6 +111,9 @@ export const createManyCustomers = async () => {
 }
 
 
+
+
+
 export const getCustomerByUserId = async (id: string) => {
     const customer = await db.user.findFirst({
         where: {
@@ -133,3 +136,6 @@ export const updateCustomerDetailsById = async () => {
 export const deleteCustomerDetailsById = () => {
 
 }
+
+
+// customer actions 

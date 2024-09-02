@@ -10,6 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { CustomerCreateCaseForm } from './CustomerCreateCaseForm'
 
 
 
@@ -41,7 +42,7 @@ export const UserDashboard = () => {
                       <DialogHeader>
                       <DialogTitle className=' text-center pt-2'>File a Case</DialogTitle>
                           <ScrollArea>
-                            
+                            <CustomerCreateCaseForm />
                           </ScrollArea>
                       </DialogHeader>
                   </DialogContent>
