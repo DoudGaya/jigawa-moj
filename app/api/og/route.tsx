@@ -16,14 +16,6 @@ export async function GET( request: Request) {
 
 
   
-
-    const fontData = await fetch( new URL('../../../assets/fonts/logo-font.ttf', import.meta.url))
-    .then(res => res.arrayBuffer());
-
-    const imageData = await fetch( new URL('../../../assets/stable-bricks-white.png', import.meta.url))
-    .then(res => res.arrayBuffer());
-
-
    try {
     return new ImageResponse(
         (
@@ -47,15 +39,7 @@ export async function GET( request: Request) {
         {
           width: 1200,
           height: 630,
-          // fonts: [
-          //   {
-          //   name: "Inter",
-          //   data: fontData,
-          //   style: 'normal',
-          //   weight: 700,
-
-          //   }
-          // ]
+        
         },
       );
 
