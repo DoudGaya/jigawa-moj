@@ -105,7 +105,7 @@ export const CourtRegisterSchema = z.object({
   level: z.string().min(3, {
     message: "Court Must have a level"
   }),
-  infrastructure: z.array(infrastructure).optional(),
+  infrastructure: z.array(infrastructure),
   location: z.string().min(2, {
     message: "Location must be more than 2 characters"
   }),
