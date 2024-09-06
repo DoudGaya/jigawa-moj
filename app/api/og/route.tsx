@@ -1,10 +1,6 @@
 // @ts-ignore
 
 import { ImageResponse } from 'next/og';
-import logo from '@/public/img/logo-icon.png'
-import Image from 'next/image';
-
-
 export const runtime = "edge"
  
 export async function GET( request: Request) {
