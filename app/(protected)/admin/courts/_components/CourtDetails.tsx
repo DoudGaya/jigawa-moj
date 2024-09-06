@@ -1,8 +1,10 @@
+"use client"
 import React from 'react'
 import { CourtWithAllRecords } from '@/typings'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import avatar from '@/public/private/avatar.png'
+import { Button } from '@/components/ui/button'
 
 export const CourtDetails = ({court }: {court: CourtWithAllRecords}) => {
 
@@ -87,6 +89,58 @@ export const CourtDetails = ({court }: {court: CourtWithAllRecords}) => {
                 </div>
                     <h2 className=' font-poppins'> { court.user.firstName } { court.user.lastName} </h2>
               </div>  
+              <hr className=' border-primary border-b my-1 w-2/3 ' />
+              <div className=" w-full flex flex-col space-y-6 rounded-xl my-3 bg-white py-6 px-4">
+                <div className=" flex w-full -mb-4">
+                    <h2 className=' font-poppins text-sm font-semibold'>Contact</h2>
+                </div>
+                  <div className=" justify-between w-full flex">
+                     <div className=" flex flex-col items-baseline ">
+                      <p className=' text-gray-500 uppercase text-xs font-semibold'>Email</p>
+                      <p className=' text-sm font-poppins'> { court.user.email } </p>
+                     </div>
+                      <div className=" flex items-end">
+                        <button className='space-x-1 font-semibold flex text-center text-green-800 text-xs items-center bg-primary/30 rounded-md px-2 py-0.5 '> 
+                        <p>send mail</p>
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-3">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                          </svg>
+                      </button>
+                      </div>
+                  </div>
+
+                  <div className=" justify-between w-full flex">
+                     <div className=" flex flex-col items-baseline ">
+                      <p className=' text-gray-500 uppercase text-xs font-semibold'>PHONE</p>
+                      <p className=' text-sm font-poppins'> { court.user.phone } </p>
+                     </div>
+                      <div className=" flex items-end">
+                        <button className='space-x-1 font-semibold flex text-center text-green-800 text-xs items-center bg-primary/30 rounded-md px-2 py-0.5 '> 
+                        <p>text message</p>
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-3">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                          </svg>
+                      </button>
+                      </div>
+                  </div>
+
+                  <div className=" justify-between w-full flex">
+                     <div className=" flex flex-col items-baseline ">
+                      <p className=' text-gray-500 uppercase text-xs font-semibold'>Email</p>
+                      <p className=' text-sm font-poppins'> { court.user.email } </p>
+                     </div>
+                      <div className=" flex items-end">
+                        <button className='space-x-1 font-semibold flex text-center text-green-800 text-xs items-center bg-primary/30 rounded-md px-2 py-0.5 '> 
+                        <p>send mail</p>
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-3">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                          </svg>
+                      </button>
+                      </div>
+                  </div>
+
+
+              </div>
             </div>
            </div>
           </div>

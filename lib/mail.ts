@@ -21,6 +21,45 @@ export const sendTwoFactorEmail = async (email: string, token: string) => {
     })
 }
 
+
+
+export const sendMailToCourtAdmin = async (email: string, message: string, subject: string) => {
+    await resend.emails.send({
+        from: "Jigawa State Ministry of Justice <norepl@stablebricks.com>",
+        to: email,
+        subject: `${subject}`,
+        html: `<p> ${message} </p>`
+    })
+}
+
+export const sendMailToUser = async (
+    email: string, 
+    message: string, 
+    subject: string
+) => {
+    await resend.emails.send({
+        from: "Jigawa State Ministry of Justice <norepl@stablebricks.com>",
+        to: email,
+        subject: `${subject}`,
+        html: `<p> ${message} </p>`
+    })
+}
+
+export const sendMailToStaff = async (
+    email: string, 
+    firstName: string, 
+    lastName: string, 
+    message: string, 
+    subject: string
+) => {
+    await resend.emails.send({
+        from: "Jigawa State Ministry of Justice <norepl@stablebricks.com>",
+        to: email,
+        subject: `${subject}`,
+        html: `<p> ${message} </p>`
+    })
+}
+
 export const sendPasswordResetEmail = async ( email: string, token: string) => {
     const resetLink =  `${baseUrl}/new-password?token=${token}`
 

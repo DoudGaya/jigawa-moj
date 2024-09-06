@@ -15,7 +15,7 @@ export const UserProfileDetails = ({ changeModal }) => {
         return;
     }
   return (
-  <div className=" flex h-full w-full">
+  <div className=" flex h-auto flex-col w-full">
       <div className='w-full p-3 bg-white dark:bg-stone-950 shadow-sm rounded-lg flex flex-col'>
         <div className=" flex flex-col w-full py-8 space-y-6 items-center justify-center">
            <div className=" flex flex-col items-center space-y-3 justify-center">
@@ -50,19 +50,6 @@ export const UserProfileDetails = ({ changeModal }) => {
                     </div>
                 </div>
             {/* ACCOUNT DETAILS */}
-                <div className=" rounded-lg space-y-3 py-2 px-3 w-full flex flex-col">
-                    <p className=' font-semibold text-gray-700 text-sm'>Account Details</p>
-                    <div className=" flex justify-between w-full">
-                        <div className=" flex flex-col">
-                            <p className=' text-gray-600 text-sm'>Bank Name</p>
-                            <p className=' font-semibold text-sm text-gray-600'> { "GT Bank" } </p>
-                        </div>
-                        <div className=" flex flex-col text-end">
-                            <p className=' text-gray-600 text-sm'>Account Number</p>
-                            <p className=' font-semibold text-sm text-gray-600'> {user.phone || "Not Available"} </p>
-                        </div>
-                    </div>
-                </div>
                         {/* SECUTIRY DETAILS */}
                 <div className=" rounded-lg  space-y-3 py-2 px-3 w-full flex flex-col">
                     <p className=' font-semibold text-gray-700 text-sm'>Account Details</p>
