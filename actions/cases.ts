@@ -11,7 +11,7 @@ export const customerCreateCaseAction = async (values: z.infer<typeof customerCr
 
 
     if (!user) {
-        return {error: "User does not exist"}
+        return {error: "User does not exist "}
     }
 
 
