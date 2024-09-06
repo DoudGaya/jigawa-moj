@@ -5,9 +5,7 @@ import {PrismaAdapter } from '@auth/prisma-adapter'
 import { getUserById } from "./data/user"
 import { UserRole } from "@prisma/client"
 import { getTwoFactorConfirmationByUserId } from "./data/two-factor-confirmation"
-import { redirect } from "next/navigation"
 import { getAccountByUserId } from "./actions/account"
-import { DEFAULT_LOGGED_IN_REDIRRECT } from "./routes"
  
 export const { auth, handlers, signIn, signOut } = NextAuth({
     pages: {

@@ -20,6 +20,11 @@ export const getUserById = async (id: string) => {
             where: {
                 id
             },
+            include: {
+                customer: true,
+                staff: true,
+                court: true,
+            }
         })
         return user
         
