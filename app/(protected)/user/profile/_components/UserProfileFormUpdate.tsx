@@ -57,6 +57,8 @@ export const UserProfileFormUpdate = ( {editModal, changeModal}: {editModal: str
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.files && e.target.files[0]) {
           setImage(e.target.files[0]);
+      } else {
+        setImage(undefined)
       }
   };
     
@@ -91,8 +93,6 @@ export const UserProfileFormUpdate = ( {editModal, changeModal}: {editModal: str
       }
 
      if (!image) {
-
-      // console beginig 
 
         startTransition(() => {
             profileRecordsUpdate({...values, image: undefined})
