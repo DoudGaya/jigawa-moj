@@ -54,48 +54,48 @@ export const UserProfileFormUpdate = ( {editModal, changeModal}: {editModal: str
 
     })     
 
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (!e.target.files) {
-        return null
-      }
-      if (e.target.files && e.target.files[0]) {
-          setImage(e.target.files[0]);
-      } else {
-        setImage(undefined)
-      }
-  };
+  //   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //     if (!e.target.files) {
+  //       return null
+  //     }
+  //     if (e.target.files && e.target.files[0]) {
+  //         setImage(e.target.files[0]);
+  //     } else {
+  //       setImage(undefined)
+  //     }
+  // };
     
     const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
 
 
-      if (image) {
-        const reader = new FileReader();
-        reader.readAsDataURL(image);
-        reader.onload = async () => {
-        const base64Image = reader.result?.toString().split(',')[1];
-          startTransition(() => {
-              profileRecordsUpdate(
-              {
-                ...values, 
-                image: base64Image
-              }
-              )
-              .then((data) => {
-                 if (data.error) {
-                  setError(data.error)
-                 }
+      // if (image) {
+      //   const reader = new FileReader();
+      //   reader.readAsDataURL(image);
+      //   reader.onload = async () => {
+      //   const base64Image = reader.result?.toString().split(',')[1];
+      //     startTransition(() => {
+      //         profileRecordsUpdate(
+      //         {
+      //           ...values, 
+      //           image: base64Image
+      //         }
+      //         )
+      //         .then((data) => {
+      //            if (data.error) {
+      //             setError(data.error)
+      //            }
   
-                 if (data.success) {
-                  update()
-                  setSuccess(data.success)
-                  changeModal("")
-                 }
-              })
-          })
-      }
-      }
+      //            if (data.success) {
+      //             update()
+      //             setSuccess(data.success)
+      //             changeModal("")
+      //            }
+      //         })
+      //     })
+      // }
+      // }
 
-     if (!image) {
+    //  if (!image) {
 
         startTransition(() => {
             profileRecordsUpdate({...values, image: undefined})
@@ -111,7 +111,7 @@ export const UserProfileFormUpdate = ( {editModal, changeModal}: {editModal: str
             })
         })
       //console end
-     }
+    //  }
     }
     if (editModal === "profile") {
         return (
@@ -126,7 +126,7 @@ export const UserProfileFormUpdate = ( {editModal, changeModal}: {editModal: str
              <div className=" flex py-6 flex-col p-4">
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4 w-full">
-                <FormField
+                {/* <FormField
                     control={form.control}
                     name="image"
                     render={({ field }) => (
@@ -144,7 +144,7 @@ export const UserProfileFormUpdate = ( {editModal, changeModal}: {editModal: str
                         <FormMessage />
                       </FormItem>
                     )}
-                  />
+                  /> */}
                   <FormField
                     control={form.control}
                     name="name"
