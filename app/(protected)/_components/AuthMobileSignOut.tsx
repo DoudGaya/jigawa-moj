@@ -2,7 +2,6 @@ import React from 'react'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { signOut } from 'next-auth/react'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import stablebricksIcon from '@/public/img/logo-icon.png'
 import { Button } from '@/components/ui/button'
 
 export const AuthMobileSignOut = () => {

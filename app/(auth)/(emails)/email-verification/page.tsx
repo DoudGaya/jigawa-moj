@@ -28,8 +28,11 @@ const EmailVerification = () => {
     }
     emailVerification(token)
     .then((data) => {
+
       setSuccess(data.success)
       setError(data.error)
+
+
     }).catch(() => {
       setError("Something Went Wrong!")
     })
@@ -44,25 +47,23 @@ const EmailVerification = () => {
       <div className=" max-w-3xl flex items-center space-y-2 justify-center flex-col text-center px-4 py-6 rounded-md drop-shadow-sm bg-white">
         <Image src={jigawa} alt='' className=' h-16 w-16 rounded-full border-2 border-primary' />
         <h1 className=' text-xl font-poppins font-semibold'>Welcome to Jigawa State Ministry of Justice</h1>
-          {!success && !error && (
+          {(!success && !error ) ? (
             <div className=" flex space-y-2 items-center text-center flex-col py-3">
-              <p>Confirming your Email</p>
+              <p className=' font-poppins'>Confirming your Email</p>
               <BeatLoader loading={true} size={8} className='' color='#ffda48'  />
             </div>
-          )}
-
-          {
-            success ? (
-              <FormError message={error} />
-              ) : (
-                <>
-                  <FormSuccess message={success}/>
-                    <Link href={'/login'} className=' bg-primary px-6 py-2 rounded-md'>
-                        Back to Log In
-                    </Link>
-             </>
-              )
-          
+          ) : success ? (
+            <FormError message={error} />
+          ) : (
+            <>
+            <div className=" flex flex-col space-y-3 py-3">
+              <FormSuccess message={success}/>
+                <Link href={'/login'} className=' bg-primary text-white px-6 py-2 rounded-md'>
+                    Back to Log In
+                </Link>
+            </div>
+           </>
+          )
           }
        
       </div>

@@ -3,11 +3,11 @@ import * as z from 'zod'
 import { db } from '@/lib/db'
 import { getUserById } from '@/data/user'
 import { currentUser } from '@/lib/auth'
-import { SettingsSchema, settingsSecurityDetailsSchema } from '@/lib/schema'
+import { settingsSecurityDetailsSchema , UserSettingsSchema} from '@/lib/schema'
 import { handleUsersProfileImages } from './images'
 // import 
 
-export const profileRecordsUpdate = async (values: z.infer<typeof SettingsSchema>) => {
+export const profileRecordsUpdate = async (values: z.infer<typeof UserSettingsSchema>) => {
 
     const user = await currentUser();
   

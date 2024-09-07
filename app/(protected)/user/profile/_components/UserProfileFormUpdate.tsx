@@ -28,7 +28,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { SettingsSchema } from '@/lib/schema'
+import { UserSettingsSchema } from '@/lib/schema'
 import { File } from 'buffer'
 
 export const UserProfileFormUpdate = ( {editModal, changeModal}: {editModal: string, changeModal: any}) => {
@@ -43,13 +43,18 @@ export const UserProfileFormUpdate = ( {editModal, changeModal}: {editModal: str
 
      
    
-    const form = useForm<z.infer<typeof SettingsSchema>>({
-      resolver: zodResolver(SettingsSchema),
+    const form = useForm<z.infer<typeof UserSettingsSchema>>({
+      resolver: zodResolver(UserSettingsSchema),
       defaultValues: {
-       name: user?.name || undefined,
-       email: user?.email || undefined,
-       phone: user?.phone || undefined,
-       image: user?.image || undefined
+        firstname: user?.name || undefined,
+        lastName: user?.lastName || undefined,
+        email: user?.email || undefined,
+        phone: user?.phone || undefined,
+
+      //  name: user?.name || undefined,
+      //  email: user?.email || undefined,
+      //  phone: user?.phone || undefined,
+      //  image: user?.image || undefined
       },
 
     })     
@@ -65,7 +70,7 @@ export const UserProfileFormUpdate = ( {editModal, changeModal}: {editModal: str
   //     }
   // };
     
-    const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
+    const onSubmit = (values: z.infer<typeof UserSettingsSchema>) => {
 
 
       // if (image) {
@@ -147,7 +152,7 @@ export const UserProfileFormUpdate = ( {editModal, changeModal}: {editModal: str
                   /> */}
                   <FormField
                     control={form.control}
-                    name="name"
+                    name="firstName"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Name</FormLabel>

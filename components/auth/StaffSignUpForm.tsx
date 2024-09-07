@@ -94,8 +94,6 @@ export function StaffSignUpForm () {
     setError('')
     setSuccess('')
 
-    console.log(values)
-
     startTransition(() => {
       if(values.password !== values.passwordConfirmation) {
         setError('Password does not matched')

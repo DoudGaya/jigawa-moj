@@ -91,6 +91,8 @@ export const staffRegistration = async (values: z.infer<typeof StaffSchema>) => 
             employerName,
             employmentLocation,
             jobTitle,
+            isTwoFactorEnabled,
+            gender,
             localGovernment,
             position,
             salaryGrade,
@@ -122,6 +124,8 @@ export const staffRegistration = async (values: z.infer<typeof StaffSchema>) => 
           phone,
           state,
           role: UserRole.STAFF,
+          isTwoFactorEnabled,
+          gender,
           localGovernment,
           staff: {
             create: {

@@ -58,7 +58,7 @@ export const PublicNavigations = () => {
     <div className=' w-full bg-white hidden lg:flex border-b fixed z-10 left-0 top-0 py-4'>
         <nav className=" max-w-6xl mx-auto w-full flex justify-between">
         <Link href={'/'} className=" flex flex-row space-x-3 items-center">
-            <Image src={logo} alt='stable Bricks Logo' className=' md:h-8 md:w-8 rounded-full' />
+            <Image src={logo} alt='Court of Arm' className=' md:h-8 md:w-8 rounded-full' />
             <p className=' font-poppins font-semibold '>Jigawa State Ministry of Justice</p>
         </Link>
             <div className=" flex divide-x-2 divide-primary items-center">  
@@ -121,8 +121,8 @@ export const PublicNavigations = () => {
     <Sheet>
     <   div className=" w-full md:hidden border-b flex justify-between shadow-sm z-10 items-center fixed left-0 top-0 bg-white px-8 py-3">
             <Link href={'/'} className=' flex items-center space-x-3 '>
-                <Image src={logo} alt='stable Bricks Logo' className= 'h-12 w-12  object-contain' />
-                <p className=' font-poppins font-semibold'>Justice | Jigawa </p>
+                <Image src={logo} alt='Court of arm' className= 'h-12 w-12  object-contain' />
+                <p className=' font-poppins text-sm font-semibold'>Justice | Jigawa </p>
             </Link>
             <div className=" flex justify-between">
                 <SheetTrigger>
@@ -137,7 +137,7 @@ export const PublicNavigations = () => {
             <SheetHeader>
             <SheetTitle className=" flex items-center ">
                 <div className=" flex items-center  space-x-2 ">
-                    <Image src={logo} alt='stable Bricks Logo' className= 'h-12 w-12  object-contain' />
+                    <Image src={logo} alt='Court of Arm' className= 'h-12 w-12  object-contain' />
                     <p className=' font-poppins text-sm font-semibold'>Justice | Jigawa </p>
                 </div>
             </SheetTitle>

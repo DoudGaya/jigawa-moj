@@ -37,6 +37,5 @@ export const emailVerification = async (token: string) => {
         where: {id: existingToken.id}
     })
  
-    return {success: 'Your Email has been Verified'}
-
+    return { success: "Email has been Verified" }
 }

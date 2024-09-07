@@ -1,11 +1,50 @@
 import { z } from "zod"
 
-export const SettingsSchema = z.object({
-  name: z.optional(z.string()),
+export const UserSettingsSchema = z.object({
+  firstname: z.optional(z.string()),
+  lastName: z.optional(z.string()),
+  otherNames: z.optional(z.string()),
+  state: z.optional(z.string()),
+  localGovernment: z.optional(z.string()),
+  gender: z.optional(z.string()),
+  address: z.optional(z.string()),
+  city: z.optional(z.string()),
+  occupation: z.optional(z.string()),
   email: z.optional(z.string()),
   phone: z.optional(z.string()),
-  image: z.optional(z.any())
+  image: z.optional(z.any()),
+  maritalStatus: z.optional(z.string())
 }) 
+
+
+export const staffSettingsSchema = z.object({
+  firstname: z.optional(z.string()),
+  lastName: z.optional(z.string()),
+  otherNames: z.optional(z.string()),
+  state: z.optional(z.string()),
+  localGovernment: z.optional(z.string()),
+  gender: z.optional(z.string()),
+  address: z.optional(z.string()),
+  city: z.optional(z.string()),
+  occupation: z.optional(z.string()),
+  email: z.optional(z.string()),
+  phone: z.optional(z.string()),
+  image: z.optional(z.any()),
+  maritalStatus: z.optional(z.string()),
+  jobTitle: z.string().optional(),
+  staffNumber: z.string().optional(),
+  employerName: z.string().optional(),
+  position: z.string().optional(),
+  department: z.string().optional(),
+  step: z.string().optional(),
+  employmentLocation: z.string().optional(),
+  salaryStructure: z.string().optional(),
+  salaryGrade: z.string().optional(),
+}) 
+
+
+
+
 
 
 
@@ -188,6 +227,39 @@ export const loginSchema = z.object({
     }),
   })
 
+
+  export const StaffSettingsShema = z.object({
+
+    firstName: z.string().min(2, { //
+      message: "Please provide your First Name",
+    }),
+
+    lastName: z.string().min(2, { //
+      message: "Please provide your Last Name",
+    }),
+
+    otherNames: z.string().optional(), // 
+
+
+    state: z.string().min(2, { // 
+      message: "Please Select your State of residence",
+    }),
+
+    
+    email: z.string().min(3, {
+      message: "Email address must be less than 2 characters",
+    }),
+    
+    gender: z.enum(["MALE","FEMALE", "OTHER"]),
+
+    phone: z.string().min(2, {
+      message: "Provide Your Phone Number",
+    }),
+
+    localGovernment: z.string().min(2, {
+      message: "Please provide your Local Government",
+    }),
+  })
 
 
   export const StaffSchema = z.object({

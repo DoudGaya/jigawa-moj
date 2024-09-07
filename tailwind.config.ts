@@ -21,7 +21,6 @@ export default withUt({
     },
     extend: {
       colors: {
-        "stablebrick-black": "#343434",
         primary: "#02923F",
         jgreen: "#005344",
         jred: "#DB251C",
