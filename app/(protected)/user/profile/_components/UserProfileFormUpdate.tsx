@@ -60,7 +60,9 @@ export const UserProfileFormUpdate = ( {editModal, changeModal}: {editModal: str
       }
       if (e.target.files && e.target.files[0]) {
           setImage(e.target.files[0]);
-      } 
+      } else {
+        setImage(undefined)
+      }
   };
     
     const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
