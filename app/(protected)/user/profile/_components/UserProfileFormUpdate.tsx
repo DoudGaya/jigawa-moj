@@ -39,7 +39,7 @@ export const UserProfileFormUpdate = ( {editModal, changeModal}: {editModal: str
     const [terms, setTerms] = useState<boolean> (false)
     const [error, setError] = useState<string | undefined>('')
     const [success, setSuccess] = useState < string | undefined>('')
-    const [image, setImage] = useState<File | undefined>()
+    const [image, setImage] = useState<File>()
 
      
    
@@ -55,11 +55,12 @@ export const UserProfileFormUpdate = ( {editModal, changeModal}: {editModal: str
     })     
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (!e.target.files) {
+        return null
+      }
       if (e.target.files && e.target.files[0]) {
           setImage(e.target.files[0]);
-      } else {
-        setImage(undefined)
-      }
+      } 
   };
     
     const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
