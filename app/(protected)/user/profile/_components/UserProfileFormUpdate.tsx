@@ -72,7 +72,6 @@ export const UserProfileFormUpdate = ( {editModal, changeModal}: {editModal: str
     
     const onSubmit = (values: z.infer<typeof UserSettingsSchema>) => {
 
-
       // if (image) {
       //   const reader = new FileReader();
       //   reader.readAsDataURL(image);
