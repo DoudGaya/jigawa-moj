@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { FormSuccess } from "@/components/FormSuccess";
 import { FormError } from "@/components/FormError";
+import { useRouter } from "next/navigation";
 
 import { createNewCustomer } from "@/actions/customers";
 import {
@@ -123,6 +124,7 @@ export function AdminCreateCustomerForm() {
         setError(data.error)
         setSuccess(data.success)
       })
+
     })
 
   }

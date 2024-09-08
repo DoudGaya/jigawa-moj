@@ -76,7 +76,7 @@ export const AdminDashboardCards = () => {
 
 
   return (
-    <div className='grid grid-cols-4 w-full gap-4 mx-auto px-3 max-w-6xl'>
+    <div className='grid grid-cols-1 md:grid-cols-4 w-full gap-4 mx-auto px-3 max-w-6xl'>
         {
             cards.map((single) => {
                 return <DashboardCard 

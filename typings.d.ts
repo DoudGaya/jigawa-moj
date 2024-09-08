@@ -1,4 +1,4 @@
-import { Gender, UserRole, User, Court, Case, Infrastructure } from '@prisma/client';
+import { Gender, UserRole, User, Court, Case, Infrastructure, Probate, Transaction } from '@prisma/client';
 
 interface CustomerType {
     id: string
@@ -8,6 +8,9 @@ interface CustomerType {
     employmentStatus:string
     maritalStatus: string
     userId: string
+    probates: Probate[]
+    transactions: Transaction[]
+    cases: Case[]
   }
 
 
@@ -41,9 +44,10 @@ interface CustomerType {
     state: string
     gender: Gender
     localGovernment: string
-    emailVerified: DateConstructor
+    emailVerified: String
     image: string
     role: UserRole
     isTwoFactorEnabled: boolean
     customer: CustomerType
+
   }

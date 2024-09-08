@@ -97,6 +97,8 @@ model Probate {
   assets          Asset[]   
   beneficiaries   String  
   filing          Filing?
+  customer        Customer @relation(fields: [customerId], references: [id],  onDelete: Cascade)
+  customerId      String @db.ObjectId 
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }
@@ -185,6 +187,7 @@ model Customer {
   occupation          String?
   employmentStatus    String?
   maritalStatus       String?
+  probates            Probate[]
   user                User              @relation(fields: [userId], references: [id], onDelete: Cascade )
   userId              String            @db.ObjectId @unique
   transactions        Transaction[]

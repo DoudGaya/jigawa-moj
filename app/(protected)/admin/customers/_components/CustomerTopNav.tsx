@@ -15,18 +15,17 @@ import { AdminCreateCustomerForm } from './AdminCreateCustomerForm'
 export const CustomerActionArea = ({customerCount}: {customerCount: number} ) => {
 
   return (
-    <div className=" flex w-full  shadow-md border border-primary rounded-md p-4 justify-between items-center">
-        <div className=" flex space-x-2 items-baseline hover:bg-gray-100 cursor-pointer">
-            <p className=' font-poppins text-4xl rounded-lg '> { customerCount } </p>
-            <p className=' font-semibold font-poppins text-lg '> Customers</p>
+    <div className=" flex w-full  shadow-sm border bg-white rounded-md p-4 justify-between items-center">
+        <div className=" flex space-x-2  items-center  bg-green-200/50 px-4 py-1 rounded-lg font-semibold ">
+            <p className=' font-poppins rounded-lg text-green-900 '> { customerCount } customers </p>
         </div>
        <div className="">
         <Dialog>
                 <DialogTrigger className=' bg-primary text-white px-4 py-2 text-sm  rounded-md font-poppins'>Create New Customer</DialogTrigger>
-                <DialogContent className='h-[600px] overflow-y-scroll'>
+                <DialogContent className='h-[600px] w-[90%] rounded-lg overflow-y-scroll'>
                     <DialogHeader>
                     <DialogTitle>Create a New Customer</DialogTitle>
-                        <ScrollArea>
+                        <ScrollArea className=''>
                             <AdminCreateCustomerForm />
                         </ScrollArea>
                     </DialogHeader>

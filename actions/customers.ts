@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs'
 import { db } from '@/lib/db'
 import { getUserByEmail } from '@/data/user'
 import { UserRole } from '@prisma/client';
+import { UserSettingsSchema } from '@/lib/schema'
 
 
 
@@ -114,13 +115,44 @@ export const createManyCustomers = async () => {
 
 
 
+
+
+
 export const getCustomerByUserId = async (id: string) => {
     const customer = await db.user.findFirst({
         where: {
             id: id
         }, 
         include: {
-            customer: true
+            customer: {
+
+                include: {
+                    _count: true,
+                    cases: {
+                      include: {
+                        _count: true
+                      }  
+                    },
+                    probates: {
+                        include: {
+                            _count: true
+                        }
+                    },
+                    transactions: true
+                }
+                // select: {
+                //     _count: true,
+                //     city: true,
+                //     address: true,
+                //     cases: true,
+                //     employmentStatus: true,
+                //     maritalStatus: true,
+                //     occupation: true,
+                //     probates: true,
+                //     transactions: true,
+                //     id: true,
+                // }
+            }
         }
     })
 
@@ -128,14 +160,43 @@ export const getCustomerByUserId = async (id: string) => {
 }
 
 
-export const updateCustomerDetailsById = async () => {
+export const updateCustomerDetailsByEmail = async (id: string, values: z.infer<typeof UserSettingsSchema>) => {
+
+    const dbCustomer = await db.user.findUnique({
+        where: {
+            email: id
+        }
+    })
+
+    if (!dbCustomer) {
+        return {error: "customer does not exist"}
+    }
+
+
     
 }
 
 
-export const deleteCustomerDetailsById = () => {
+export const deleteUserAndCustomerDetailsById = async (id: string) => {
 
-}
+    const dbCustomer = await db.user.findFirst({
+        where: {
+            id: id
+        }
+    })
+
+    if (!dbCustomer) {
+        return {error: "Customer does not exist!"}
+    }
+
+    await db.user.delete({
+        where: {
+            id: id
+        }
+    })
+
+    return {success: "Customer has been deleted"}
+}   
 
 
 // customer actions 

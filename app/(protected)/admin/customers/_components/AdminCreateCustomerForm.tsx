@@ -11,6 +11,7 @@ import { states } from "@/lib/jigawa";
 import { localGovernment } from "@/lib/jigawa";
 import { Gender } from "@prisma/client";
 import { Textarea } from "@/components/ui/textarea"
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { FormSuccess } from "@/components/FormSuccess";
@@ -77,6 +78,9 @@ const maritalStatus = [
 
 export function AdminCreateCustomerForm() {
 
+
+  const router = useRouter()
+
   const [terms, setTerms] = useState<boolean> (false)
   const [isPending, startTransition] = useTransition()
   const [error, setError] = useState<string | undefined>('')
@@ -124,6 +128,8 @@ export function AdminCreateCustomerForm() {
         setSuccess(data.success)
       })
     })
+
+    router.refresh()
 
   }
 
