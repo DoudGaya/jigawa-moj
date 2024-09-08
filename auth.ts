@@ -63,7 +63,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
                  session.user.phone = token.phone as string
                  session.user.image = token.image as string 
                  session.user.isOAuth  = token.isOAuth as boolean
-                //  user specifics 
+                //  USER SPECIFICS 
                 session.user.localGovernment = token.localGovernment as string
                 session.user.address = token.address as string
                 session.user.gender = token.gender as string
@@ -71,7 +71,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
                 session.user.occupation = token.occupation as string
                 session.user.maritalStatus = token.maritalStatus as string
                 session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean
-
 
                 //  STAFFS SPECIFICS
                 session.user.jobTitle = token.jobTitle as string
@@ -123,8 +122,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
             token.employmentLocation = existingUser.staff?.employmentLocation
             token.salaryGrade = existingUser.staff?.salaryGrade
             token.salaryStructure = existingUser.staff?.salaryStructure
-
-
             return token
         },
        

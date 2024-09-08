@@ -6,7 +6,7 @@ export const UserSettingsSchema = z.object({
   otherNames: z.optional(z.string()),
   state: z.optional(z.string()),
   localGovernment: z.optional(z.string()),
-  gender: z.optional(z.string()),
+  gender: z.optional(z.enum(["MALE","FEMALE", "OTHER"])),
   address: z.optional(z.string()),
   city: z.optional(z.string()),
   occupation: z.optional(z.string()),

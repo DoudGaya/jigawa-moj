@@ -3,12 +3,13 @@ import { useCurrentUser } from '@/hooks/use-current-user'
 import { signOut } from 'next-auth/react'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from '@/components/ui/button'
+import { logOut } from '@/actions/logout'
 
 export const AuthMobileSignOut = () => {
     const user = useCurrentUser()
 
     const logoutUser = () => {
-        signOut()
+        logOut()
     }
   return (
     <>

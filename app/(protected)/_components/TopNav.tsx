@@ -2,7 +2,6 @@
 
 import React from 'react'
 import { useSession } from 'next-auth/react'
-import { signOut } from 'next-auth/react'
 import {
   Popover,
   PopoverContent,
@@ -13,14 +12,14 @@ import jigawa from '@/public/img/icons/jigawa-icon.png'
 import Link from 'next/link'
 import { DarkButton } from '@/components/DarkButton'
 import Image from 'next/image'
-import { currentUser } from '../../../lib/auth';
 import { useCurrentUser } from '@/hooks/use-current-user'
+import { logOut } from '@/actions/logout'
 
 
 
 
 const logout = () => {
-    signOut()
+    logOut()
 }
 
 

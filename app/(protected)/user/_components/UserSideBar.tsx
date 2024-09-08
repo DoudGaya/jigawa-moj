@@ -95,7 +95,7 @@ export const UserDashboardSideBar = ( ) => {
 <>
     <div className=' w-full hidden md:flex flex-col border-r dark:border-gray-600 md:w-[16rem] py-3 drop-shadow-sm px-4 dark:text-white bg-white dark:bg-black'>
     <div className="flex space-x-2 items-center hover:bg-gray-100/80 cursor-pointer p-2 rounded-md ">
-        <Image src={jigawa} alt='Stablebricks logo' className='w-10 border-primary rounded-full border-2 h-10 block object-contain' />
+        <Image src={jigawa} alt='Jigawa State' className='w-10 border-primary rounded-full border-2 h-10 block object-contain' />
         <p className=' font-poppins font-semibold text-xs'>Justice | Jigawa</p>
     </div>
     <div className=" flex flex-col py-4 px-2 space-y-3">
@@ -115,7 +115,7 @@ export const UserDashboardSideBar = ( ) => {
         {
             publicLinks.map((single) => {
                 return (
-                    <Link href={single.url} key={single.id} className={`hover:text-primary ${single.url == pathname && ' bg-black dark:bg-primary text-primary' } rounded-md space-x-2 w-full py-3 flex items-center text-sm px-4 flex-row`}>
+                    <Link href={single.url} key={single.id} className={`hover:text-primary ${single.url == pathname && ' bg-black dark:bg-primary text-primary text-black/80' } rounded-md font-poppins font-semibold space-x-2 w-full py-3 flex items-center text-sm px-4 flex-row`}>
                         <span> {single.icon} </span>
                         <span> {single.name} </span>
                     </Link>
@@ -125,9 +125,12 @@ export const UserDashboardSideBar = ( ) => {
     </div>
     </div>
     <Sheet>
-    <div className=" w-full md:hidden border-b flex justify-between shadow-sm z-10 items-center fixed left-0 top-0 bg-white px-8 py-3">
+    <div className=" w-full md:hidden border-b flex justify-between shadow-sm z-10 items-center fixed left-0 top-0 bg-white px-6 py-3">
             <Link href={'/'}>
-                {/* <Image src={logo} alt='stable Bricks Logo' className=' h-10 object-left object-contain' /> */}
+                 <div className="flex space-x-2 items-center hover:bg-gray-100/80 cursor-pointer p-2 rounded-md ">
+                    <Image src={jigawa} alt='Jigawa State' className='w-10 border-primary rounded-full border-2 h-10 block object-contain' />
+                    <p className=' font-poppins font-semibold text-xs'>Justice | Jigawa</p>
+                </div>
             </Link>
             <div className=" flex justify-between">
                 <SheetTrigger>
@@ -142,7 +145,10 @@ export const UserDashboardSideBar = ( ) => {
             <SheetHeader>
             <SheetTitle className=" flex items-center  ">
                 <div className=" px-2 flex items-center">
-                    {/* <Image alt='StableBrick Logo' className='h-10 object-contain object-left' src={logo} /> */}
+                     <div className="flex space-x-2 items-center hover:bg-gray-100/80 cursor-pointer rounded-md ">
+                        <Image src={jigawa} alt='Jigawa State' className='w-10 border-primary rounded-full border-2 h-10 block object-contain' />
+                        <p className=' font-poppins font-semibold text-xs'>Justice | Jigawa</p>
+                    </div>
                 </div>
             </SheetTitle>
             <SheetDescription>
@@ -150,9 +156,9 @@ export const UserDashboardSideBar = ( ) => {
                 {
                     privateLinks.map((nav) => {
                         return ( 
-                            <Link href={nav.url} key={ nav.id } className=' font-poppins font-semibold text-lg text-black hover:text-yellow-500'> 
+                            <Link href={nav.url} key={ nav.id } className={`hover:text-primary ${nav.url == pathname &&' bg-primary dark:bg-primary dark:text-black text-white'} rounded-md text-sm space-x-2 w-full py-3 px-4 flex flex-row`}> 
                                 <SheetTrigger>
-                                    <div className=" flex space-x-4 w-full flex-row">
+                                    <div className=" flex space-x-4 w-full flex-row font-semibold">
                                        <span> {nav.icon}</span>
                                         <span>{nav.name}</span>
                                     </div>
@@ -167,10 +173,10 @@ export const UserDashboardSideBar = ( ) => {
                 {
                     publicLinks.map((nav) => {
                         return ( 
-                            <Link href={nav.url} key={ nav.id } className=' font-poppins font-semibold text-lg text-black hover:text-yellow-500'> 
+                            <Link href={nav.url} key={ nav.id } className={`${nav.url == pathname ? " bg-primary dark:bg-primary dark:text-black text-white" : 'hover:text-primary text-black '} font-poppins rounded-md items-center text-sm space-x-2 w-full py-3 px-4 flex flex-row`}> 
                                 <SheetTrigger>
-                                    <div className=" flex space-x-4 w-full flex-row">
-                                        <span>{ nav.icon }</span>
+                                    <div className=" flex space-x-4 w-full items-center flex-row">
+                                        <span>{  nav.icon }</span>
                                         <span>{ nav.name }</span>
                                     </div>
                                 </SheetTrigger>

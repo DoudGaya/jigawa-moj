@@ -9,6 +9,27 @@ import { sendVrificationEmail } from '@/lib/mail'
 import { generateVerificationToken } from '@/lib/tokens'
 import { UserRole } from '@prisma/client'
 
+
+export const getAllCourtRecordsCounts  = async () => {
+    const customers = await db.customer.count()
+    const staffs = await db.staff.count()
+    const cases = await db.case.count()
+    const inmates = await db.inmate.count()
+    const probates = await db.probate.count()
+    const transactions = await db.transaction.count()
+
+
+    return {
+        customers,
+        staffs,
+        probates,
+        transactions,
+        cases,
+        inmates,
+    }
+}
+
+
 export const CourtRegistrationAction = async (values: z.infer<typeof CourtRegisterSchema>) => {
     const fieldValidation = CourtRegisterSchema.safeParse(values);
     if (!fieldValidation.success) {

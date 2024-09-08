@@ -2,7 +2,7 @@ import { auth } from '@/auth'
 import { SessionProvider } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { TopNav } from '../_components/TopNav';
-import { StaffSideBar } from './_components/StaffSideBar';
+import { CourtSideBar } from './_components/CourtSideBar';
 
 
 export default async function AdmninLayout({ children }: { children: React.ReactNode }) {
@@ -20,7 +20,7 @@ export default async function AdmninLayout({ children }: { children: React.React
     return (
       <SessionProvider session={session}>
         <div className="flex h-screen bg-slate-50 dark:bg-black md:flex-row md:overflow-hidden">
-          <StaffSideBar />
+          <CourtSideBar />
           <div className="flex flex-col w-full md:overflow-y-auto ">
             <TopNav />
           <div className=" mt-20 md:mt-0 w-full h-full">

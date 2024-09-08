@@ -146,7 +146,7 @@ export const StaffSideBar = ( ) => {
                     {
                         privateLinks.map((nav) => {
                             return ( 
-                                <Link href={nav.url} key={ nav.id } className=' font-poppins text-xs font-semibold text-black hover:text-primary'> 
+                                <Link href={nav.url} key={ nav.id } className={` ${nav.url == pathname ? ' bg-primary dark:bg-primary dark:text-black text-white' : "hover:bg-primary/20"} rounded-md text-sm space-x-2 w-full py-3 px-4 flex flex-row`}> 
                                     <SheetTrigger>
                                         <div className=" flex space-x-3 items-center w-full flex-row">
                                         <span> {nav.icon}</span>
@@ -163,7 +163,7 @@ export const StaffSideBar = ( ) => {
                     {
                         publicLinks.map((nav) => {
                             return ( 
-                                <Link href={nav.url} key={ nav.id } className=' font-poppins font-semibold text-xs items-center text-black hover:text-primary'> 
+                                <Link href={nav.url} key={ nav.id } className={` ${nav.url == pathname ? ' bg-primary dark:bg-primary dark:text-black text-white' : "hover:bg-primary/20"} rounded-md text-sm space-x-2 w-full py-3 px-4 flex flex-row`}> 
                                     <SheetTrigger>
                                         <div className=" flex space-x-4 w-full items-center flex-row">
                                             <span>{ nav.icon }</span>
