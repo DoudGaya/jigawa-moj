@@ -1,7 +1,7 @@
 import { z } from "zod"
 
 export const UserSettingsSchema = z.object({
-  firstname: z.optional(z.string()),
+  firstName: z.optional(z.string()),
   lastName: z.optional(z.string()),
   otherNames: z.optional(z.string()),
   state: z.optional(z.string()),

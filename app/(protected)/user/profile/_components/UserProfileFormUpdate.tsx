@@ -46,7 +46,7 @@ export const UserProfileFormUpdate = ( {editModal, changeModal}: {editModal: str
     const form = useForm<z.infer<typeof UserSettingsSchema>>({
       resolver: zodResolver(UserSettingsSchema),
       defaultValues: {
-        firstname: user?.name || undefined,
+        firstName: user?.name || undefined,
         lastName: user?.lastName || undefined,
         email: user?.email || undefined,
         phone: user?.phone || undefined,
@@ -155,7 +155,7 @@ export const UserProfileFormUpdate = ( {editModal, changeModal}: {editModal: str
                     name="firstName"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Name</FormLabel>
+                        <FormLabel>First Name</FormLabel>
                         <FormControl>
                           <Input disabled={isPending} className=" outline-yellow-500" placeholder="Name" {...field} />
                         </FormControl>
