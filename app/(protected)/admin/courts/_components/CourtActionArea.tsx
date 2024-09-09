@@ -21,7 +21,7 @@ export const CourtActionArea = () => {
        <div className="">
         <Dialog>
                 <DialogTrigger className=' bg-primary text-white px-4 py-2 text-sm  rounded-md font-poppins'>Create New Court</DialogTrigger>
-                <DialogContent className='h-[600px] overflow-y-scroll'>
+                <DialogContent className=' h-[400px] lg:h-[600px] overflow-y-scroll'>
                     <DialogHeader>
                     <DialogTitle className=' text-center pt-2'>Register a new Court</DialogTitle>
                         <ScrollArea>

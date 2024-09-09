@@ -21,7 +21,6 @@ export const getAllCustomers = async ({pagenum }:{pagenum: number}) => {
         skip: +pagenum || 0 * PAGE_SIZE,
         take: PAGE_SIZE,
     })
-    // return customers
 
     const totalCustomersPromise  =  db.customer.count()
 
@@ -140,18 +139,6 @@ export const getCustomerByUserId = async (id: string) => {
                     },
                     transactions: true
                 }
-                // select: {
-                //     _count: true,
-                //     city: true,
-                //     address: true,
-                //     cases: true,
-                //     employmentStatus: true,
-                //     maritalStatus: true,
-                //     occupation: true,
-                //     probates: true,
-                //     transactions: true,
-                //     id: true,
-                // }
             }
         }
     })
