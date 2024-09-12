@@ -28,7 +28,7 @@ export const TopNav = () => {
     const session = useSession()
     const currentUser = useCurrentUser()
   return (
-    <div className="hidden lg:flex justify-between bg-white dark:bg-black border-b dark:border-gray-700  dark:text-gray-300 drop-shadow-sm px-12 py-2.5 items-center w-full">
+    <div className="hidden lg:flex top-0 fixed justify-between bg-white dark:bg-black border-b dark:border-gray-700  dark:text-gray-300 drop-shadow-sm px-12 py-2.5 items-center w-full">
     <div className=" font-poppins font-semibold"> Welcome, { currentUser?.firstName } </div>
     <div className="">
       <Popover>

@@ -6,6 +6,7 @@ import { db } from '@/lib/db'
 import { getUserByEmail } from '@/data/user'
 import { UserRole } from '@prisma/client';
 import { UserSettingsSchema } from '@/lib/schema'
+import { UpdateUserRecordSchema } from '@/lib/schema'
 
 
 
@@ -147,21 +148,104 @@ export const getCustomerByUserId = async (id: string) => {
 }
 
 
-export const updateCustomerDetailsByEmail = async (id: string, values: z.infer<typeof UserSettingsSchema>) => {
+export const updateCustomerDetailsId = async (id: string, values: z.infer<typeof UpdateUserRecordSchema>) => {
+    const fieldValidation = UpdateUserRecordSchema.safeParse(values);
+    if (!fieldValidation.success) {
+         return { error: "field Validation failed " }
+    }
 
-    const dbCustomer = await db.user.findUnique({
-        where: {
-            email: id
-        }
-    })
+    const { 
+        firstName,
+        lastName,
+        email,
+        localGovernment,
+        occupation,
+        state,
+        otherNames,
+        password,
+        employmentStatus,
+        maritalStatus,
+        passwordConfirmation,
+        phone,
+        address,
+        city,
+        gender,
+         } = fieldValidation.data
+
+    const dbCustomer = await getCustomerByUserId(id)
+
+    console.log(dbCustomer)
 
     if (!dbCustomer) {
         return {error: "customer does not exist"}
     }
 
 
-    
+    if (values.email && values.email !== dbCustomer.email ) {
+        const existingUser = await getUserByEmail(values.email)
+
+
+        if (existingUser && existingUser.id !== dbCustomer.id) {
+            return {error: "Email Already in used by another user!"}
+        }
+    }
+
+    if (values.password && values.passwordConfirmation) {
+        if (values.password !== values.passwordConfirmation) {
+            return {error: "Password Does not Matched"}
+        }
+
+        const hashedPassword = await bcrypt.hash(values.password, 10)
+
+        values.password = hashedPassword
+    }
+
+
+
+
+
+
+
+   
+
+
+    await db.user.update({
+        where: {id: dbCustomer.id},
+        data: {
+            firstName,
+            lastName,
+            otherNames,
+            email,
+            phone,
+            gender,
+            state,
+            localGovernment,
+            password,
+             customer: { 
+            update: {
+                maritalStatus,
+                occupation,
+                city,
+                employmentStatus,
+                address,
+            }
+        }},
+        include: {
+            customer: true
+        }
+    })
+
+
+    return {success: "Records has been updated!"}
+
+
 }
+
+
+
+
+
+
 
 
 export const deleteUserAndCustomerDetailsById = async (id: string) => {

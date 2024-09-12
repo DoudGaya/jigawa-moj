@@ -1,26 +1,17 @@
-import { getCourtById } from '@/actions/courts'
-import React from 'react'
-import { getCustomerByUserId } from '@/actions/customers'
-import { AdminCustomerDetails } from './_components/AdminCustomerDetails'
+import {  getCustomerByUserId } from '@/actions/customers'
+import { CustomerDetailsContainer } from './_components/AdminCustomerDetailsContainer'
 import { UserCustomer } from '@/typings'
 
+
 const page = async (params: any) => {
-
   const id = params.params.customerUserId as string
-
-    const customer = await getCustomerByUserId(id)
-
+  // @ts-ignore
+  const customer = await getCustomerByUserId(id) as UserCustomer
 
   return (
-    <div className='flex w-full h-full'>
-      <div className=" grid grid-cols-3 w-full">
-        <div className=" p-4 w-full rounded flex">
-          <AdminCustomerDetails
-            // @ts-ignore
-            customer={customer} />
-        </div>
-      </div>
-    </div>
+   <div className="">
+        <CustomerDetailsContainer customer={customer} id={id} />
+   </div>
   )
 }
 export default page

@@ -20,62 +20,77 @@ export const AdminCustomerDetails = ({customer}: {customer: UserCustomer}) => {
             <p className=' font-poppins '>{customer.firstName} {customer.lastName} </p>
        </div>
 
-       <div className=" flex w-full flex-col space-y-4 bg-gray-50 py-6 px-4 rounded-lg">
+       <div className=" flex w-full flex-col space-y-3 bg-gray-50 py-6 px-4 rounded-lg">
           <div className=" flex justify-between ">
             <div className=" flex flex-col items-start text-start  space-y-1 ">
               <small className=' text-xs uppercase font-poppins font-semibold text-gray-900/50'>EMAIL</small>
-              <p className=' text-sm font-poppins text-gray-800/80 font-semibold'>{ customer.email }</p>
+              <p className=' text-sm font-poppins text-gray-800/80 font-semibold'>{ customer.email || "N/A" }</p>
             </div>
 
             <div className=" flex flex-col items-end text-end space-y-1 ">
               <small className=' text-xs uppercase font-poppins font-semibold text-gray-800/50'>PHONE</small>
-              <p className=' text-sm font-poppins text-gray-900/70 font-semibold'>{ customer.phone }</p>
+              <p className=' text-sm font-poppins text-gray-900/70 font-semibold'>{ customer.phone || "N/A" }</p>
+            </div>
+          </div>
+          
+          <div className=" flex justify-between ">
+            <div className=" flex flex-col items-start text-start  space-y-1 ">
+              <small className=' text-xs uppercase font-poppins font-semibold text-gray-900/50'>GENDER</small>
+              <p className=' text-sm font-poppins text-gray-800/80 font-semibold'>{ customer.gender || "N/A" }</p>
+            </div>
+
+            <div className=" flex flex-col items-end text-end space-y-1 ">
+              <small className=' text-xs uppercase font-poppins font-semibold text-gray-800/50'>Marital Status</small>
+              <p className=' text-sm font-poppins text-gray-900/70 font-semibold'>{ customer.customer.maritalStatus || "N/A" }</p>
             </div>
           </div>
 
           <div className=" flex justify-between ">
-            <div className=" flex flex-col items-start text-start  space-y-1 ">
-              <small className=' text-xs uppercase font-poppins font-semibold text-gray-900/50'>EMAIL</small>
-              <p className=' text-sm font-poppins text-gray-800/80 font-semibold'>{ customer.email }</p>
-            </div>
+              <div className=" flex flex-col items-start text-start  space-y-1 ">
+                <small className=' text-xs uppercase font-poppins font-semibold text-gray-900/50'>Employment Status</small>
+                <p className=' text-sm font-poppins text-gray-800/80 font-semibold'>{ customer.customer.employmentStatus || "N/A"  }</p>
+              </div>
 
-            <div className=" flex flex-col items-end text-end space-y-1 ">
-              <small className=' text-xs uppercase font-poppins font-semibold text-gray-800/50'>PHONE</small>
-              <p className=' text-sm font-poppins text-gray-900/70 font-semibold'>{ customer.phone }</p>
-            </div>
+              <div className=" flex flex-col items-end text-end space-y-1 ">
+                <small className=' text-xs uppercase font-poppins font-semibold text-gray-800/50'>Employment</small>
+                <p className=' text-sm font-poppins text-gray-900/70 font-semibold'>{ customer.customer.occupation || "N/A" }</p>
+              </div>
           </div>
 
-          <div className=" flex justify-between ">
-            <div className=" flex flex-col items-start text-start  space-y-1 ">
-              <small className=' text-xs uppercase font-poppins font-semibold text-gray-900/50'>STATE</small>
-              <p className=' text-sm font-poppins text-gray-800/80 font-semibold'>{ customer.state }</p>
-            </div>
-
-            <div className=" flex flex-col items-end text-end space-y-1 ">
-              <small className=' text-xs uppercase font-poppins font-semibold text-gray-800/50'>Local Government</small>
-              <p className=' text-sm font-poppins text-gray-900/70 font-semibold'>{ customer.localGovernment }</p>
-            </div>
+          <div className=" flex w-full">
+              <div className=" flex flex-col items-start text-start  space-y-2 ">
+                <small className=' text-xs uppercase font-poppins font-semibold text-gray-900/50'>Address</small>
+                <p className=' text-xs font-poppins text-gray-800/80 '>{ customer.customer.address || "N/A" }</p>
+              </div>
           </div>
-       </div> 
 
+
+
+          </div> 
+
+          
        <hr />
 
        <div className=" flex w-full flex-col space-y-4 bg-gray-50 py-6 px-4 rounded-lg">
           <div className=" flex justify-between ">
-            <div className=" flex flex-col items-start text-start  space-y-1 ">
-              <small className='text-sm font-poppins text-gray-800/80 font-semibold'>Cases</small>
-            </div>
-
-            <div className=" flex flex-col items-end text-end space-y-1 ">
+              <button className=" flex items-center hover:underline space-x-2 ">
+                  <small className='text-sm font-poppins text-gray-800/80 font-semibold'>Cases</small>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className=" stroke-3 stroke-gray-800/70 size-4">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                    </svg>
+              </button>
+            <div className=" flex space-x-1 justify-center items-center ">
               <p className=' text-sm font-poppins text-gray-900/70 font-semibold'>{customer.customer.cases.length }</p>
             </div>
           </div>
 
           <div className=" flex justify-between ">
-            <div className=" flex flex-col items-start text-start  space-y-1 ">
-              <small className='text-sm font-poppins text-gray-800/80 font-semibold'>Transactions</small>
-
-            </div>
+              <button className=" flex items-center hover:underline space-x-2 ">
+                  <small className='text-sm font-poppins text-gray-800/80 font-semibold'>Transactions</small>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className=" stroke-3 stroke-gray-800/70 size-4">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                    </svg>
+              </button>
 
             <div className=" flex flex-col items-end text-end space-y-1 ">
               <p className=' text-sm font-poppins text-gray-900/70 font-semibold'>{ customer.customer.transactions.length }</p>
@@ -83,9 +98,12 @@ export const AdminCustomerDetails = ({customer}: {customer: UserCustomer}) => {
           </div>
 
           <div className=" flex justify-between ">
-            <div className=" flex flex-col items-start text-start  space-y-1 ">
-              <small className='text-sm font-poppins text-gray-900/70 font-semibold'>Probates</small>
-            </div>
+              <button className=" flex items-center hover:underline space-x-2 ">
+                  <small className='text-sm font-poppins text-gray-800/80 font-semibold'>Probates</small>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className=" stroke-3 stroke-gray-800/70 size-4">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                    </svg>
+              </button>
 
             <div className=" flex flex-col items-end text-end space-y-1 ">
               <p className=' text-sm font-poppins text-gray-900/70 font-semibold'>{ customer.customer.probates.length }</p>

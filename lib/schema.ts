@@ -180,6 +180,38 @@ export const loginSchema = z.object({
       message: "Email must be of type email"
     }),
   })
+
+
+  export const UpdateUserRecordSchema = z.object({
+    firstName: z.optional(z.string()),
+    lastName:  z.optional(z.string()),
+    otherNames: z.string().optional(), // 
+    email:  z.optional(z.string()),
+    state: z.optional(z.string()),
+    maritalStatus: z.optional(z.string()),
+    employmentStatus: z.string().optional(),
+    gender: z.enum(["MALE","FEMALE", "OTHER"]).optional(),
+    password:  z.optional(z.string()),
+    passwordConfirmation:  z.optional(z.string()),
+    phone:  z.optional(z.string()),
+    city: z.string().optional(),
+    address:  z.optional(z.string()),
+    occupation: z.string().optional(),
+    localGovernment: z.optional(z.string()),
+  }).refine((data) => {
+    if (data.password && !data.passwordConfirmation) {
+      return false
+    }
+
+    if (data.passwordConfirmation !== data.password) {
+      return false
+    }
+    return true
+  }, {
+    message: "Password Must Match"
+  })
+
+
   
 
   export const signUpSchema = z.object({
