@@ -5,6 +5,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import logo from '@/public/img/icons/jigawa-icon.png'
+import { logOut } from '@/actions/logout'
+import { Button } from '@/components/ui/button'
+import { useRouter } from 'next/navigation'
 
 import {
     Sheet,
@@ -142,6 +145,13 @@ export const AdminDashboardSideBar = ( ) => {
 
     const pathname = usePathname()
 
+    const router = useRouter()
+
+    const logoutButton = async () => {
+       await logOut()
+       router.refresh()
+    }
+
   return (
 <>
     <div className=' w-full hidden border-r dark:border-gray-700 dark:bg-black/80 dark:text-white md:flex flex-col md:w-[18rem] py-2 drop-shadow-sm px-4 bg-white'>
@@ -196,8 +206,9 @@ export const AdminDashboardSideBar = ( ) => {
         <SheetContent side={'left'} className="">
             <SheetHeader>
             <SheetTitle className=" flex items-center  ">
-                <div className=" px-2 flex items-center">
-                    <Image alt='Jigawa State Ministry of Justice ' className=' h-10 object-contain object-left' src={logo} />
+                <div className=" px-2 flex items-center space-x-2 border-b w-full border-primary py-2">
+                    <Image alt='Jigawa State Ministry of Justice ' className=' border-2 border-primary rounded-full w-10 h-10 object-contain object-left' src={logo} />
+                    <p className=' font-poppins'>Jigawa | Justice</p>
                 </div>
             </SheetTitle>
             <SheetDescription>
@@ -233,6 +244,9 @@ export const AdminDashboardSideBar = ( ) => {
                         )
                     })
                 }
+              </div>
+              <div className=" w-full">
+                <Button onClick={logoutButton} className=' w-full font-poppins font-semibold  text-white '>Logout</Button>
               </div>
             </SheetDescription>
             </SheetHeader>

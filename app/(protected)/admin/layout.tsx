@@ -23,7 +23,7 @@ export default async function AdmninLayout({ children }: { children: React.React
           <AdminDashboardSideBar/>
           <div className="flex flex-col w-full">
           <TopNav />
-          <div className=" lg:mt-16 w-full h-full">
+          <div className=" mt-16 lg:mt-4 w-full h-full">
                 {children}
           </div>
           </div>

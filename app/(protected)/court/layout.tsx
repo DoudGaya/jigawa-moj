@@ -21,9 +21,9 @@ export default async function AdmninLayout({ children }: { children: React.React
       <SessionProvider session={session}>
         <div className="flex h-screen bg-slate-50 dark:bg-black md:flex-row md:overflow-hidden">
           <CourtSideBar />
-          <div className="flex flex-col w-full md:overflow-y-auto ">
+          <div className="flex flex-col w-full ">
             <TopNav />
-          <div className=" mt-20 md:mt-0 w-full h-full">
+          <div className=" mt-20 w-full h-full">
           {children}
           </div>
           </div>
