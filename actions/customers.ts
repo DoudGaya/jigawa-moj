@@ -199,16 +199,7 @@ export const updateCustomerDetailsId = async (id: string, values: z.infer<typeof
 
         values.password = hashedPassword
     }
-
-
-
-
-
-
-
-   
-
-
+    
     await db.user.update({
         where: {id: dbCustomer.id},
         data: {
@@ -234,18 +225,8 @@ export const updateCustomerDetailsId = async (id: string, values: z.infer<typeof
             customer: true
         }
     })
-
-
     return {success: "Records has been updated!"}
-
-
 }
-
-
-
-
-
-
 
 
 export const deleteUserAndCustomerDetailsById = async (id: string) => {

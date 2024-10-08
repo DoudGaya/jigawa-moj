@@ -14,6 +14,7 @@ import { DarkButton } from '@/components/DarkButton'
 import Image from 'next/image'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { logOut } from '@/actions/logout'
+import LogoutButton from '@/components/auth/LogOutButton'
 
 
 
@@ -50,7 +51,8 @@ export const TopNav = () => {
             </ul>
             <div className=" flex space-x-3">
               <DarkButton />
-                <button onClick={logout} className=' bg-black py-2 w-full rounded-lg outline-none text-primary hover:bg-black/90'>Sign Out</button>
+              <LogoutButton />
+                {/* <button onClick={logout} className=' bg-black py-2 w-full rounded-lg outline-none text-primary hover:bg-black/90'>Sign Out</button> */}
             </div>
           </div>
         </div>

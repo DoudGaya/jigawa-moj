@@ -192,7 +192,7 @@ export const UserProfileFormUpdate = ( {editModal, changeModal}: {editModal: str
                     )}
                   />
                   </div>
-                  { success ?  <FormSuccess message={success} /> ? error : <FormError message={error} /> : "" }
+                  {/* { success ?  <FormSuccess message={success} /> ? error : <FormError message={error} /> : "" } */}
                   <Button type="submit" disabled={isPending} className=" bg-primary hover:bg-black/80 text-black w-full">Update My Records</Button> 
                 </form>
               </Form>

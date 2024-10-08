@@ -16,6 +16,8 @@ export default async function AdmninLayout({ children }: { children: React.React
     return redirect("/staff/dashboard")
    } else if (session?.user.role === "COURT") {
     return redirect("/court/dashboard")
+  } else if ( session?.user.role === "POLICE" ) {
+    return redirect('/police/dashboard') 
    } else {
     return (
       <SessionProvider session={session}>

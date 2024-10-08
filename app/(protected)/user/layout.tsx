@@ -12,6 +12,9 @@ export default async function UserLayout({ children }: { children: React.ReactNo
     return redirect("/staff/dashboard")
    } else if (session?.user.role === "COURT") {
     return redirect("/court/dashboard")
+  } else if ( session?.user.role === "POLICE" ) {
+    return redirect('/police/dashboard') 
+    
    } else {
     return (
       <SessionProvider session={session}>

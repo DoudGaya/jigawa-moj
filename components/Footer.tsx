@@ -13,45 +13,22 @@ interface LinksUrls {
 const loginLinks = [
     {
         id: 1,
-        title: 'Control',
-        url: ''
+        title: 'Ministry Login',
+        url: '/ministry/login'
     },
     {
         id: 1,
-        title: 'Customer Log In',
-        url: ''
+        title: 'Police Login',
+        url: '/police/login'
     },
     {
         id: 1,
-        title: 'Judge or Staff Log in',
+        title: 'Courts',
         url: ''
     },
-    {
-        id: 1,
-        title: 'Court Admin Log in',
-        url: ''
-    },
-]
-
-const signUpLinks = [
     {
         id: 1,
         title: 'Control',
-        url: ''
-    },
-    {
-        id: 1,
-        title: 'Customer Log Sign Up',
-        url: ''
-    },
-    {
-        id: 1,
-        title: 'Judge or Staff Sign Up',
-        url: ''
-    },
-    {
-        id: 1,
-        title: 'Court Admin Sign Up',
         url: ''
     },
 ]
@@ -92,20 +69,20 @@ export const Footer = () => {
                 <h1 className=' font-poppins font-semibold  '>Useful Links </h1>
                    <div className="">
                     <ul className=' grid grid-cols-1 w-full gap-4 md:grid-cols-2'>
-                               {
-                                   loginLinks.map((links: LinksUrls) => {
-                                       return (
-                                        <li className='' key={links.id}>
-                                            <Link className=' flex space-x-3 border py-2 px-2 border-primary group rounded-md items-center group-hover:text-primary font-semibold transition-all ease-in-out' href={ links.url}>
-                                            <p className=' font-poppins text-sm'> {links.title } </p>
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 transition-all ease-in-out group-hover:translate-x-2">
-                                                <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                                            </svg>
-                                            </Link>
-                                        </li>
-                                    )
-                                })
-                               }
+                            {
+                                loginLinks.map((links: LinksUrls) => {
+                                    return (
+                                    <li  key={links.id}>
+                                        <Link className=' flex space-x-3 border py-2 px-2 border-primary group rounded-md items-center group-hover:text-primary font-semibold transition-all ease-in-out' href={ links.url}>
+                                        <p className=' font-poppins text-sm'> {links.title } </p>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 transition-all ease-in-out group-hover:translate-x-2">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                        </svg>
+                                        </Link>
+                                    </li>
+                                )
+                            })
+                            }
                         </ul>
                    </div>
             </div>
