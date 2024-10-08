@@ -24,15 +24,8 @@ export default async function RootLayout({
   return (
     <html lang="en">
      <SessionProvider session={session}>
-     <body className={`${inter.className} text-gray-950 bg-white`}>
-      {/* <ThemeProvider
-            attribute="class"
-            // defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          > */}
+     <body className={`${inter.className} text-gray-950 bg-gray-50`}>
         {children}
-      {/* </ThemeProvider> */}
       </body>
      </SessionProvider>
     </html>

@@ -15,10 +15,12 @@ export default async function StaffDahboard({ children }: { children: React.Reac
     return redirect("/admin/dashboard")
    } else if (session?.user.role === "COURT") {
     return redirect("/court/dashboard")
+  } else if ( session?.user.role === "POLICE" ) {
+    return redirect('/police/dashboard') 
    } else {
     return (
       <SessionProvider session={session}>
-        <div className="flex h-screen bg-slate-50 dark:bg-black md:flex-row md:overflow-hidden">
+        <div className="flex h-screen dark:bg-black md:flex-row md:overflow-hidden">
           <StaffSideBar />
           <div className="flex flex-col w-full md:overflow-y-auto ">
             <TopNav />

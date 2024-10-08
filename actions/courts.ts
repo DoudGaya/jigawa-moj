@@ -96,7 +96,7 @@ export const CourtRegistrationAction = async (values: z.infer<typeof CourtRegist
                 city,
                 infrastructure: {
                     createMany: {
-                        data: [ ...infrastructure ]
+                        data: [ ...infrastructure ] || undefined
                     }
                 }
             }

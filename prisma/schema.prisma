@@ -65,6 +65,7 @@ enum UserRole {
   COURT
   STAFF
   USER
+  POLICE
 }
 
 model VerificationToken {
@@ -119,17 +120,37 @@ model TwoFactorConfirmation {
 }
 
 
+model PoliceCaseReport {
+  id                      String @id @default(auto()) @map("_id") @db.ObjectId
+  defendantName           String
+  caseTitle               String
+  caseDescription         String?
+  defendantAddress        String
+  defendantAge            String
+  defendantSex            String
+  defendantOccupation     String
+  placeOfOffense          String
+  nameOfIPO               String
+  firstInformationReport  String?   // URL to the uploaded file
+  statementOfComplainant  String?   // URL to the uploaded file
+  statementOfVictims      String?     // URL to the uploaded file
+  statementOfWitness      String?     // URL to the uploaded file
+  medicalReport           String?     // URL to the uploaded file
+  pictures                String[]    // Array of URLs to uploaded images
+  isDraft                 Boolean     @default(false)
+  createdAt               DateTime    @default(now())
+}
+
+
+
+
 model Case {
   id                                String         @id @default(auto()) @map("_id") @db.ObjectId
-  title                             String
-  description                       String?
   customer                          Customer       @relation(fields: [customerId], references: [id], onDelete: Cascade)
   customerId                        String         @db.ObjectId @unique          
   caseNumber                        Int            
   court                             Court?         @relation(fields: [courtId], references: [id])
   courtId                           String         @db.ObjectId
-  judge                             Staff?         @relation(fields: [judgeId], references: [id])
-  judgeId                           String         @db.ObjectId
   files                             Files[]
   caseType                          CaseType
   filing                            Filing?
@@ -138,11 +159,18 @@ model Case {
   defendentAttoney                  DefendentAttoney[]
   caseStatus                        CaseStatus
   transaction                       Transaction[]
-  inmate                            Inmate?
-  hearingTime                       DateTime?
+  hearingTime                       Hearing[]
   createdAt                         DateTime        @default(now())
   updatedAt                         DateTime        @updatedAt
   @@map("case")
+}
+
+
+model Hearing {
+    id                  String     @id @default(auto()) @map("_id") @db.ObjectId
+    case                Case @relation(fields: [caseId], references: [id], onDelete: Cascade) 
+    caseId              String @db.ObjectId
+    hearingDate         DateTime
 }
 
 
@@ -217,10 +245,12 @@ enum PaymentStatus {
 
 
 enum CaseStatus {
-  PENDING
-  ACTIVE
-  CLOSED
-  ON_APPEAL
+  Pending
+  Active
+  Closed
+  Submitted
+  Reviewed
+  Draft
 }
 
 enum CaseType {
@@ -277,8 +307,7 @@ model Staff {
   user                User      @relation(fields: [userId], references: [id], onDelete: Cascade) 
   userId              String    @db.ObjectId @unique
   court               Court?    @relation(fields: [courtId], references: [id])
-  courtId             String?   @db.ObjectId
-  handledCases        Case[]    
+  courtId             String?   @db.ObjectId  
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
   @@map("staff")
@@ -303,7 +332,7 @@ model Inmate {
   phoneNumber           String
   relativeaddress       String
   expectedReleaseDate   DateTime
-  case                  Case @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  // case                  Case @relation(fields: [caseId], references: [id], onDelete: Cascade)
   caseId                String @unique @db.ObjectId
 }
 

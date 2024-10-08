@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useState, useTransition } from "react"
 import { z } from "zod"
+import { FcGoogle } from "react-icons/fc";
 import Link from "next/link";
 import { loginSchema } from "@/lib/schema"
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"
@@ -32,7 +33,7 @@ import { DEFAULT_LOGGED_IN_REDIRRECT } from "@/routes"
 import { useSearchParams } from "next/navigation"
 
 
-export function LoginForm() {
+export function RoleLoginForm() {
 
   const [isPending, startTransition] = useTransition()
   const [showTwoFactor, setShowTwoFactor] = useState<boolean>(false)
@@ -74,11 +75,9 @@ export function LoginForm() {
   }
 
   return (
-    <div className=" flex mt-6 flex-col w-full ">
+    <div className=" flex mt-6 flex-col w-full px-4 ">
       <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
-      <fieldset className=" border  border-primary rounded-lg flex py-6 flex-col text-center space-y-4 px-6 align-middle justify-center">
-        <legend className=" flex px-2 py-1 text-primary font-poppins font-semibold" >Log in Form</legend>
         {showTwoFactor && (
           <div className=" w-full flex flex-col justify-start items-start text-start">
           <FormField
@@ -90,12 +89,12 @@ export function LoginForm() {
                <FormControl className=" flex items-center justify-center w-full text-center">
                <InputOTP maxLength={6} pattern={REGEXP_ONLY_DIGITS_AND_CHARS} {...field}>
                 <InputOTPGroup>
-                  < InputOTPSlot index = { 0 } />
-                  < InputOTPSlot index = { 1 } />
-                  < InputOTPSlot index = { 2 } />
-                  < InputOTPSlot index = { 3 } />
-                  < InputOTPSlot index = { 4 } />
-                  < InputOTPSlot index = { 5 } />
+                  <InputOTPSlot index={0} />
+                  <InputOTPSlot index={1} />
+                  <InputOTPSlot index={2} />
+                  <InputOTPSlot index={3} />
+                  <InputOTPSlot index={4} />
+                  <InputOTPSlot index={5} />
                 </InputOTPGroup>
               </InputOTP>
                </FormControl>
@@ -116,7 +115,7 @@ export function LoginForm() {
            name="email"
            render={({ field }) => (
              <FormItem className=" w-full">
-               <FormLabel>Email Address</FormLabel>
+               <FormLabel className=" hidden">Email Address</FormLabel>
                <FormControl>
                  <Input type="email" disabled={isPending} className=" outline-green-500" placeholder="Email Address" {...field} />
                </FormControl>
@@ -129,9 +128,9 @@ export function LoginForm() {
            name="password"
            render={({ field }) => (
              <FormItem className=" w-full">
-               <FormLabel>Password</FormLabel>
+               <FormLabel className="hidden">Password</FormLabel>
                <FormControl>
-                 <Input type="password" disabled={isPending} className=" outline-green-500" placeholder="Password" {...field} />
+                 <Input type="Password" disabled={isPending} className=" outline-green-500" placeholder="Password" {...field} />
                </FormControl>
                <FormMessage />
              </FormItem>
@@ -144,14 +143,9 @@ export function LoginForm() {
          <FormError message={error ||  urlError} />
         <FormSuccess message={success} />
        <Button type="submit" disabled={isPending} className=" bg-primary text-white hover:bg-black/90 w-full"> {showTwoFactor ? "Confirm OTP" : "Log In"} </Button>
-      </fieldset>
       </form>
     </Form>
-    <div className=" py-6">
-    <Link href="/register" className=" flex justify-between text-sm space-x-2">
-        <p className=" hover:underline"> Don't have an account ? </p>
-        <span className=" font-semibold">Register</span>
-    </Link>
+    <div className=" border-t-2 py-6 flex flex-col">
 
       <div className="">
         <Button asChild size={'sm'} variant={'link'} className=" px-0 font-normal text-sm text-black ">
@@ -159,6 +153,7 @@ export function LoginForm() {
         </Button>
       </div>
       </div>
+  
     </div>
   )
 }

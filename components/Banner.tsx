@@ -65,12 +65,9 @@ export const Banner = () => {
             <p className=" font-poppins text-md my-4 font-semibold">Welcome back {user.firstName}, Go to <Link className=" text-primary" href={'/user/dashboard'}> Dashboard </Link> </p>
         ) : (
             <div className=" flex flex-col space-y-1">
-            <div className=" grid md:grid-cols-2 grid-cols-1 w-full  max-w-4xl gap-x-6 gap-y-2 my-6 mx-auto">
-                <Link href={'/staff-registration'} className=" py-2 delay-75 duration-150 ease-in-out transition-colors rounded-md border  border-primary text-center items-center hover:bg-primary hover:text-white font-semibold justify-center">
-                    <p>Justice Staff Registration</p>
-                </Link>
-                <Link href={'/register'} className=" py-2 rounded-md border delay-75 duration-150 ease-in-out transition-colors border-primary text-center items-center hover:bg-primary hover:text-white font-semibold justify-center">
-                    <p>Public Registration</p>
+            <div className=" items-center justify-center flex w-full  max-w-4xl gap-x-6 gap-y-2 my-6 mx-auto">
+                <Link href={'/register'} className=" px-8 py-2 rounded-md border delay-75 duration-150 ease-in-out transition-colors border-primary text-center items-center hover:bg-primary hover:text-white font-semibold justify-center">
+                    <p>Create an Account</p>
                 </Link>
             </div>
             <p className=" font-semibold">Already have an account <Link href={'/login'} className=" text-primary underline ">Log In</Link> </p>

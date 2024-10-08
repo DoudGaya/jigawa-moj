@@ -26,7 +26,8 @@ export const authRoutes = [
     '/error',
     '/forgot-password',
     '/new-password',
-    '/staff-registration',
+    '/police/login',
+    '/ministry/login',
 ]
 
 /**
