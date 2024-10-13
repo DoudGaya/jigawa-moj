@@ -115,7 +115,6 @@ export function SignUpForm() {
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof signUpSchema>) {
 
-    console.log(values)
     setError('')
     setSuccess('')
 
@@ -461,15 +460,7 @@ export function SignUpForm() {
         <p className=""> Already have an account ? </p>
         <span className=" font-semibold">Log In</span>
     </Link>
-    <fieldset className=" border py-4  border-primary rounded-lg flex flex-col text-center items-center align-middle justify-center">
-      <legend className=" flex px-2 text-sm text-primary font-semibold" >Ministry of Justice Staff?</legend>
-        <Link href={'/staff-registration'} className=" flex space-x-3 w-ful py-2 delay-75 duration-150 ease-in-out transition-colorstext-center items-center  hover:text-primary font-semibold justify-center">
-              <p>Justice Staff Registration</p>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 transition-all delay-75 duration-150 ease-in-out translate-x-3 ">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-              </svg>
-        </Link>
-    </fieldset>
+  
    </div>
     </div>
   )

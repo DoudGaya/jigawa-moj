@@ -12,7 +12,7 @@ export default async function StaffDahboard({ children }: { children: React.Reac
   if (session?.user.role === "USER") {
     return redirect("/user/dashboard")
    } else if (session?.user.role === "ADMIN") {
-    return redirect("/admin/dashboard")
+    return redirect("/ministry/dashboard")
    } else if (session?.user.role === "COURT") {
     return redirect("/court/dashboard")
   } else if ( session?.user.role === "POLICE" ) {

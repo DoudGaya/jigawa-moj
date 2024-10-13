@@ -1,6 +1,7 @@
 "use server"
 
-import { CourtRegisterSchema } from "@/lib/schema";
+// import { CourtRegisterSchema } from "@/lib/schema";
+import { CourtRegisterSchema } from "@/lib/zod-schemas/courts-schema";
 import * as z from 'zod'
 import bcrypt from 'bcryptjs'
 import { db } from '@/lib/db'
@@ -47,16 +48,17 @@ export const CourtRegistrationAction = async (values: z.infer<typeof CourtRegist
             phone,
             state,
             level,
-            infrastructure,
+            courtName,
+            tribunal,
+            // infrastructure,
             courtLocalGovernment,
-            address,
             gender,
             jurisdiction,
-            courtFunction,
-            location,
-            name,
-            capacity,
+            // courtFunction,
             city,
+            // name,
+            // capacity,
+            courtAddress,
         } = fieldValidation.data
 
 
@@ -86,19 +88,13 @@ export const CourtRegistrationAction = async (values: z.infer<typeof CourtRegist
           localGovernment,
           court: {
             create: {
-                capacity, 
-                function: courtFunction,
-                localGovernment: courtLocalGovernment,
-                location,
-                name,
-                level, 
-                jurisdiction,
+                courtName,
+                tribunal,
+                level,
+                jurisdiction: jurisdiction || "Jigawa State",
+                courtLocalGovernment,
                 city,
-                infrastructure: {
-                    createMany: {
-                        data: [ ...infrastructure ] || undefined
-                    }
-                }
+                courtAddress,
             }
         }
         }
@@ -115,9 +111,7 @@ export const getAllCourts = async () => {
     const courts = await db.court.findMany({
         include: {
            user: true,
-           infrastructure: true,
            cases: true,
-           staffs: true,
         }
     })
     return courts
@@ -125,11 +119,7 @@ export const getAllCourts = async () => {
 
 
 export const deleteCourtItem = async (id: string) => {
-
-
     const courtExist = await getCourtById(id)
-
-
     if (!courtExist) {
         return {error: "Court do not Exist"}
     }
@@ -141,9 +131,7 @@ export const deleteCourtItem = async (id: string) => {
         },
         include: {
             user: true,
-            infrastructure: true,
             cases: true,
-            staffs: true,
          }
     })
 
@@ -161,17 +149,66 @@ export const getCourtById = async (id: string) => {
     return court
 }
 
-// export const updateCourtInfoByCourtId = async (values: z.infer<typeof CourtRegisterSchema) => {
+export const updateCourt = async (id: string, values: z.infer<typeof CourtRegisterSchema>) => {
+    const fieldValidation = CourtRegisterSchema.safeParse(values);
+    if (!fieldValidation.success) {
+         return { error: "field Validation failed " }
+    }
 
-//     // await db.court.update({
-//     //     where: {id: id},
-//     //     data: {
-//     //         {}
-//     //     }
-//     // })
+    const {
+            firstName, 
+            otherNames,
+            lastName,
+            email, 
+            localGovernment,
+            password, 
+            phone,
+            state,
+            courtName,
+            gender,
+            jurisdiction,
+            city,
+            tribunal,
+            level,
+            courtLocalGovernment,
+    } = fieldValidation.data
 
-// }
+    const hashedPassword = await bcrypt.hash(password, 10)
 
+    const updatedCourt = await db.user.update({
+        where: {
+            id: id
+        },
+        data: {
+            firstName,
+            lastName,
+            otherNames,
+            password: hashedPassword,
+            email,
+            phone,
+            state,
+            gender,
+            localGovernment,
+            court: {
+                update: {
+                    data: {
+                       courtName,
+                       
+                       updatedAt: Date.now().toLocaleString(),
+                       jurisdiction,
+                       level,
+                       tribunal,
+                       courtLocalGovernment
+                    }
+                }
+                }
+             }
+        });
+
+
+        return {success: "Court has been updated successfully!", data: updatedCourt} 
+}
+       
 
 
 

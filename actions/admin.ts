@@ -14,13 +14,14 @@ export const getAllCount  = async () => {
     const courts = await db.court.count()
     const probates = await db.probate.count()
     const transactions = await db.transaction.count()
+    const police = await db.policeStation.count()
 
 
     return {
         customers,
         staffs,
         courts,
-        probates,
+        police,
         transactions,
         cases,
         inmates,

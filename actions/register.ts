@@ -1,12 +1,14 @@
 "use server"
 import * as z from 'zod'
-import { signUpSchema } from '@/lib/schema'
+// import { signUpSchema } from '@/lib/schema'
+import { signUpSchema } from '@/lib/zod-schemas/user-schema'
 import bcrypt from 'bcryptjs'
 import { db } from '@/lib/db'
 import { getUserByEmail } from '@/data/user'
 import { sendVrificationEmail } from '@/lib/mail'
 import { generateVerificationToken } from '@/lib/tokens'
-import { StaffSchema } from '@/lib/schema'
+// import { StaffSchema } from '@/lib/schema'
+import { StaffSchema } from '@/lib/zod-schemas/staff-schema'
 import { UserRole } from '@prisma/client'
 
 

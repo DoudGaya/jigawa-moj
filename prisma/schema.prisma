@@ -9,6 +9,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
+
+
 model User {
   id                  String      @id @default(auto()) @map("_id") @db.ObjectId
   firstName           String? 
@@ -28,9 +31,26 @@ model User {
   customer            Customer?
   filings             Filing[]
   staff               Staff?
+  police              PoliceStation?
   isTwoFactorEnabled Boolean @default(false)
   TwoFactorConfirmation TwoFactorConfirmation?
   @@map("user")
+}
+
+
+model PoliceStation {
+  id                          String    @id @default(auto()) @map("_id") @db.ObjectId
+  stationName                 String?        // Name of the police station
+  stationAddress              String?        // Full address of the police station
+  stationLocalGovernment      String?        // Local government area for the station
+  stationcontactNumber        String?
+  stationState                String?    
+  contactEmail                String? // if different from user mail
+  user                        User      @relation(fields: [userId], references: [id], onDelete: Cascade) 
+  userId                      String    @db.ObjectId @unique
+  createdAt                   DateTime @default(now())
+  updatedAt                   DateTime @updatedAt
+  @@map("police")
 }
 
 
@@ -61,10 +81,10 @@ model Account {
 
 
 enum UserRole {
+  USER
   ADMIN
   COURT
   STAFF
-  USER
   POLICE
 }
 
@@ -146,24 +166,55 @@ model PoliceCaseReport {
 
 model Case {
   id                                String         @id @default(auto()) @map("_id") @db.ObjectId
-  customer                          Customer       @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  customerId                        String         @db.ObjectId @unique          
-  caseNumber                        Int            
+  customerId                        String         @db.ObjectId @unique   
+  title                             String?
+  FIR                               String?
+  tribunal                          String?       
+  caseNumber                        String         @unique     
   court                             Court?         @relation(fields: [courtId], references: [id])
   courtId                           String         @db.ObjectId
   files                             Files[]
   caseType                          CaseType
+  caseCouncil                       Council[]    
   filing                            Filing?
-  verdict                           String
-  plaintiffsAttorney                PlaintiffsAttorney[] 
-  defendentAttoney                  DefendentAttoney[]
   caseStatus                        CaseStatus
   transaction                       Transaction[]
-  hearingTime                       Hearing[]
+  hearings                          Hearing[]
   createdAt                         DateTime        @default(now())
   updatedAt                         DateTime        @updatedAt
   @@map("case")
 }
+
+
+
+model Council {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  role           PartyRole
+  caseId         String       @db.ObjectId
+  case           Case         @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  contactDetails String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+enum PartyRole {
+  PLAINTIFF
+  DEFENDANT
+  WITNESS
+  JUDGE
+  PROSECUTOR
+  DEFENSE
+  VICTIM
+  ACCUSED
+  COMPLAINANT
+  COMPLAIN
+  RESPONDENT
+  APPLICANT
+  APPELLANT
+}
+
+
 
 
 model Hearing {
@@ -174,28 +225,6 @@ model Hearing {
 }
 
 
-
-model PlaintiffsAttorney {
-  id                String @id @default(auto()) @map("_id") @db.ObjectId
-  surname           String?
-  firstName         String
-  phoneNumber       String
-  email             String
-  case              Case @relation(fields: [caseId], references: [id], onDelete: Cascade) 
-  caseId            String @db.ObjectId
-  @@map("plaintiffattoney")
-}
-
-model DefendentAttoney {
-  id                String @id @default(auto()) @map("_id") @db.ObjectId
-  surname           String?
-  firstName         String
-  phoneNumber       String
-  email             String
-  case              Case @relation(fields: [caseId], references: [id], onDelete: Cascade) 
-  caseId            String @db.ObjectId
-  @@map("defendentattoney")
-}
 
 
 model Files {
@@ -219,7 +248,7 @@ model Customer {
   user                User              @relation(fields: [userId], references: [id], onDelete: Cascade )
   userId              String            @db.ObjectId @unique
   transactions        Transaction[]
-  cases               Case[]
+  // cases               Case[]
   @@map("customer")
 }
 
@@ -261,55 +290,61 @@ enum CaseType {
 }
 
 model Court {
-  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
-  name                String
-  function            String
-  location            String?
-  localGovernment     String?
-  jurisdiction        String?
-  city                String?
-  level               String? // Supreme Court, High Court, District Court
-  user                User @relation(fields: [userId], references: [id])
-  userId              String @db.ObjectId @unique
-  capacity            String?
-  infrastructure      Infrastructure[]
-  staffs              Staff[]
-  cases               Case[]
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  id                      String   @id @default(auto()) @map("_id") @db.ObjectId
+  courtName               String
+  tribunal                Tribunal
+  city                    String?
+  courtLocalGovernment    String?
+  jurisdiction            String?
+  courtAddress            String?
+  level                   String? // Supreme Court, High Court, District Court
+  user                    User @relation(fields: [userId], references: [id])
+  userId                  String @db.ObjectId @unique
+  cases                   Case[]
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
   @@map("court")
 }
 
-model Infrastructure {
-  id              String @id @default(auto()) @map("_id") @db.ObjectId
-  name            String?
-  number          String?
-  court           Court @relation(fields: [courtId], references: [id], onDelete: Cascade)
-  courtId         String @db.ObjectId
-  @@map("infrastructure")
+enum Tribunal {
+  SHARIA
+  CIVIL
+  ELECTION
+  INDUSTRIAL
+  TAX
+  ADMINISTRATIVE
+  OTHER
 }
+
+// model Infrastructure {
+//   id              String @id @default(auto()) @map("_id") @db.ObjectId
+//   name            String?
+//   number          String?
+//   court           Court @relation(fields: [courtId], references: [id], onDelete: Cascade)
+//   courtId         String @db.ObjectId
+//   @@map("infrastructure")
+// }
 
 
 model Staff {
-  id                  String    @id @default(auto()) @map("_id") @db.ObjectId
-  staffNumber         String?
-  staffRole           String?
-  salaryStructure     String?
-  jobTitle            String? 
-  isJudge             Boolean?
-  department          String?
-  employerName        String?
-  employmentLocation  String?
-  position            String?
-  salaryGrade         String?
-  step                String?
-  dateOfEmployment    DateTime?
-  user                User      @relation(fields: [userId], references: [id], onDelete: Cascade) 
-  userId              String    @db.ObjectId @unique
-  court               Court?    @relation(fields: [courtId], references: [id])
-  courtId             String?   @db.ObjectId  
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  id                                  String                      @id @default(auto()) @map("_id") @db.ObjectId
+  staffNumber                         String?
+  staffRole                           String?
+  salaryStructure                     String?
+  jobTitle                            String? 
+  isJudge                             Boolean?
+  department                          String?
+  employerName                        String?
+  employmentLocation                  String?
+  position                            String?
+  salaryGrade                         String?
+  step                                String?
+  dateOfEmployment                    DateTime?
+  user                                User                        @relation(fields: [userId], references: [id], onDelete: Cascade) 
+  userId                              String                      @db.ObjectId @unique
+  courtId                             String?                     @db.ObjectId  
+  createdAt                           DateTime                    @default(now())
+  updatedAt                           DateTime                    @updatedAt
   @@map("staff")
 }
 

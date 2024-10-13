@@ -3,7 +3,8 @@ import * as z from 'zod'
 import { db } from '@/lib/db'
 import { getUserById } from '@/data/user'
 import { currentUser } from '@/lib/auth'
-import { settingsSecurityDetailsSchema , UserSettingsSchema} from '@/lib/schema'
+// import { settingsSecurityDetailsSchema , UserSettingsSchema} from '@/lib/schema'
+import { settingsSecurityDetailsSchema , UserSettingsSchema} from '@/lib/zod-schemas/user-schema'
 import { handleUsersProfileImages } from './images'
 // import 
 

@@ -43,8 +43,8 @@ const EmailVerification = () => {
   }, [onSubmit])
 
   return (
-    <div>
-      <div className=" max-w-3xl flex items-center space-y-2 justify-center flex-col text-center px-4 py-6 rounded-md drop-shadow-sm bg-white">
+    <div className=' h-[80vh] flex items-center justify-center w-full '>
+      <div className=" max-w-xl flex items-center space-y-2 justify-center flex-col text-center shadow-lg px-4 py-6 rounded-lg drop-shadow-sm">
         <Image src={jigawa} alt='' className=' h-16 w-16 rounded-full border-2 border-primary' />
         <h1 className=' text-xl font-poppins font-semibold'>Welcome to Jigawa State Ministry of Justice</h1>
           {(!success && !error ) ? (

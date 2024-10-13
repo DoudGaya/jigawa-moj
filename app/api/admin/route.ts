@@ -7,7 +7,7 @@ export async function GET() {
 
     const role = await currentRole()
     if (role === UserRole.ADMIN) {
-       return redirect('/admin/dashboard')
+       return redirect('/ministry/dashboard')
     }
 
      if (role === UserRole.COURT) {
@@ -18,6 +18,9 @@ export async function GET() {
      if (role === UserRole.STAFF) {
         return redirect("/staff/dashboard")
      }
+     if (role === UserRole.POLICE) {
+      return redirect("/police/dashboard")
+   }
 
      return redirect("/user/dashboard")
 }

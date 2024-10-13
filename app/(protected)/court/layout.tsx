@@ -16,7 +16,7 @@ export default async function CourtLayout({ children }: { children: React.ReactN
    } else if (session?.user.role === "STAFF") {
     return redirect("/staff/dashboard")
    } else if (session?.user.role === "ADMIN") {
-    return redirect("/admin/dashboard")
+    return redirect("/ministry/dashboard")
    } else if ( session?.user.role === "POLICE" ) {
     return redirect('/police/dashboard') 
    } else {

@@ -2,7 +2,7 @@ import { auth } from '@/auth'
 import { SessionProvider } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { TopNav } from '../(protected)/_components/TopNav';
-import { AdminDashboardSideBar } from '../(protected)/admin/_components/AdminSideBar';
+import { AdminDashboardSideBar } from '../(protected)/ministry/_components/AdminSideBar';
 
 export default async function LoadingLayout({ children }: { children: React.ReactNode }) {
 
