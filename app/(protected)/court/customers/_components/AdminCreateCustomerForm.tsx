@@ -6,7 +6,8 @@ import { z } from "zod"
 import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox"
 import { useTransition } from "react";
-import { signUpSchema } from "@/lib/schema";
+// import { signUpSchema } from "@/lib/schema";
+import { signUpSchema } from "@/lib/zod-schemas/user-schema";
 import { states } from "@/lib/jigawa";
 import { localGovernment } from "@/lib/jigawa";
 import { Gender } from "@prisma/client";

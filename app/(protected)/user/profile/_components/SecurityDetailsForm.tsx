@@ -26,7 +26,8 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { settingsSecurityDetailsSchema } from '@/lib/schema'
+// import { settingsSecurityDetailsSchema } from '@/lib/schema'
+import { settingsSecurityDetailsSchema } from '@/lib/zod-schemas/user-schema'
 
 export const SecurityDetailsForm = ( {editModal, changeModal}: {editModal: string, changeModal: any}) => {
 
@@ -142,7 +143,7 @@ export const SecurityDetailsForm = ( {editModal, changeModal}: {editModal: strin
                     )}
                   />
                   </div>
-                  { success ?  <FormSuccess message={success} /> ? error : <FormError message={error} /> : "" }
+                  { success ?  <FormSuccess message={success} /> : error ? <FormError message={error} /> : "" }
                   <Button type="submit" disabled={isPending} className=" bg-black hover:bg-black/80 text-primary w-full">Update Security Records</Button> 
                 </form>
               </Form>
