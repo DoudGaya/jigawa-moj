@@ -11,7 +11,7 @@ import { states } from "@/lib/jigawa";
 import { localGovernment } from "@/lib/jigawa";
 import { Gender } from "@prisma/client";
 import { Textarea } from "@/components/ui/textarea"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button" 
 import { Input } from "@/components/ui/input"
 import { FormSuccess } from "@/components/FormSuccess";
 import { FormError } from "@/components/FormError";
