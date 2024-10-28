@@ -62,19 +62,19 @@ enum Gender {
 
 
 model Account {
-  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId             String  @db.ObjectId
-  type               String
-  provider           String
-  providerAccountId  String  @map("provider_account_id")
-  refresh_token      String? @db.String
-  access_token       String? @db.String
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String? @db.String
-  session_state      String?
-  user               User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                                       String                   @id @default(auto()) @map("_id") @db.ObjectId
+  userId                                   String                   @db.ObjectId
+  type                                     String
+  provider                                 String
+  providerAccountId                        String                   @map("provider_account_id")
+  refresh_token                            String?                  @db.String
+  access_token                             String?                  @db.String
+  expires_at                               Int?
+  token_type                               String?
+  scope                                    String?
+  id_token                                 String?                  @db.String
+  session_state                            String?
+  user                                     User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@unique([provider, providerAccountId])
   @@map("account")
 }
@@ -89,114 +89,150 @@ enum UserRole {
 }
 
 model VerificationToken {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
-  email     String
-  token     String @unique
-  expires   DateTime
+  id                                  String            @id @default(auto()) @map("_id") @db.ObjectId
+  email                               String
+  token                               String            @unique
+  expires                             DateTime
   @@unique([email, token])
 }
 
 model PasswordResetToken {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
-  email     String
-  token     String @unique
-  expires   DateTime
+  id                                  String             @id @default(auto()) @map("_id") @db.ObjectId
+  email                               String
+  token                               String             @unique
+  expires                             DateTime
   @@unique([email, token])
 }
 
 model twoFactorToken {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
-  email     String
-  token     String @unique
-  expires   DateTime
+  id                                  String              @id @default(auto()) @map("_id") @db.ObjectId
+  email                               String
+  token                               String              @unique
+  expires                             DateTime
   @@unique([email, token])
 }
 
 
 model Probate {
-  id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  assets          Asset[]   
-  beneficiaries   String  
-  filing          Filing?
-  customer        Customer @relation(fields: [customerId], references: [id],  onDelete: Cascade)
-  customerId      String @db.ObjectId 
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id                                  String                @id @default(auto()) @map("_id") @db.ObjectId
+  assets                              Asset[]   
+  beneficiaries                       String  
+  filing                              Filing?
+  customer                            Customer              @relation(fields: [customerId], references: [id],  onDelete: Cascade)
+  customerId                          String                @db.ObjectId 
+  createdAt                           DateTime              @default(now())
+  updatedAt                           DateTime              @updatedAt
 }
 
 model Asset {
-  id              String @id @default(auto()) @map("_id") @db.ObjectId
-  name            String?
-  value           String?
-  probate         Probate @relation(fields: [probateId], references: [id],  onDelete: Cascade)
-  probateId       String  @db.ObjectId @unique
+  id                                  String                 @id @default(auto()) @map("_id") @db.ObjectId
+  name                                String?
+  value                               String?
+  probate                             Probate                @relation(fields: [probateId], references: [id],  onDelete: Cascade)
+  probateId                           String                 @db.ObjectId @unique
 }
 
 model TwoFactorConfirmation {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String @db.ObjectId
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                                  String                  @id @default(auto()) @map("_id") @db.ObjectId
+  userId                              String                  @db.ObjectId
+  user                                User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@unique([userId])
 }
 
 
 model PoliceCaseReport {
-  id                      String @id @default(auto()) @map("_id") @db.ObjectId
-  defendantName           String
-  caseTitle               String
-  caseDescription         String?
-  defendantAddress        String
-  defendantAge            String
-  defendantSex            String
-  defendantOccupation     String
-  placeOfOffense          String
-  nameOfIPO               String
-  firstInformationReport  String?   // URL to the uploaded file
-  statementOfComplainant  String?   // URL to the uploaded file
-  statementOfVictims      String?     // URL to the uploaded file
-  statementOfWitness      String?     // URL to the uploaded file
-  medicalReport           String?     // URL to the uploaded file
-  pictures                String[]    // Array of URLs to uploaded images
-  isDraft                 Boolean     @default(false)
-  createdAt               DateTime    @default(now())
+  id                                  String                    @id @default(auto()) @map("_id") @db.ObjectId
+  defendantName                       String
+  caseTitle                           String
+  caseDescription                     String?
+  defendantAddress                    String
+  defendantAge                        String
+  defendantSex                        String
+  defendantOccupation                 String
+  placeOfOffense                      String
+  nameOfIPO                           String
+  firstInformationReport              String?     
+  statementOfComplainant              String?     
+  statementOfVictims                  String?     
+  statementOfWitness                  String?     
+  medicalReport                       String?     
+  pictures                            String[]    
+  isDraft                             Boolean                 @default(false)
+  createdAt                           DateTime                @default(now())
 }
 
 
 
+model Counter {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  name  String @unique
+  value Int
+}
 
-model Case {
-  id                                String         @id @default(auto()) @map("_id") @db.ObjectId
-  customerId                        String         @db.ObjectId @unique   
-  title                             String?
-  FIR                               String?
-  tribunal                          String?       
-  caseNumber                        String         @unique     
-  court                             Court?         @relation(fields: [courtId], references: [id])
-  courtId                           String         @db.ObjectId
-  files                             Files[]
-  caseType                          CaseType
-  caseCouncil                       Council[]    
-  filing                            Filing?
-  caseStatus                        CaseStatus
-  transaction                       Transaction[]
-  hearings                          Hearing[]
-  createdAt                         DateTime        @default(now())
-  updatedAt                         DateTime        @updatedAt
+
+
+model Case {    
+  id                                    String             @id @default(auto()) @map("_id") @db.ObjectId
+  // customerId                            String             @db.ObjectId @unique   
+  title                                 String?
+  caseDescription                       String?
+  placeOfOffense                        String?
+  nameOfIPO                             String?
+
+  // defendant informations 
+
+  defendantAddress                      String?
+  defendantAge                          String?
+  defendantSex                          String?
+  defendantOccupation                   String?
+  defendantName                         String?
+
+  // case informations & Attachments
+
+  caseCouncil                           Council[]    
+  FIR                                   String?
+  statementOfComplainant                String?
+  statementOfVictims                    String?
+  statementOfWitness                    String?
+  medicalReport                         String?
+  pictures                              String[]
+  caseNumber                            String
+  caseType                              CaseType?
+  caseStatus                            CaseStatus
+  
+
+// court informations and Tribunal
+
+  tribunal                              String?
+  courtId                               String?            @db.ObjectId
+  hearings                              Hearing[]
+  court                                 Court?             @relation(fields: [courtId], references: [id])
+
+  // other informations 
+
+
+  files                                 Files[]
+  filing                                Filing?
+  transaction                           Transaction[]
+  createdAt                             DateTime           @default(now())
+  updatedAt                             DateTime           @updatedAt
   @@map("case")
 }
 
 
 
 model Council {
-  id             String       @id @default(auto()) @map("_id") @db.ObjectId
-  name           String
-  role           PartyRole
-  caseId         String       @db.ObjectId
-  case           Case         @relation(fields: [caseId], references: [id], onDelete: Cascade)
-  contactDetails String?
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
+  id                                    String       @id @default(auto()) @map("_id") @db.ObjectId
+  caseId                                String       @db.ObjectId
+  name                                  String
+  email                                 String?
+  phone                                 String?
+  role                                  PartyRole
+  case                                  Case         @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  createdAt                             DateTime     @default(now())
+  updatedAt                             DateTime     @updatedAt
 }
+
 
 enum PartyRole {
   PLAINTIFF
@@ -206,22 +242,21 @@ enum PartyRole {
   PROSECUTOR
   DEFENSE
   VICTIM
-  ACCUSED
-  COMPLAINANT
-  COMPLAIN
-  RESPONDENT
+  ACCUSED     
+  COMPLAINANT     
+  COMPLAIN      
+  RESPONDENT      
   APPLICANT
   APPELLANT
 }
 
 
-
-
 model Hearing {
-    id                  String     @id @default(auto()) @map("_id") @db.ObjectId
-    case                Case @relation(fields: [caseId], references: [id], onDelete: Cascade) 
-    caseId              String @db.ObjectId
-    hearingDate         DateTime
+    id                  String      @id @default(auto()) @map("_id") @db.ObjectId
+    case                Case        @relation(fields: [caseId], references: [id], onDelete: Cascade) 
+    caseId              String      @db.ObjectId
+    time                DateTime?
+    date                DateTime?
 }
 
 

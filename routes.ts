@@ -28,6 +28,8 @@ export const authRoutes = [
     '/new-password',
     '/police/login',
     '/ministry/login',
+    '/courts/login',
+    '/agents/login',
 ]
 
 /**

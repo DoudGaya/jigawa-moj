@@ -1,3 +1,4 @@
+import { Poppins } from "next/font/google";
 import type { Config } from "tailwindcss"
 import { withUt } from "uploadthing/tw";
  

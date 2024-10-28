@@ -33,7 +33,7 @@ export const Banner = () => {
   return (
     <>  
     <div className=" h-[100vh] flex flex-col bg-white w-full text-center overflow-hidden" >
-       <div className=" my-auto  mx-auto max-w-4xl w-full flex flex-col px-6">
+       <div className=" my-auto  mx-auto max-w-6xl w-full flex flex-col px-6">
         <div className=" flex items-center py-2 space-x-4 justify-center">
             <div className="">
                 <Image src={nigeria} alt="" className=" h-28 w-28 border-4 border-primary rounded-full" />
@@ -49,7 +49,7 @@ export const Banner = () => {
                     caroselImages.map((item): any => {
                         return (
                             <CarouselItem key={item.id} className="basis-1/3">
-                               <div className=" h-[130px] overflow-hidden rounded-md">
+                               <div className=" h-[200px] overflow-hidden rounded-md">
                                 <Image src={item.image} className=" h-full object-cover object-center w-full" alt="" />
                                </div>
                             </CarouselItem>
@@ -60,7 +60,7 @@ export const Banner = () => {
                 <CarouselNext />
             </Carousel>
         <h1 className=' text-2xl md:text-2xl font-poppins text-[#1E1815] max-w-2xl mx-auto font-semibold'>Welcome to Jigawa State Ministry of Justice <span className=" text-primary"> eFiling </span>Facility</h1>
-      {
+      {/* {
         user ? (
             <p className=" font-poppins text-md my-4 font-semibold">Welcome back {user.firstName}, Go to <Link className=" text-primary" href={'/user/dashboard'}> Dashboard </Link> </p>
         ) : (
@@ -73,7 +73,7 @@ export const Banner = () => {
             <p className=" font-semibold">Already have an account <Link href={'/login'} className=" text-primary underline ">Log In</Link> </p>
        </div>
         )
-      }
+      } */}
        </div>
       
     </div>

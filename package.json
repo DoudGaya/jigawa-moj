@@ -9,9 +9,11 @@
     "postinstall": "prisma generate",
     "lint": "next lint"
   },
+
   "dependencies": {
     "@auth/prisma-adapter": "^2.1.0",
-    "@aws-sdk/client-s3": "^3.666.0",
+    "@aws-sdk/client-s3": "^3.670.0",
+    "@aws-sdk/lib-storage": "^3.670.0",
     "@hookform/resolvers": "^3.3.4",
     "@prisma/client": "^5.14.0",
     "@radix-ui/react-alert-dialog": "^1.1.1",
@@ -31,12 +33,12 @@
     "@tanstack/react-table": "^8.20.1",
     "@uploadthing/react": "^6.7.2",
     "@vercel/og": "^0.6.2",
-    "aws-sdk": "^2.1691.0",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
+    "dotenv": "^16.4.5",
     "embla-carousel-autoplay": "^8.1.8",
     "embla-carousel-react": "^8.0.2",
     "framer-motion": "^11.3.30",

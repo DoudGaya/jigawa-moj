@@ -1,18 +1,22 @@
 import React from 'react'
-import { AdminPoliceActionArea } from './_components/PoliceActionArea'
+import { CaseActionArea } from './_components/CaseActionArea'
 import { getAllPoliceStations } from '@/actions/police'
-import { PoliceStation, User } from '@prisma/client'
-import { PoliceUserType } from '@/typings'
+import { CaseSchemaWithAllRecords, PoliceUserType } from '@/typings'
+import { getAllSubmittedCases } from '@/actions/cases'
+import { getAllCourts } from '@/actions/courts'
 
 
-const AdminPolicePage = async () => {
+const AdminCasePage = async () => {
 
-  const stations = await getAllPoliceStations() as PoliceUserType[]
+  // @ts-ignore
+  const cases = await getAllSubmittedCases() as CaseSchemaWithAllRecords[]
+
+  const court = await getAllCourts()
   return (
-    <div className=' flex flex-col h-full'>
-      <AdminPoliceActionArea stations={stations} />
+    <div className='flex flex-col h-full'>
+      <CaseActionArea cases={cases} />
     </div>
-  )
+    )
 }
 
-export default AdminPolicePage
+export default AdminCasePage

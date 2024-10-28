@@ -42,14 +42,13 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { useTransition } from 'react'
 import { submitPoliceCase } from "@/actions/police"
-import { improvedPoliceCaseSchema } from "@/lib/zod-schemas/case-schema"
+import { improvedPoliceCaseSchema, MinistryCaseSchema } from "@/lib/zod-schemas/case-schema"
 import { uploadFileToS3, uploadMultipleFilesToS3 } from '@/lib/aws/aws-s3'
-import { FormError } from '@/components/FormError'
 
 
 
 
-export const PoliceCaseForm = () => {
+export const MinistryCaseForm = () => {
   
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [isPending, startTransition] = useTransition()
@@ -57,8 +56,8 @@ export const PoliceCaseForm = () => {
     const [success, setSuccess] = useState < string | undefined>('')
     const router = useRouter()
   
-    const form = useForm<z.infer<typeof improvedPoliceCaseSchema>>({
-      resolver: zodResolver(improvedPoliceCaseSchema),
+    const form = useForm<z.infer<typeof MinistryCaseSchema>>({
+      resolver: zodResolver(MinistryCaseSchema),
       defaultValues: {
         title: "",
         caseDescription: "",
@@ -68,6 +67,13 @@ export const PoliceCaseForm = () => {
         defendantAge: "",
         defendantName: "",
         defendantOccupation: "",
+        caseCouncil: undefined,
+        caseStatus: undefined,
+        court: undefined,
+        files: undefined,
+        hearings: undefined,
+        tribunal: undefined,
+        caseType: undefined,
         defendantSex: undefined,
         FIR: undefined,
         medicalReport: undefined,
@@ -77,8 +83,8 @@ export const PoliceCaseForm = () => {
         statementOfWitness: undefined,
       },
     })
-  
-    async function onSubmit(data: z.infer<typeof improvedPoliceCaseSchema>, isDraft: boolean) {
+
+    async function onSubmit(data: z.infer<typeof MinistryCaseSchema>, isDraft: boolean) {
         try {
           let formDataToSubmit: any = { ...data };
     
@@ -106,12 +112,13 @@ export const PoliceCaseForm = () => {
           if (data.pictures) {
             formDataToSubmit.pictures = await uploadMultipleFilesToS3(data.pictures, 'jigawa-state');
           }
+          
+          // if (data.files) {
+          //   formDataToSubmit.pictures = await uploadMultipleFilesToS3(data.files, 'jigawa-state');
+          // }
 
           setError('')
           setSuccess('')
-
-          console.log(formDataToSubmit)
-          // return;
       
           startTransition(() => {
             submitPoliceCase(formDataToSubmit, isDraft)
@@ -133,22 +140,14 @@ export const PoliceCaseForm = () => {
 
   return (
     <div>
-          <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-            <DialogTrigger asChild>
-              <Button size="lg" className=' font-poppins'>Create a Case</Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[600px] max-w-[95%] rounded-lg mx-auto max-h-[80vh] overflow-y-auto">
-              <DialogHeader className=' w-full flex items-center justify-center rounded-md py-2 '>
-                <DialogTitle>Create a New Case</DialogTitle>
-                <DialogDescription className=' border-b border-primary/50 mb-6 py-3'>
-                  Fill in the details for the new case. You can submit or save as draft.
-                </DialogDescription>
-              </DialogHeader>
               <Form {...form}>
                 <form onSubmit={form.handleSubmit((data) => onSubmit(data, false))} className="space-y-8">
                   <div className=' flex flex-col space-y-8'>
                   <div className=' py-4'>
-                    <h3 className="text-lg font-semibold mb-4">Case Information</h3>
+                   <div className=" flex flex-row ">
+                      <h3 className="text-xl font-semibold mb-4 text-primary">Case Information</h3>
+                   </div>
+                    <Separator className=' my-2 border-green-300' />
                     <div className="grid grid-cols-1 my-4 gap-4">
                       <FormField
                         control={form.control}
@@ -159,7 +158,7 @@ export const PoliceCaseForm = () => {
                             <FormControl>
                               <Input disabled={isPending} placeholder="Enter place of offense" {...field} />
                             </FormControl>
-                            { error && <FormMessage about={error} /> }
+                            <FormMessage />
                           </FormItem>
                         )}
                       />
@@ -172,7 +171,7 @@ export const PoliceCaseForm = () => {
                             <FormControl>
                               <Textarea disabled={isPending} placeholder="Case Description" {...field} />
                             </FormControl>
-                            { error && <FormMessage about={error} /> }
+                            <FormMessage />
                           </FormItem>
                         )}
                       />
@@ -188,7 +187,7 @@ export const PoliceCaseForm = () => {
                             <FormControl>
                               <Input disabled={isPending} placeholder="Enter place of offense" {...field} />
                             </FormControl>
-                            { error && <FormMessage about={error} /> }
+                            <FormMessage />
                           </FormItem>
                         )}
                       />
@@ -201,7 +200,7 @@ export const PoliceCaseForm = () => {
                             <FormControl>
                               <Input disabled={isPending} placeholder="Enter name of IPO" {...field} />
                             </FormControl>
-                            { error && <FormMessage about={error} /> }
+                            <FormMessage />
                           </FormItem>
                         )}
                       />
@@ -211,7 +210,7 @@ export const PoliceCaseForm = () => {
                   <Separator about='Text' />
 
 
-                    <h3 className="text-lg font-semibold mb-4">Defendant Information</h3>
+                    <h3 className="text-xl text-green-600 font-semibold mb-4">Defendant Information</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <FormField
                         control={form.control}
@@ -222,7 +221,7 @@ export const PoliceCaseForm = () => {
                             <FormControl>
                               <Input disabled={isPending} placeholder="Enter defendant's name" {...field} />
                             </FormControl>
-                            { error && <FormMessage about={error} /> }
+                            <FormMessage />
                           </FormItem>
                         )}
                       />
@@ -235,7 +234,7 @@ export const PoliceCaseForm = () => {
                             <FormControl>
                               <Input disabled={isPending} placeholder="Enter defendant's address" {...field} />
                             </FormControl>
-                            { error && <FormMessage about={error} /> }
+                            <FormMessage />
                           </FormItem>
                         )}
                       />
@@ -248,7 +247,7 @@ export const PoliceCaseForm = () => {
                             <FormControl>
                               <Input disabled={isPending} type="number" placeholder="Enter defendant's age" {...field} />
                             </FormControl>
-                            { error && <FormMessage about={error} /> }
+                            <FormMessage />
                           </FormItem>
                         )}
                       />
@@ -270,7 +269,7 @@ export const PoliceCaseForm = () => {
                                 <SelectItem value="other">Other</SelectItem>
                               </SelectContent>
                             </Select>
-                            { error && <FormMessage about={error} /> }
+                            <FormMessage />
                           </FormItem>
                         )}
                       />
@@ -283,15 +282,13 @@ export const PoliceCaseForm = () => {
                             <FormControl>
                               <Input disabled={isPending} placeholder="Enter defendant's occupation" {...field} />
                             </FormControl>
-                            { error && <FormError message={error} /> }
+                            <FormMessage />
                           </FormItem>
                         )}
                       />
                     </div>
                   </div>
-
                   <Separator />
-
                   <div>
                     <h3 className="text-lg font-semibold mb-4">File Uploads</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -309,7 +306,7 @@ export const PoliceCaseForm = () => {
                                 {...field}
                               />
                             </FormControl>
-                            { error && <FormMessage about={error} /> }
+                            <FormMessage />
                           </FormItem>
                         )}
                       />
@@ -327,7 +324,7 @@ export const PoliceCaseForm = () => {
                                 {...field}
                               />
                             </FormControl>
-                            { error && <FormMessage about={error} /> }
+                            <FormMessage />
                           </FormItem>
                         )}
                       />
@@ -345,7 +342,7 @@ export const PoliceCaseForm = () => {
                                 {...field}
                               />
                             </FormControl>
-                            { error && <FormMessage about={error} /> }
+                            <FormMessage />
                           </FormItem>
                         )}
                       />
@@ -363,7 +360,7 @@ export const PoliceCaseForm = () => {
                                 {...field}
                               />
                             </FormControl>
-                            { error && <FormMessage about={error} /> }
+                            <FormMessage />
                           </FormItem>
                         )}
                       />
@@ -381,7 +378,7 @@ export const PoliceCaseForm = () => {
                                 {...field}
                               />
                             </FormControl>
-                            { error && <FormMessage about={error} /> }
+                            <FormMessage />
                           </FormItem>
                         )}
                       />
@@ -400,7 +397,7 @@ export const PoliceCaseForm = () => {
                                 {...field}
                               />
                             </FormControl>
-                            { error && <FormMessage about={error} /> }
+                            <FormMessage />
                           </FormItem>
                         )}
                       />
@@ -418,9 +415,7 @@ export const PoliceCaseForm = () => {
                     </Button>
                   </div>
                 </form>
-              </Form>
-            </DialogContent>
-          </Dialog>
+          </Form>
     </div>
   )
 }

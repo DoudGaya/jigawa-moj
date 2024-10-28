@@ -8,7 +8,8 @@ import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox"
 import { useTransition } from "react";
 import Link from "next/link";
-import { signUpSchema } from "@/lib/schema";
+// import { signUpSchema } from "@/lib/schema";
+import { signUpSchema } from "@/lib/zod-schemas/user-schema";
 import { signIn } from "@/auth";
 import { DEFAULT_LOGGED_IN_REDIRRECT } from "@/routes";
 import { states } from "@/lib/jigawa";
@@ -136,7 +137,6 @@ export function SignUpForm() {
 
   return (
     <div className=" flex mt-20 flex-col">
-     
      <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
       <fieldset className=" border  border-primary rounded-lg flex py-10 flex-col text-center space-y-4 px-6 align-middle justify-center">
@@ -460,7 +460,6 @@ export function SignUpForm() {
         <p className=""> Already have an account ? </p>
         <span className=" font-semibold">Log In</span>
     </Link>
-  
    </div>
     </div>
   )

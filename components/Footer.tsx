@@ -24,12 +24,12 @@ const loginLinks = [
     {
         id: 1,
         title: 'Courts',
-        url: ''
+        url: '/courts/login'
     },
     {
         id: 1,
-        title: 'Control',
-        url: ''
+        title: 'Agents',
+        url: '/agents/login'
     },
 ]
 

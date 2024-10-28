@@ -17,7 +17,7 @@ export const CustomerActionArea = ({customerCount}: {customerCount: number} ) =>
   return (
     <div className=" flex w-full  shadow-sm border bg-white rounded-md p-4 justify-between items-center">
         <div className=" flex space-x-2  items-center  bg-green-200/50 px-4 py-1 rounded-lg font-semibold ">
-            <p className=' font-poppins rounded-lg text-green-900 '> { customerCount } customers </p>
+            <p className=' font-poppins rounded-lg text-green-900 '> { customerCount } users </p>
         </div>
        <div className="">
         <Dialog>

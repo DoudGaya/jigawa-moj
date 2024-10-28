@@ -2,6 +2,7 @@ import { auth } from '@/auth'
 import { SessionProvider } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { TopNav } from '../_components/TopNav';
+import { Toaster } from "@/components/ui/sonner"
 // import { CourtSideBar } from './_components/CourtSideBar';
 import { PoliceSideBar } from './_components/PoliceSideBar';
 
@@ -20,6 +21,7 @@ export default async function AdmninLayout({ children }: { children: React.React
    } else if ( session?.user.role === "COURT" ) {
     return redirect('/court/dashboard') 
    } else {
+    
     return (
       <SessionProvider session={session}>
         <div className="flex dark:bg-black h-screen md:flex-row md:overflow-hidden">
@@ -31,6 +33,7 @@ export default async function AdmninLayout({ children }: { children: React.React
           </div>
           </div>
         </div>
+        <Toaster />
       </SessionProvider>
     );
   }

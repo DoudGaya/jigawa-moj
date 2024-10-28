@@ -7,18 +7,88 @@ import { sendWelcomeMailToPolice } from '@/lib/mail'
 import { generateVerificationToken } from '@/lib/tokens'
 import { policeCaseFormSchema } from "@/lib/zod-schemas/policeSchema"
 import { policeUSerSchema } from "@/lib/zod-schemas/police-schema"
-import { UserRole } from '@prisma/client'
+import { CaseStatus, UserRole } from '@prisma/client'
+import { policeCaseSchema } from "@/lib/zod-schemas/case-schema"
+import { generateCaseNumber } from "./cases"
 
 
 
 
 
-export async function submitPoliceCase(data: z.infer<typeof policeCaseFormSchema>, isDraft: boolean) {
-    // Here you would typically save the data to your database
-    console.log("Submitting case:", data, "Is Draft:", isDraft)
+export async function submitPoliceCase(values: z.infer<typeof policeCaseSchema>, isDraft: boolean) {
+    // Here you would typically save the data to your 
+    const fieldValidation = policeCaseSchema.safeParse(values);
+
+
+    if (!fieldValidation.success) {
+        return { error: "field Validation failed " }
+    }
+
+    const {
+        title,
+        caseDescription,
+        placeOfOffense,
+        nameOfIPO,
+        defendantAddress,
+        defendantAge,
+        defendantName,
+        defendantOccupation,
+        defendantSex,
+        FIR,
+        medicalReport,
+        pictures,
+        statementOfComplainant,
+        statementOfVictims,
+        statementOfWitness,
+    } = fieldValidation.data
+
+    console.log({data: fieldValidation, draft: isDraft })
+
+    const caseNumber = await generateCaseNumber()
+
+    if (!caseNumber) {
+        return {error: "Case number generation failed"}
+    }
+
+
+    // Save the data to your database
+    await db.case.create({
+        data: {
+            title,
+            caseNumber,
+            caseDescription,
+            placeOfOffense,
+            nameOfIPO,
+            defendantAddress,
+            defendantAge,
+            defendantName,
+            defendantOccupation,
+            defendantSex,
+            FIR,
+            medicalReport,
+            pictures, 
+            statementOfVictims,
+            statementOfComplainant,
+            statementOfWitness,
+            caseStatus: isDraft ? CaseStatus.Draft : CaseStatus.Submitted,
+        }
+    })
+    // return {success: "Case submitted successfully"} ;
+    
+    console.log("Submitting case:", values, "Is Draft:", isDraft)
     // Return a success message or error
     return { success: true, message: "Case submitted successfully" }
   }
+
+
+
+
+
+
+
+
+
+
 
 
   export const createPoliceUser = async (values: z.infer<typeof policeUSerSchema>) => {

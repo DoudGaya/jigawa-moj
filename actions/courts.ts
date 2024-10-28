@@ -18,6 +18,7 @@ export const getAllCourtRecordsCounts  = async () => {
     const inmates = await db.inmate.count()
     const probates = await db.probate.count()
     const transactions = await db.transaction.count()
+    const police = await db.policeStation.count()
 
 
     return {
@@ -27,6 +28,7 @@ export const getAllCourtRecordsCounts  = async () => {
         transactions,
         cases,
         inmates,
+        police,
     }
 }
 

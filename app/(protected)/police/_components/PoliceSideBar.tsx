@@ -3,7 +3,6 @@ import React, {useState} from 'react'
 import {
     Sheet,
     SheetContent,
-    SheetDescription,
     SheetHeader,
     SheetTitle,
     SheetTrigger,
@@ -15,7 +14,7 @@ import {
   import Image from 'next/image'
   
   import { Button } from '@/components/ui/button'
-  import { Menu, FileText, Send, Save } from "lucide-react"
+  import { Menu } from "lucide-react"
 import LogoutButton from '@/components/auth/LogOutButton'
 
 
@@ -81,8 +80,8 @@ export const PoliceSideBar = () => {
               privateLinks.map((single) => {
                   return (
                       <Link href={single.url} key={single.id} className={`${single.url == pathname ? ' bg-green-500 text-white hover:bg-jgreen dark:text-black' : "hover:bg-gray-200 dark:hover:bg-gray-800 " } rounded-md space-x-2 w-full py-3 px-4 flex flex-row`}>
-                          <span> {single.icon} </span>
-                          <span> { single.name} </span>
+                          <span>{single.icon}</span>
+                          <span>{ single.name}</span>
                       </Link>
                   )
               })

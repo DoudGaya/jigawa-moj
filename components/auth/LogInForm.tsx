@@ -74,7 +74,7 @@ export function LoginForm() {
   }
 
   return (
-    <div className=" flex mt-6 flex-col w-full ">
+    <div className=" flex mt-6 flex-col w-full justify-center h-full ">
       <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
       <fieldset className=" border  border-primary rounded-lg flex py-6 flex-col text-center space-y-4 px-6 align-middle justify-center">

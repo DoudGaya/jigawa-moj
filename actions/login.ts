@@ -19,6 +19,7 @@ interface RoleRoutes {
     CUSTOMER: string
     STAFF: string
     COURT: string
+    POLICE: string
 }
 
 export const login = async (values: z.infer<typeof loginSchema>) => {
@@ -87,14 +88,16 @@ export const login = async (values: z.infer<typeof loginSchema>) => {
     }
 
     const roleBasedRedirects: RoleRoutes = {
-        ADMIN: '/admin/dashboard',
+        ADMIN: '/ministry/dashboard',
         CUSTOMER: '/user/dashobard',
         STAFF: '/staff/dashboard',
         COURT: '/court/dashboard',
+        POLICE: '/police/dashboard',
     };
 
 
 
+    
     try {
         await signIn("credentials", {
             email, 

@@ -3,6 +3,7 @@ import Image from 'next/image'
 import authImage from '@/public/img/jigawa-state.png'
 import nigeria from '@/public/img/nigeria.png'
 import { PublicNavigations } from '@/components/PublicNavigations'
+import { Footer } from '@/components/Footer'
 const AuthLayout = ({ children }: { children:  React.ReactNode}) => {
   return (
      <>
@@ -12,6 +13,7 @@ const AuthLayout = ({ children }: { children:  React.ReactNode}) => {
               {children}
           </div>
       </div>
+      <Footer />
     </>
   )
 }
