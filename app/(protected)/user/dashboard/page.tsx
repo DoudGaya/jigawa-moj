@@ -1,7 +1,5 @@
 import React from 'react'
 import { DashboadTopCard, DashboardTopcardProps } from './_components/DashboadTopCard'
-import { DashboardWallet } from './_components/DashboardWallet'
-import { DashboardProfile } from './_components/DashboardProfile'
 
 
 const cards = [
