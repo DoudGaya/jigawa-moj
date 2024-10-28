@@ -28,7 +28,8 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { UserSettingsSchema } from '@/lib/schema'
+// import { UserSettingsSchema } from '@/lib/schema'
+import { UserSettingsSchema } from '@/lib/zod-schemas/user-schema'
 import { File } from 'buffer'
 
 export const UserProfileFormUpdate = ( {editModal, changeModal}: {editModal: string, changeModal: any}) => {
