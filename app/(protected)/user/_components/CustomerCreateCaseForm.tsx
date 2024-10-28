@@ -6,7 +6,7 @@ import { z } from "zod"
 import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox"
 import { useTransition } from "react";
-import { CourtRegisterSchema, customerCreateCase, signUpSchema } from "@/lib/schema";
+import { customerCreateCase } from "@/lib/zod-schemas/user-schema";
 import { states } from "@/lib/jigawa";
 import { localGovernment } from "@/lib/jigawa";
 import { Gender } from "@prisma/client";
@@ -33,7 +33,7 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { CourtRegistrationAction } from "@/actions/courts";
-import { customerCreateCaseAction } from "@/actions/cases";
+// import { customerCreateCaseAction } from "@/actions/cases";
 
 
 const caseType = [ 
@@ -111,24 +111,24 @@ export function CustomerCreateCaseForm() {
   })
  
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof customerCreateCase>) {
-    setError('')
-    setSuccess('')
-    startTransition(() => {
-      customerCreateCaseAction({...values, files: files }) 
-      .then((data) => {
-        setError(data.error)
-        setSuccess(data.success)
-      })
-    })
-    router.refresh()
-  }
+  // function onSubmit(values: z.infer<typeof customerCreateCase>) {
+  //   setError('')
+  //   setSuccess('')
+  //   startTransition(() => {
+  //     customerCreateCaseAction({...values, files: files }) 
+  //     .then((data) => {
+  //       setError(data.error)
+  //       setSuccess(data.success)
+  //     })
+  //   })
+  //   router.refresh()
+  // }
 
 
 
   return (
     <div className=" flex mt-6 flex-col">
-     <Form {...form}>
+     {/* <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
       <fieldset className=" border  border-primary rounded-lg space-y-8 flex py-4 px-6 flex-col text-center items-center align-middle justify-center">
         <legend className=" flex px-2 py-1 text-primary font-poppins font-semibold" > Case Informations</legend>
@@ -208,7 +208,7 @@ export function CustomerCreateCaseForm() {
         <FormError message={error} />
         <Button type="submit" disabled={isPending} className=" bg-primary hover:bg-jgreen text-white w-full">Submit a Case</Button>
       </form>
-    </Form>
+    </Form> */}
     </div>
   )
 }
