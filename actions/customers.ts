@@ -1,12 +1,15 @@
 "use server"
 import * as z from 'zod'
-import { signUpSchema } from '@/lib/schema'
+// import { signUpSchema } from '@/lib/schema'
+import { signUpSchema } from '@/lib/zod-schemas/user-schema'
 import bcrypt from 'bcryptjs'
 import { db } from '@/lib/db'
 import { getUserByEmail } from '@/data/user'
 import { UserRole } from '@prisma/client';
-import { UserSettingsSchema } from '@/lib/schema'
-import { UpdateUserRecordSchema } from '@/lib/schema'
+// import { UserSettingsSchema } from '@/lib/schema'
+import { UserSettingsSchema } from '@/lib/zod-schemas/user-schema'
+// import { UpdateUserRecordSchema } from '@/lib/schema'
+import { UpdateUserRecordSchema } from '@/lib/zod-schemas/user-schema'
 
 
 
@@ -128,11 +131,11 @@ export const getCustomerByUserId = async (id: string) => {
 
                 include: {
                     _count: true,
-                    cases: {
-                      include: {
-                        _count: true
-                      }  
-                    },
+                    // cases: {
+                    //   include: {
+                    //     _count: true
+                    //   }  
+                    // },
                     probates: {
                         include: {
                             _count: true

@@ -9,7 +9,8 @@ import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox"
 import { toast } from "sonner"
 import { useTransition } from "react";
-import { signUpSchema } from "@/lib/schema";
+// import { signUpSchema } from "@/lib/schema";
+import { signUpSchema } from "@/lib/zod-schemas/user-schema"
 import { states } from "@/lib/jigawa";
 import { localGovernment } from "@/lib/jigawa";
 import { Gender } from "@prisma/client";
@@ -19,7 +20,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { FormSuccess } from "@/components/FormSuccess";
 import { FormError } from "@/components/FormError";
-import { UpdateUserRecordSchema } from "@/lib/schema"
+// import { UpdateUserRecordSchema } from "@/lib/schema"
+import { UpdateUserRecordSchema } from "@/lib/zod-schemas/user-schema"
 import { updateCustomerDetailsId } from "@/actions/customers"
 
 

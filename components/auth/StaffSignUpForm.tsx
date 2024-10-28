@@ -8,10 +8,12 @@ import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox"
 import { useTransition } from "react";
 import Link from "next/link";
-import { signUpSchema } from "@/lib/schema";
+// import { signUpSchema } from "@/lib/schema";
+import { signUpSchema } from "@/lib/zod-schemas/user-schema";
 import { signIn } from "@/auth";
 import { DEFAULT_LOGGED_IN_REDIRRECT } from "@/routes";
-import { StaffSchema } from "@/lib/schema";
+// import { StaffSchema } from "@/lib/schema";
+import { StaffSchema } from "@/lib/zod-schemas/staff-schema";
 import { Calendar } from "@/components/ui/calendar"
 import {
   Popover,
