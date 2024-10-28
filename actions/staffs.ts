@@ -1,14 +1,14 @@
 "use server"
 import { db } from "@/lib/db";
+import { getUserById } from '@/data/user'
 import * as z from 'zod'
-// import { signUpSchema, StaffSettingsShema } from '@/lib/schema'
-// import { signUpSchema } from "@/lib/zod-schemas/user-schema";
 import { StaffSchema, StaffSettingsShema } from "@/lib/zod-schemas/staff-schema";
 import bcrypt from 'bcryptjs'
 import { getUserByEmail } from '@/data/user'
 import { sendVrificationEmail } from '@/lib/mail'
 import { generateVerificationToken } from '@/lib/tokens'
 import { UserRole } from '@prisma/client'
+import { currentRole, currentUser } from "@/lib/auth";
 
 
 // TODOS 
@@ -59,7 +59,7 @@ export const getStaffByEmail = async (email: string) => {
 
 // create a new staff by admin
 
-export const CourtRegistrationAction = async (values: z.infer<typeof StaffSchema>) => {
+export const StaffRegistrationAction = async (values: z.infer<typeof StaffSchema>) => {
     const fieldValidation = StaffSchema.safeParse(values);
     if (!fieldValidation.success) {
          return { error: "field Validation failed " }
@@ -176,24 +176,37 @@ export const getAllStaffs = async () => {
 
 // update staff with user records by user id
 
-export const updateStaffById = async (id: string, values: z.infer<typeof StaffSettingsShema>) => {
-    const fieldValidation = StaffSettingsShema.safeParse(values);
-    if (!fieldValidation.success) {
-         return { error: "field Validation failed " }
-    }
+export const updateStaffById = async (id: string, values: z.infer<typeof StaffSchema>) => {
+   
+            const user = await currentUser()
+            const role = await currentRole()
+            
+            if (role !== UserRole.STAFF) {
+                return {error: "Unauthorized"}
+            }
+        
+        if (!user) {
+                return {error: "Unauthorized"}
+            }
 
 
-    const {
-        firstName, 
-        otherNames,
-        lastName,
-        email, 
-        localGovernment,
-        phone,
-        state,
+            const dbUser = await getUserById(user.id);
 
-    } = fieldValidation.data
+            if (!dbUser) {
+                return "User does not exist"
+            }
+        
+                await db.user.update({
+                    where: {id: dbUser.id},
+                    data: {
+                        ...values,
+                        staff: {
+                            update: {
+                                ...values
+                            }
+                        }
+                    }
+                })
 
-
-
+    return {success: "Profile Updated"}
 }

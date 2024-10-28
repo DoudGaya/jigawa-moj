@@ -1,6 +1,10 @@
 import { S3Client } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
-import { env } from "process";
+import dotenv from 'dotenv';
+dotenv.config();
+
+// import { env } from "process";
+import process from "process";
 
 // Configure S3 client
 const s3Client = new S3Client({
@@ -12,10 +16,11 @@ const s3Client = new S3Client({
 });
 
 export const uploadFileToS3 = async (file: File, bucketName: string): Promise<string> => {
+  console.log({region: process.env.RESEND_API_KEY, testing: 'Hello Test '})
   const fileName = `${Date.now()}-${file.name}`;
   
   const upload = new Upload({
-    client: s3Client,
+    client: await s3Client,
     params: {
       Bucket: bucketName,
       Key: fileName,
@@ -23,6 +28,8 @@ export const uploadFileToS3 = async (file: File, bucketName: string): Promise<st
       ContentType: file.type,
     },
   });
+
+
 
   try {
     const result = await upload.done();
@@ -37,25 +44,3 @@ export const uploadMultipleFilesToS3 = async (files: FileList, bucketName: strin
   const uploadPromises = Array.from(files).map(file => uploadFileToS3(file, bucketName));
   return Promise.all(uploadPromises);
 };
-
-
-// import { S3 } from 'aws-sdk'
-
-// // Initialize S3 client
-// const s3 = new S3({
-//   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-//   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-//   region: process.env.AWS_REGION,
-// })
-
-// export async function uploadFileToS3(file: File, folder: string) {
-//   const params = {
-//     Bucket: process.env.AWS_BUCKET_NAME!,
-//     Key: `${folder}/${Date.now()}-${file.name}`,
-//     Body: file,
-//     ACL: 'public-read', // or private based on your needs
-//   }
-
-//   const data = await s3.upload(params).promise()
-//   return data.Location // This will be the URL of the uploaded file
-// }

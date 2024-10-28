@@ -3,7 +3,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 export const AdminCourt = () => {
   return (
-    <div className=' w-full space-y-6 px-10 py-8 h-full flex flex-col max-w-6xl mx-auto'>
+    <div className=' w-full space-y-6 px-10 py-8 h-full flex flex-col max-w-7xl mx-auto'>
     <Skeleton className=" bg-gray-200 dark:bg-gray-800 py-4 px-3 items-center flex justify-between w-full">
         <div className=" flex space-x-4  items-center">
             <Skeleton className=' bg-white dark:bg-gray-700 h-8 w-8' />

@@ -43,7 +43,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { useTransition } from 'react'
 import { submitPoliceCase } from "@/actions/police"
 import { improvedPoliceCaseSchema } from "@/lib/zod-schemas/case-schema"
-import { uploadFileToS3, uploadMultipleFilesToS3 } from '@/lib/aws/aws-s3'
+// import { uploadFileToS3, uploadMultipleFilesToS3 } from '@/awss3'
+import { uploadFileToS3, uploadMultipleFilesToS3 } from '@/actions/amazon-s3'
 import { FormError } from '@/components/FormError'
 
 

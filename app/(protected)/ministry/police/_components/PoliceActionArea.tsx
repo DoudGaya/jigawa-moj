@@ -114,10 +114,10 @@ export function AdminPoliceActionArea( { stations }: {
       <div className=" flex w-full justify-between items-center">
       <Dialog>
         <div className=" flex space-y-2 flex-col">
-            <p className=' text-lg font-poppins'>Police Registration Section</p>
+            <p className=' text-lg font-poppins'>Police Station Management System</p>
            <div className="">
             <DialogTrigger asChild>
-            <Button className=' font-poppins text-white'>Add New </Button>
+            <Button className=' font-poppins text-white'>Resgister a Police Station </Button>
             </DialogTrigger>
         </div>
         </div>
