@@ -1,4 +1,4 @@
-import { PartyRole } from '@prisma/client';
+import { CaseType, } from '@prisma/client';
 import * as z from 'zod'
 
 const isBrowser = typeof window !== 'undefined';
@@ -63,9 +63,7 @@ export const policeCaseSchema = z.object({
     defendantName: z.string().optional(),
     defendantAddress: z.string().optional(),
     defendantAge: z.string().optional(),
-    defendantSex: z.enum(['male', 'female', 'other'], {
-        errorMap: () => ({ message: "Please select the defendant's sex" })
-    }),
+    defendantSex: z.string().optional(),
     defendantOccupation: z.string().optional(),
     FIR: z.string().min(1, "Last name is required"),
     statementOfComplainant: z.string().optional(),
@@ -77,7 +75,7 @@ export const policeCaseSchema = z.object({
 
 export const improvedPoliceCaseSchema = z.object({
 
-    title: z.string().min(1, "First name is required"),
+    title: z.string().min(1, "Case Title is required"),
     caseDescription: z.string().min(1, "Last name is required"),
     // FIR: z.string().min(1, "Last name is required"),
     placeOfOffense: z.string().optional(),
@@ -103,9 +101,6 @@ export const improvedPoliceCaseSchema = z.object({
 
 
 export type PoliceCaseFormData = z.infer<typeof policeCaseSchema>;
-
-
-
 export const UploadsSchema = z.object({
   fileTitle: z.string().min(1, "File title is required"),
   fileDescriptions: z.string().optional(),
@@ -116,52 +111,67 @@ export const UploadsSchema = z.object({
 
 
 export const CaseCouncilSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  email: z.string().email("Invalid email format"),
-  phone: z.string().min(10, "Phone number must be valid"),
-  address: z.string().min(1, "Address is required"),
+  name: z.string().min(1, "Name is required").optional(),
+  email: z.string().email("Invalid email format").optional(),
+  phone: z.string().min(10, "Phone number must be valid").optional(),
+  address: z.string().min(1, "Address is required").optional(),
   role: z.string().optional(),
 })
 
 export const HearingSchema = z.object({
-  date: z.date().optional(),
+  date: z.string().optional(),
   time: z.string().optional(),
   caseCouncil: z.array(CaseCouncilSchema).optional(),
 })
 
-export const MinistryCaseSchema = z.object({
+
+
+export const MinistryCaseSchema = z.object({ //32
   title: z.string().min(1, "First name is required"),
   caseDescription: z.string().min(1, "Last name is required"),
   placeOfOffense: z.string().optional(),
   nameOfIPO: z.string().optional(),
+  underActs: z.string().optional(),
+  underSections: z.string().optional(),
+  yearOfFiling: z.string().optional(),
+  dateOfFiling: z.date().optional(),
+  // Court Information
+  courtId: z.string().optional(),
+  courtRoom: z.string().optional(),
+  courtDate: z.string().optional(),
+  courtTime: z.string().optional(),
+  judgeName: z.string().optional(),
+  judgePhone: z.string().optional(),
+  judgeEmail: z.string().email("Invalid email format").optional(),
+
 
   // Defendant Information
   defendantName: z.string().optional(),
   defendantAddress: z.string().optional(),
   defendantAge: z.string().optional(),
-  defendantSex: z.enum(['male', 'female', 'other'], {
-      errorMap: () => ({ message: "Please select the defendant's sex" })
-  }),
-  defendantOccupation: z.string().min(1, "Defendant's occupation is required"),
+  defendantSex: z.string().optional(),
+  defendantOccupation: z.string().optional(),
 
 
+  hearings: z.array(HearingSchema).optional(),
   caseCouncil: z.array(CaseCouncilSchema).optional(),
+
+
+
   FIR: fileValidation(5000000, ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']).optional(),
   statementOfComplainant: fileValidation(5000000, ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']).optional(),
   statementOfVictims: fileValidation(5000000, ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']).optional(),
   statementOfWitness: fileValidation(5000000, ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']).optional(),
   medicalReport: fileValidation(5000000, ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']).optional(),
   pictures: multipleFileValidation(5000000, ['image/jpeg', 'image/png', 'image/gif']).optional(),
-  caseType: z.string().optional(),
-  caseStatus: z.string().default("submitted"),
+  caseType: z.enum([CaseType.Civil, CaseType.Criminal, CaseType.Family, CaseType.Other]).optional(),
+  caseStatus: z.string().default("submitted").optional(),
 
 
 
   // tribunal and court informations
   files: z.array(UploadsSchema).optional(),
-  tribunal: z.string().optional(),
-  court: z.string().optional(),
-  hearings: z.array(HearingSchema).optional(),
+  tribunal: z.string().optional(), // 29
 });
 
 

@@ -36,11 +36,6 @@ export function ResetForm() {
     },
   })
 
-  const googleSignIn = (provider: "google") => {
-    signIn(provider, {
-      callbackUrl: DEFAULT_LOGGED_IN_REDIRRECT
-    })
-  }
  
 
 
@@ -57,9 +52,8 @@ export function ResetForm() {
   }
 
 
-
   return (
-    <div className=" flex flex-col w-full px-10">
+    <div className=" flex flex-col h-full mx-auto max-w-xl mt-20 w-full px-10">
       <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
       <fieldset className=" border  border-primary rounded-lg flex py-6 flex-col text-center space-y-4 px-6 align-middle justify-center">

@@ -1,9 +1,22 @@
 import React from 'react'
+import { CaseActionArea } from './_components/CaseActionArea'
+import { getAllPoliceStations } from '@/actions/police'
+import { CaseSchemaWithAllRecords, PoliceUserType, CourtWithAllRecords } from '@/typings'
+import { getAllCasesByCourtId } from '@/actions/cases'
+import { getAllCourts } from '@/actions/courts'
 
-const page = () => {
+
+const AdminCasePage = async () => {
+
+  // @ts-ignore
+  const cases = await getAllCasesByCourtId() as CaseSchemaWithAllRecords[]
+
+  const courts = await getAllCourts() as CourtWithAllRecords[]
   return (
-    <div>Cases</div>
-  )
+    <div className='flex flex-col h-full'>
+      <CaseActionArea cases={cases} courts={courts} />
+    </div>
+    )
 }
 
-export default page
+export default AdminCasePage

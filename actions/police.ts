@@ -5,7 +5,6 @@ import { db } from '@/lib/db'
 import { getUserByEmail, getUserById } from '@/data/user'
 import { sendWelcomeMailToPolice } from '@/lib/mail'
 import { generateVerificationToken } from '@/lib/tokens'
-import { policeCaseFormSchema } from "@/lib/zod-schemas/policeSchema"
 import { policeUSerSchema } from "@/lib/zod-schemas/police-schema"
 import { CaseStatus, UserRole } from '@prisma/client'
 import { policeCaseSchema } from "@/lib/zod-schemas/case-schema"
@@ -170,11 +169,7 @@ export const getPoliceById = async (id: string) => {
 
 
 export const deletePolice = async (id: string) => {
-
-
     const policeExist = await getUserById(id)
-
-
     if (!policeExist) {
         return {error: "Police do not Exist"}
     }

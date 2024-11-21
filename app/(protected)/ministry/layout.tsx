@@ -8,7 +8,6 @@ export default async function AdmninLayout({ children }: { children: React.React
 
 
   const session = await auth()
-  const user = session?.user.name
    if (session?.user.role === "USER") {
     return redirect("/user/dashboard")
    } else if (session?.user.role === "STAFF") {

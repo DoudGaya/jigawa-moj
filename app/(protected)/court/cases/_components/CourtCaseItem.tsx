@@ -51,7 +51,6 @@ import {
   import { AiOutlineFileProtect } from "react-icons/ai"
 import { CaseStatus } from '@prisma/client'
 import { deleteCase } from '@/actions/cases'
-import { toast } from 'sonner'
 
 
   // @ts-ignore
@@ -67,7 +66,7 @@ export const AdminCaseItem = ( {caseData}: {
 const deleteCaseItem = async (id: string) => {
     try {
        const data = await deleteCase(id)
-        return {success: "Case has been Deleted Successfully!"}
+        return data
     } catch (error) {
         console.log(error)  
     }
@@ -83,7 +82,6 @@ const handleCaseDelete = () => {
         // @ts-ignore
           setError(data?.error)
           setSuccess(data?.success)
-          router.push('/ministry/cases')
       })
   })
 
@@ -94,13 +92,13 @@ const handleCaseDelete = () => {
 
 console.log(caseData)
   return (
-    <div className=' flex rounded-lg bg-white border border-green-300 shadow-sm flex-col'>
+    <div className=' flex rounded-lg bg-white border border-green-500 shadow-sm flex-col'>
         <div className=" flex h-full flex-col px-4 py-4">
           <div className=" my-2 py-2 flex items-center justify-between spaxe-x-3">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-7">
               <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
             </svg>
-              <span className=' text-sm bg-green-500/30 px-1.5 cursor-pointer font-mono rounded-md'>{ `JG-MOJ-${caseData.createdAt.getFullYear()}-${caseData.caseNumber}` } </span>
+              <span className=' text-sm bg-green-500/30 px-1.5 cursor-pointer font-mono rounded-md'>{ caseData.caseNumber } </span>
         </div>
         <Separator className=' mb-4' />
         <div className=" flex flex-col space-y-6">
@@ -159,26 +157,18 @@ console.log(caseData)
       <div className=" grid grid-cols-2 gap-2 justify-center ">
         <Button onClick={() => setOpen(true)} className=' text-white'>View Case Details</Button>
         {/* <div className=""> */}
-          <Link className=' px-6 py-1.5 w-full border-2 border-green-600 text-center rounded-md bg-white text-green-500 text-sm' href={`/ministry/cases/${caseData.id}`}> Update Case</Link>
+          <Link className=' px-6 py-1.5 w-full border-2 border-green-600 text-center rounded-md bg-white text-green-500 text-sm' href={`/court/cases/${caseData.id}`}> Update Case</Link>
         {/* </div> */}
       </div>
       <Drawer open={open} onOpenChange={setOpen}>
         <DrawerContent className=''>
           <DrawerHeader className=' py-0'>
-            <DrawerTitle className=' text-3xl'>
-              <p className=' py-1'>Case: {caseData.title}</p>
-            </DrawerTitle>
-            <DrawerDescription className=' border-b-2 border-green-300'>
-              <span className='py-2 bg-green-300 flex max-w-max text-center font-poppins font-semibold px-4 rounded-t-xl text-black'>
-                  { `JG-MOJ-${caseData.createdAt.getFullYear()}-${caseData.caseNumber}` }
-              </span>
-
-            </DrawerDescription>
+            <DrawerTitle className=' text-3xl'>Case: {caseData.title}</DrawerTitle>
+            <DrawerDescription>Case Number: {caseData.caseNumber}</DrawerDescription>
           </DrawerHeader>
           <ScrollArea className="h-[calc(100vh-10em)] px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-             <div className="bg-green-300 h-full rounded-b-lg rounded-tr-lg ">
-             <Card className=' border rounded-b-lg rounded-tr-lg h-full border-green-300'>
+              <Card>
                 <CardHeader>
                   <CardTitle>Case Information</CardTitle>
                 </CardHeader>
@@ -220,18 +210,24 @@ console.log(caseData)
                   </dl>
                 </CardContent>
               </Card>
-             </div>
 
-              <Card className=' border border-green-300'>
+              <Card>
                 <CardHeader>
                   <CardTitle>Defendant Information</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <dl className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                      <div className='bg-gray-100 p-2  rounded-md'>
+                  <dl className="grid grid-cols-1 gap-2 text-sm">
+                    <div className="flex items-center gap-2">
+                      <UserIcon className="w-4 h-4" />
+                      <div>
                         <dt className="font-medium">Name</dt>
                         <dd>{caseData.defendantName}</dd>
                       </div>
+                    </div>
+                    <div className=' bg-gray-100 p-2  rounded-md'>
+                      <dt className="font-medium">Address</dt>
+                      <dd>{caseData.defendantAddress}</dd>
+                    </div>
                     <div className=' bg-gray-100 p-2  rounded-md'>
                       <dt className="font-medium">Age</dt>
                       <dd>{caseData.defendantAge}</dd>
@@ -244,53 +240,36 @@ console.log(caseData)
                       <dt className="font-medium">Occupation</dt>
                       <dd>{caseData.defendantOccupation}</dd>
                     </div>
-                    <div className=' bg-gray-100 col-span-2 p-2  rounded-md'>
-                      <dt className="font-medium">Defendant Address</dt>
-                      <dd>{caseData.defendantAddress}</dd>
-                    </div>
                   </dl>
                 </CardContent>
               </Card>
 
-              <Card className=' border border-green-300'>
+              <Card>
                 <CardHeader>
                   <CardTitle>Court Information</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <dl className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                    <div className="flex items-center col-span-2 bg-gray-100 rounded-lg gap-2">
-                      <div className=' px-2 py-3'>
-                        <dt className="font-medium text-gray-800">Court Name</dt>
-                        <dd className=''>{caseData?.court?.courtName || "N/A"}</dd>
+                  <dl className="grid grid-cols-1 gap-2 text-sm">
+                    <div className="flex items-center gap-2">
+                      <GavelIcon className="w-4 h-4" />
+                      <div>
+                        <dt className="font-medium">Court Name</dt>
+                        <dd>{caseData?.court?.courtName || "N/A"}</dd>
                       </div>
                     </div>
                     <div className=' bg-gray-100 p-2  rounded-md'>
-                      <dt className="font-medium">Tribunal</dt>
-                      <dd>{ ` ${caseData?.court?.tribunal[0]}${caseData?.court?.tribunal.slice(1).toLowerCase()} Court` || "N/A"}</dd>
-                    </div>
-                    <div className=' bg-gray-100 col-span-2 p-2  rounded-md'>
                       <dt className="font-medium">Court Address</dt>
                       <dd>{caseData?.court?.courtAddress || "N/A"}</dd>
                     </div>
                     <div className=' bg-gray-100 p-2  rounded-md'>
-                      <dt className="font-medium">Court LGA</dt>
-                      <dd>{caseData?.court?.courtLocalGovernment || "N/A"}</dd>
-                    </div>
-                   
-                    <div className=' bg-gray-100 p-2  rounded-md'>
-                      <dt className="font-medium">Court Level</dt>
-                      <dd>{caseData?.court?.level || "N/A"}</dd>
-                    </div>
-
-                    <div className=' bg-gray-100 p-2  rounded-md'>
-                      <dt className="font-medium">Jurisdiction</dt>
-                      <dd>{caseData?.court?.jurisdiction || "N/A"}</dd>
+                      <dt className="font-medium">Tribunal</dt>
+                      <dd>{caseData.tribunal}</dd>
                     </div>
                   </dl>
                 </CardContent>
               </Card>
 
-              <Card className=' border border-green-300'>
+              <Card>
                 <CardHeader>
                   <CardTitle>Hearings</CardTitle>
                 </CardHeader>
@@ -298,62 +277,20 @@ console.log(caseData)
                   <ul className="space-y-2">
                     { caseData.hearings.length > 0 ? caseData.hearings.map((hearing: any, index: any) => (
                       <li key={index} className="text-sm">
-                        {/* <span className="font-medium">{hearing.caseId}</span> */}
+                        <span className="font-medium">{hearing.caseId}</span>
                         <br />
-                        <div className=" flex flex-col">
-                            {hearing.date} at {hearing.time} 
-                        </div>
+                        {new Date(hearing.date).toDateString()} at {new Date(hearing.time).toLocaleTimeString()}
                       </li>
                     )) : "There is no available hearing"}
                   </ul>
                 </CardContent>
               </Card>
 
-              <Card className=' border border-green-300'>
+              <Card>
                 <CardHeader>
-                  <CardTitle className=' border-b pb-2 border-green-300 my-2'>Documents </CardTitle>
-                 <div className=" flex flex-col space-y-4">
-                 <div className=" flex flex-row justify-between bg-gray-100 px-2 py-2 w-full">
-                  <p>First Information Report (FIR)</p>
-                    { caseData.FIR && <Link href={String(caseData.FIR)} download>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
-                            <path d="M10.75 2.75a.75.75 0 0 0-1.5 0v8.614L6.295 8.235a.75.75 0 1 0-1.09 1.03l4.25 4.5a.75.75 0 0 0 1.09 0l4.25-4.5a.75.75 0 0 0-1.09-1.03l-2.955 3.129V2.75Z" />
-                            <path d="M3.5 12.75a.75.75 0 0 0-1.5 0v2.5A2.75 2.75 0 0 0 4.75 18h10.5A2.75 2.75 0 0 0 18 15.25v-2.5a.75.75 0 0 0-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5Z" />
-                          </svg>
-                  </Link> }
-                 </div>
-                 <div className=" flex flex-row justify-between bg-gray-100 px-2 py-2 w-full">
-                  <p>Statement of Complainant</p>
-                    { caseData.statementOfComplainant && <Link href={String(caseData.statementOfComplainant)} download>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
-                            <path d="M10.75 2.75a.75.75 0 0 0-1.5 0v8.614L6.295 8.235a.75.75 0 1 0-1.09 1.03l4.25 4.5a.75.75 0 0 0 1.09 0l4.25-4.5a.75.75 0 0 0-1.09-1.03l-2.955 3.129V2.75Z" />
-                            <path d="M3.5 12.75a.75.75 0 0 0-1.5 0v2.5A2.75 2.75 0 0 0 4.75 18h10.5A2.75 2.75 0 0 0 18 15.25v-2.5a.75.75 0 0 0-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5Z" />
-                          </svg>
-                  </Link> }
-                 </div>
-
-                 <div className=" flex flex-row justify-between bg-gray-100 px-2 py-2 w-full">
-                  <p>Statement of Victim(s)</p>
-                    { caseData.statementOfVictims && <Link href={String(caseData.statementOfVictims)} download>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
-                            <path d="M10.75 2.75a.75.75 0 0 0-1.5 0v8.614L6.295 8.235a.75.75 0 1 0-1.09 1.03l4.25 4.5a.75.75 0 0 0 1.09 0l4.25-4.5a.75.75 0 0 0-1.09-1.03l-2.955 3.129V2.75Z" />
-                            <path d="M3.5 12.75a.75.75 0 0 0-1.5 0v2.5A2.75 2.75 0 0 0 4.75 18h10.5A2.75 2.75 0 0 0 18 15.25v-2.5a.75.75 0 0 0-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5Z" />
-                          </svg>
-                  </Link> }
-                 </div>
-
-                 <div className=" flex flex-row justify-between bg-gray-100 rounded-lg px-2 py-2 w-full">
-                  <p>Statement of Witness</p>
-                    { caseData.statementOfWitness && <Link href={String(caseData.statementOfWitness)} download>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
-                            <path d="M10.75 2.75a.75.75 0 0 0-1.5 0v8.614L6.295 8.235a.75.75 0 1 0-1.09 1.03l4.25 4.5a.75.75 0 0 0 1.09 0l4.25-4.5a.75.75 0 0 0-1.09-1.03l-2.955 3.129V2.75Z" />
-                            <path d="M3.5 12.75a.75.75 0 0 0-1.5 0v2.5A2.75 2.75 0 0 0 4.75 18h10.5A2.75 2.75 0 0 0 18 15.25v-2.5a.75.75 0 0 0-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5Z" />
-                        </svg>
-                  </Link> }
-                 </div>
+                  <CardTitle>File</CardTitle>
+                  { caseData.FIR && <Link href={String(caseData.FIR)} download>Download FIR</Link> }
                   
-
-                 </div>
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-2">
@@ -369,7 +306,7 @@ console.log(caseData)
                 </CardContent>
               </Card>
 
-              <Card className=' border border-green-300'>
+              <Card>
                 <CardHeader>
                   <CardTitle>Evidence Pictures</CardTitle>
                 </CardHeader>
@@ -377,7 +314,7 @@ console.log(caseData)
                   <div className="grid grid-cols-4 gap-2">
                     {caseData.pictures.map((picture) => (
                       // @ts-ignore
-                     <div key={picture}  className=" bg-gray-100 px-2 py-2 flex flex-col w-full rounded-lg space-y-2">
+                     <div key={picture}  className=" flex flex-col w-full rounded-lg space-y-2">
                        <div className="aspect-square bg-muted rounded-md flex overflow-hidden items-center justify-center">
                       
                         <Image width={700} height={700} 
@@ -386,7 +323,7 @@ console.log(caseData)
                       </div>
                       <Link 
                       // @ts-ignore
-                      href={picture} download className=' w-full hover:text-green-600 hover:underline space-x-3 flex items-center' type='download'>
+                      href={picture} download className=' flex items-center' type='download'>
                         <small className=' text-sm'>Download</small>
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
                             <path d="M10.75 2.75a.75.75 0 0 0-1.5 0v8.614L6.295 8.235a.75.75 0 1 0-1.09 1.03l4.25 4.5a.75.75 0 0 0 1.09 0l4.25-4.5a.75.75 0 0 0-1.09-1.03l-2.955 3.129V2.75Z" />
@@ -402,7 +339,7 @@ console.log(caseData)
           </ScrollArea>
           <DrawerFooter className=' flex space-x-4 w-full'>
            <div className=" flex space-x-3 w-full">
-            {/* <Link className=' py-2 px-6 bg-green-600 rounded-lg text-white' href={`/ministry/cases/${caseData.id}`}>Update Records </Link> */}
+            {/* <Link className=' py-2 px-6 bg-green-600 rounded-lg text-white' href={`/court/cases/${caseData.id}`}>Update Records </Link> */}
               <DrawerClose asChild>
                 <Button variant="outline">Close</Button>
               </DrawerClose>

@@ -1,0 +1,443 @@
+// generator client {
+//   provider = "prisma-client-js"
+// }
+
+// datasource db {
+//   provider = "mongodb"
+//   url      = env("DATABASE_URL")
+// }
+
+
+
+
+// model User {
+//   id                  String      @id @default(auto()) @map("_id") @db.ObjectId
+//   firstName           String? 
+//   lastName            String? 
+//   otherNames          String?
+//   email               String?      @unique
+//   password            String?
+//   phone               String?
+//   state               String?
+//   gender              Gender?
+//   localGovernment     String?
+//   emailVerified       DateTime?    @map("email_verified")
+//   image               String?
+//   role                UserRole     @default(USER)
+//   accounts            Account[]
+//   court               Court?
+//   customer            Customer?
+//   filings             Filing[]
+//   staff               Staff?
+//   police              PoliceStation?
+//   isTwoFactorEnabled Boolean @default(false)
+//   TwoFactorConfirmation TwoFactorConfirmation?
+//   @@map("user")
+// }
+
+
+// model PoliceStation {
+//   id                          String    @id @default(auto()) @map("_id") @db.ObjectId
+//   stationName                 String?        // Name of the police station
+//   stationAddress              String?        // Full address of the police station
+//   stationLocalGovernment      String?        // Local government area for the station
+//   stationcontactNumber        String?
+//   stationState                String?    
+//   contactEmail                String? // if different from user mail
+//   user                        User      @relation(fields: [userId], references: [id], onDelete: Cascade) 
+//   userId                      String    @db.ObjectId @unique
+//   createdAt                   DateTime @default(now())
+//   updatedAt                   DateTime @updatedAt
+//   @@map("police")
+// }
+
+
+// enum Gender {
+//   MALE
+//   FEMALE
+//   OTHER
+// }
+
+
+// model Account {
+//   id                                       String                   @id @default(auto()) @map("_id") @db.ObjectId
+//   userId                                   String                   @db.ObjectId
+//   type                                     String
+//   provider                                 String
+//   providerAccountId                        String                   @map("provider_account_id")
+//   refresh_token                            String?                  @db.String
+//   access_token                             String?                  @db.String
+//   expires_at                               Int?
+//   token_type                               String?
+//   scope                                    String?
+//   id_token                                 String?                  @db.String
+//   session_state                            String?
+//   user                                     User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   @@unique([provider, providerAccountId])
+//   @@map("account")
+// }
+
+
+// enum UserRole {
+//   USER
+//   ADMIN
+//   COURT
+//   STAFF
+//   POLICE
+// }
+
+// model VerificationToken {
+//   id                                  String            @id @default(auto()) @map("_id") @db.ObjectId
+//   email                               String
+//   token                               String            @unique
+//   expires                             DateTime
+//   @@unique([email, token])
+// }
+
+// model PasswordResetToken {
+//   id                                  String             @id @default(auto()) @map("_id") @db.ObjectId
+//   email                               String
+//   token                               String             @unique
+//   expires                             DateTime
+//   @@unique([email, token])
+// }
+
+// model twoFactorToken {
+//   id                                  String              @id @default(auto()) @map("_id") @db.ObjectId
+//   email                               String
+//   token                               String              @unique
+//   expires                             DateTime
+//   @@unique([email, token])
+// }
+
+
+// model Probate {
+//   id                                  String                @id @default(auto()) @map("_id") @db.ObjectId
+//   assets                              Asset[]   
+//   beneficiaries                       String  
+//   filing                              Filing?
+//   customer                            Customer              @relation(fields: [customerId], references: [id],  onDelete: Cascade)
+//   customerId                          String                @db.ObjectId 
+//   createdAt                           DateTime              @default(now())
+//   updatedAt                           DateTime              @updatedAt
+// }
+
+// model Asset {
+//   id                                  String                 @id @default(auto()) @map("_id") @db.ObjectId
+//   name                                String?
+//   value                               String?
+//   probate                             Probate                @relation(fields: [probateId], references: [id],  onDelete: Cascade)
+//   probateId                           String                 @db.ObjectId @unique
+// }
+
+// model TwoFactorConfirmation {
+//   id                                  String                  @id @default(auto()) @map("_id") @db.ObjectId
+//   userId                              String                  @db.ObjectId
+//   user                                User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   @@unique([userId])
+// }
+
+
+// model PoliceCaseReport {
+//   id                                  String                    @id @default(auto()) @map("_id") @db.ObjectId
+//   defendantName                       String
+//   caseTitle                           String
+//   caseDescription                     String?
+//   defendantAddress                    String
+//   defendantAge                        String
+//   defendantSex                        String
+//   defendantOccupation                 String
+//   placeOfOffense                      String
+//   nameOfIPO                           String
+//   firstInformationReport              String?     
+//   statementOfComplainant              String?     
+//   statementOfVictims                  String?     
+//   statementOfWitness                  String?     
+//   medicalReport                       String?     
+//   pictures                            String[]    
+//   isDraft                             Boolean                 @default(false)
+//   createdAt                           DateTime                @default(now())
+// }
+
+
+
+// model Counter {
+//   id    String @id @default(auto()) @map("_id") @db.ObjectId
+//   name  String @unique
+//   value Int
+// }
+
+
+
+// model Case {    
+//   id                                    String             @id @default(auto()) @map("_id") @db.ObjectId   
+//   title                                 String?
+//   caseDescription                       String?
+//   placeOfOffense                        String?
+//   nameOfIPO                             String?
+//   dateOfFiling                          DateTime? @default(now())
+//   yearOfFIR                             String?
+//   underActs                             String?
+//   underSections                         String?
+  
+  
+//   // defendant informations 
+
+//   defendantAddress                      String?
+//   defendantAge                          String?
+//   defendantSex                          String?
+//   defendantOccupation                   String?
+//   defendantName                         String?
+
+//   // case informations & Attachments
+
+//   caseCouncil                           Council[]    
+//   FIR                                   String?
+//   statementOfComplainant                String?
+//   statementOfVictims                    String?
+//   statementOfWitness                    String?
+//   medicalReport                         String?
+//   pictures                              String[]
+//   caseNumber                            String
+//   courtRoom                             String?
+//   courtDate                             DateTime?
+//   caseType                              CaseType? // enum
+//   caseStatus                            CaseStatus // enum
+//   judgeName                             String?
+//   judgeEmail                            String?
+//   judgePhone                            String?
+  
+
+// // court informations and Tribunal
+
+//   tribunal                              String?
+//   courtId                               String?            @db.ObjectId
+//   hearings                              Hearing[]
+//   court                                 Court?             @relation(fields: [courtId], references: [id])
+
+//   // other informations 
+
+
+//   files                                 Files[]
+//   filing                                Filing?
+//   transaction                           Transaction[]
+//   createdAt                             DateTime           @default(now())
+//   updatedAt                             DateTime           @updatedAt
+//   @@map("case")
+// }
+
+
+
+// model Council {
+//   id                                    String       @id @default(auto()) @map("_id") @db.ObjectId
+//   caseId                                String       @db.ObjectId
+//   name                                  String?
+//   email                                 String?
+//   phone                                 String?
+//   role                                  String?
+//   address                               String?
+//   case                                  Case         @relation(fields: [caseId], references: [id], onDelete: Cascade)
+//   createdAt                             DateTime     @default(now())
+//   updatedAt                             DateTime     @updatedAt
+// }
+
+
+// // model Parties {
+// //   id                  String @id @default(auto()) @map("_id") @db.ObjectId
+// //   case                Case @relation(fields: [caseId], references: [id], onDelete: Cascade)
+// //   caseId              String @db.ObjectId
+// //   partyName           String
+// //   partyRole           PartyRole
+// //   partyAddress        String?
+// //   partyPhone          String?
+// //   partyEmail          String?
+// //   partyOccupation     String?
+// //   partyAge            String
+// // }
+
+
+
+
+// model Hearing {
+//     id                  String      @id @default(auto()) @map("_id") @db.ObjectId
+//     case                Case        @relation(fields: [caseId], references: [id], onDelete: Cascade) 
+//     caseId              String      @db.ObjectId
+//     time                DateTime?
+//     date                DateTime?
+// }
+
+
+
+
+// model Files {
+//   id              String @id @default(auto()) @map("_id") @db.ObjectId
+//   fileTitle       String?
+//   fileDescription String?
+//   fileUrl         String
+//   case            Case @relation(fields: [caseId], references: [id], onDelete: Cascade)
+//   caseId          String @db.ObjectId @unique
+//   @@map("file")
+// }
+
+// model Customer {
+//   id                  String          @id @default(auto()) @map("_id") @db.ObjectId
+//   city                String?
+//   address             String?
+//   occupation          String?
+//   employmentStatus    String?
+//   maritalStatus       String?
+//   probates            Probate[]
+//   user                User              @relation(fields: [userId], references: [id], onDelete: Cascade )
+//   userId              String            @db.ObjectId @unique
+//   transactions        Transaction[]
+//   // cases               Case[]
+//   @@map("customer")
+// }
+
+// model Transaction {
+//   id                  String     @id @default(auto()) @map("_id") @db.ObjectId
+//   amount              String
+//   paymentRef          String
+//   paymentFor          String
+//   paymentStatus       PaymentStatus
+//   case                Case @relation( fields: [caseId], references: [id], onDelete: Cascade)
+//   caseId              String @db.ObjectId @unique
+//   customer            Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+//   customerId          String @db.ObjectId
+//   paymentDate         DateTime @default(now())
+//   @@map("transaction")
+// }
+
+// enum PaymentStatus {
+//   PENDING
+//   PAID
+//   FAILED
+// }
+
+
+// enum CaseStatus {
+//   Pending
+//   Active
+//   Closed
+//   Submitted
+//   Reviewed
+//   Draft
+// }
+
+// enum CaseType {
+//   Criminal
+//   Civil
+//   Family
+//   Other
+// }
+
+// model Court {
+//   id                      String   @id @default(auto()) @map("_id") @db.ObjectId
+//   courtName               String
+//   tribunal                Tribunal
+//   city                    String?
+//   courtLocalGovernment    String?
+//   jurisdiction            String?
+//   courtAddress            String?
+//   level                   String? // Supreme Court, High Court, District Court
+//   user                    User @relation(fields: [userId], references: [id])
+//   userId                  String @db.ObjectId @unique
+//   cases                   Case[]
+//   createdAt               DateTime @default(now())
+//   updatedAt               DateTime @updatedAt
+//   @@map("court")
+// }
+
+// enum Tribunal {
+//   SHARIA
+//   CIVIL
+//   ELECTION
+//   INDUSTRIAL
+//   TAX
+//   ADMINISTRATIVE
+//   OTHER
+// }
+
+// // model Infrastructure {
+// //   id              String @id @default(auto()) @map("_id") @db.ObjectId
+// //   name            String?
+// //   number          String?
+// //   court           Court @relation(fields: [courtId], references: [id], onDelete: Cascade)
+// //   courtId         String @db.ObjectId
+// //   @@map("infrastructure")
+// // }
+
+
+// model Staff {
+//   id                                  String                      @id @default(auto()) @map("_id") @db.ObjectId
+//   staffNumber                         String?
+//   staffRole                           String?
+//   salaryStructure                     String?
+//   jobTitle                            String? 
+//   isJudge                             Boolean?
+//   department                          String?
+//   employerName                        String?
+//   employmentLocation                  String?
+//   position                            String?
+//   salaryGrade                         String?
+//   step                                String?
+//   dateOfEmployment                    DateTime?
+//   user                                User                        @relation(fields: [userId], references: [id], onDelete: Cascade) 
+//   userId                              String                      @db.ObjectId @unique
+//   courtId                             String?                     @db.ObjectId  
+//   createdAt                           DateTime                    @default(now())
+//   updatedAt                           DateTime                    @updatedAt
+//   @@map("staff")
+// }
+
+
+// enum StaffRole {
+//   JUDGES
+//   ADMIN
+//   LAWYER
+// }
+
+// model Inmate {
+//   id                    String @id @default(auto()) @map("_id") @db.ObjectId
+//   firstName             String
+//   lastName              String
+//   age                   String
+//   maritalStatus         String
+//   dateOfIncarceration   DateTime
+//   relativePhone         String
+//   relativeFullName      String
+//   phoneNumber           String
+//   relativeaddress       String
+//   expectedReleaseDate   DateTime
+//   // case                  Case @relation(fields: [caseId], references: [id], onDelete: Cascade)
+//   caseId                String @unique @db.ObjectId
+// }
+
+// model Filing {
+//   id                  String        @id @default(auto()) @map("_id") @db.ObjectId
+//   case                Case?         @relation(fields: [caseId], references: [id])
+//   caseId              String        @db.ObjectId @unique
+//   probate             Probate?      @relation(fields: [probateId], references: [id])
+//   probateId           String        @db.ObjectId @unique
+//   filingType          FilingType
+//   user                User          @relation(fields: [userId], references: [id])
+//   userId              String        @db.ObjectId @unique
+//   filedAt             DateTime      @default(now())
+//   status              FilingStatus
+//   @@map("filing")
+// }
+
+
+// enum FilingType {
+//   CASE
+//   PROBATE
+// }
+
+
+// enum FilingStatus {
+//   Submitted
+//   UnderReview
+//   Accepted
+//   Rejected
+// }
+

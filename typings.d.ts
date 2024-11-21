@@ -34,48 +34,60 @@ interface CustomerType {
 
 
   interface PoliceCaseSchemaType {
-    id: String
-    title: String
-    caseDescription: String | undefined
-    FIR: String | undefined
-    placeOfOffense: String | undefined
-    statementOfComplainant: String | undefined
-    statementOfVictims: String | undefined
-    statementOfWitness: String | undefined
-    medicalReport: String | undefined
-    defendantName: String | undefined
-    defendantAddress: String | undefined
-    defendantAge:  String | undefined
-    defendantSex: String | undefined
-    defendantOccupation: String | undefined
-    pictures:String[] | []
-    nameOfIPO: String | undefined
-    tribunal: String | undefined
+    id: string
+    title: string
+    caseDescription: string | undefined
+    FIR: string | undefined
+    placeOfOffense: string | undefined
+    statementOfComplainant: string | undefined
+    statementOfVictims: string | undefined
+    statementOfWitness: string | undefined
+    medicalReport: string | undefined
+    defendantName: string | undefined
+    defendantAddress: string | undefined
+    defendantAge:  string | undefined
+    defendantSex: string | undefined
+    defendantOccupation: string | undefined
+    pictures:string[] | []
+    nameOfIPO: string | undefined
+    tribunal: string | undefined
     caseStatus: CaseStatus
-    caseNumber: String
-    courtId: String | undefined
+    caseNumber: string
+    courtId: string | undefined
   }
 
   interface CaseSchemaWithAllRecords {
-    id : String
-    title: String
-    caseDescription: String | undefined
-    FIR: String | undefined
-    placeOfOffense: String | undefined
-    statementOfComplainant: String | undefined
-    statementOfVictims: String | undefined
-    statementOfWitness: String | undefined
-    medicalReport: String | undefined
-    defendantName: String | undefined
-    defendantAddress: String | undefined
-    defendantAge:  String | undefined
-    defendantSex: String | undefined
-    defendantOccupation: String | undefined
-    pictures:String[] | []
-    nameOfIPO: String | undefined
-    tribunal: String | undefined
-    caseNumber: String
-    courtId: String | undefined
+    id : string
+    title: string
+    caseDescription: string | undefined
+    FIR: string | undefined
+    placeOfOffense: string | undefined
+    statementOfComplainant: string | undefined
+    statementOfVictims: string | undefined
+    statementOfWitness: string | undefined
+    medicalReport: string | undefined
+    defendantName: string | undefined
+    defendantAddress: string | undefined
+    dateOfFiling: Date | undefined,
+    yearOfFiling: string | undefined,
+    underActs: string | undefined,
+    underSections: string | undefined,
+    defendantAge:  string | undefined
+    defendantSex: string | undefined
+    courtRoom: string | undefined,
+    courtDate: string | undefined,
+    caseType: CaseType | undefined,
+    judgeName: string | undefined
+    judgeEmail: string | undefined
+    courtTime: string | undefined
+    judgePhone: string | undefined
+    tribunal: string | undefined
+    defendantOccupation: string | undefined
+    pictures:string[] | []
+    nameOfIPO: string | undefined
+    tribunal: string | undefined
+    caseNumber: string
+    courtId: string | undefined
     court: CourtWithAllRecords
     caseType: CaseType | undefined
     caseStatus: CaseStatus
@@ -101,7 +113,7 @@ interface CustomerType {
     state: string
     gender: Gender
     localGovernment: string
-    emailVerified: String
+    emailVerified: string
     image: string
     role: UserRole
     isTwoFactorEnabled: boolean

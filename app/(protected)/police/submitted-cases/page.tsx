@@ -12,12 +12,12 @@ const page = async () => {
           <p className='font-poppins text-lg font-semibold'>Submitted Cases</p>
         </div>
         <div className="max-w-7xl h-full w-full py-4">
-          <div className=" grid md:grid-cols-4 grid-cols-1 px-6 md:px-0 gap-y-6 sm:gap-y-4 sm:grid-cols-2 gap-4">
+          <div className=" grid md:grid-cols-3 grid-cols-1 px-6 md:px-0 gap-y-6 sm:gap-y-4 sm:grid-cols-2 gap-4">
           {
             submittedCases.map((item: PoliceCaseSchemaType) => {
               return (
                 // @ts-ignore
-                <SubmittedCase key={item.id} item={item} /> 
+                <SubmittedCase key={item.id} caseData={item} /> 
               )
             })
           }

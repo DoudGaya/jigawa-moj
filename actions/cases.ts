@@ -68,6 +68,29 @@ export async function generateCaseNumber() {
         console.log(error)
     }
   }
+
+  // get all by court ID
+
+    export const getAllCasesByCourtId = async (courtId: string) => {
+        try {
+            const cases = await db.case.findMany({
+                where: {
+                    courtId
+                },
+                include: {
+                    caseCouncil: true,
+                    court: true,
+                    files: true,
+                    hearings: true,
+                    filing: true,
+                    transaction: true,
+                }
+            })
+            return cases
+        } catch (error) {
+            console.log(error)
+        }
+    }
   
   
   export const getAllDraftedCases = async () => {
@@ -110,16 +133,20 @@ export const findCaseById = async (id: string) => {
  }
 
 
- // find a staff by id
  
  export const getCaseItemById = async (id: string) => {
      try {
-         const caseItem = await db.user.findUnique({
+         const caseItem = await db.case.findUnique({
              where: {
                  id,
              },
              include: {
-                 staff: true,
+                caseCouncil: true,
+                court: true,
+                files: true,
+                hearings: true,
+                filing: true,
+                transaction: true,
              }
          })
          return caseItem

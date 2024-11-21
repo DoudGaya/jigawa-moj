@@ -4,6 +4,14 @@ import Link from 'next/link'
 import Image from 'next/image'
 import logo from '@/public/img/nigeria.png'
 import { useCurrentUser } from '@/hooks/use-current-user'
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+  } from "@/components/ui/dropdown-menu"
 
 
 import {
@@ -40,12 +48,12 @@ import { DarkButton } from './DarkButton'
         url: "/login",
         icon: ""
     },
-    {
-        id: 2,
-        name: 'Sign Up',
-        url: "/register",
-        icon: ""
-    },
+    // {
+    //     id: 2,
+    //     name: 'Sign Up',
+    //     url: "/register",
+    //     icon: ""
+    // },
   ]
 
 export const PublicNavigations = () => {
@@ -94,23 +102,28 @@ export const PublicNavigations = () => {
                     </div>
                     </div>
                     ) : (
-                    <div className=" px-3 flex items-center ">
+                    <div className=" px-3 flex">
+                         <DropdownMenu>
+                        <DropdownMenuTrigger className=' flex font-semibold font-poppins space-x-3'>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
                         </svg>
-                    <div className="">
-                    <Link
-                            href={'register'}
-                            className="rounded-md font-poppins font-semibold px-2 py-2 ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]"
-                        >
-                        Register
-                        </Link>
-                        <Link href={'login'}
-                            className="rounded-md font-poppins font-semibold px-2 py-2 ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]"
-                            >
-                        Log In
-                        </Link>
-                    </div>
+                            <span>Login</span>
+                            </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                            
+                            <DropdownMenuItem>
+                                <Link href={'/ministry/login'}>Ministry In</Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                                <Link href={'/police/login'}>Police Login</Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                                <Link href={'/court/login'}>Court Login</Link>
+                            </DropdownMenuItem>
+                    
+                        </DropdownMenuContent>
+                        </DropdownMenu>
                     </div>
                     )
                    }

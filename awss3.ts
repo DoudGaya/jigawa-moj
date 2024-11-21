@@ -16,7 +16,6 @@ const s3Client = new S3Client({
 });
 
 export const uploadFileToS3 = async (file: File, bucketName: string): Promise<string> => {
-  console.log({region: process.env.RESEND_API_KEY, testing: 'Hello Test '})
   const fileName = `${Date.now()}-${file.name}`;
   
   const upload = new Upload({

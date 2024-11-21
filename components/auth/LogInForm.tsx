@@ -148,10 +148,10 @@ export function LoginForm() {
       </form>
     </Form>
     <div className=" py-6">
-    <Link href="/register" className=" flex justify-between text-sm space-x-2">
+    {/* <Link href="/register" className=" flex justify-between text-sm space-x-2">
         <p className=" hover:underline"> Don't have an account ? </p>
         <span className=" font-semibold">Register</span>
-    </Link>
+    </Link> */}
 
       <div className="">
         <Button asChild size={'sm'} variant={'link'} className=" px-0 font-normal text-sm text-black ">

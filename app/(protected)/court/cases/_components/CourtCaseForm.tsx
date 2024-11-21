@@ -69,7 +69,7 @@ export const MinistryCaseForm = ({courts}: {
         judgePhone: "",
         judgeEmail: "",
         underSections: "",
-        caseCouncil: [],
+        // caseCouncil: [],
         caseStatus: undefined,
         files: undefined,
         hearings: undefined,
@@ -97,37 +97,35 @@ export const MinistryCaseForm = ({courts}: {
           let formDataToSubmit: any = { ...data };
     
           // Handle file uploads
-         
+          if (data.FIR) {
+            formDataToSubmit.FIR = await uploadFileToS3(data.FIR, 'jigawa-state');
+          }
+    
+          if (data.statementOfComplainant) {
+            formDataToSubmit.statementOfComplainant = await uploadFileToS3(data.statementOfComplainant, 'jigawa-state');
+          }
+    
+          if (data.statementOfVictims) {
+            formDataToSubmit.statementOfVictims = await uploadFileToS3(data.statementOfVictims, 'jigawa-state');
+          }
+    
+          if (data.statementOfWitness) {
+            formDataToSubmit.statementOfWitness = await uploadFileToS3(data.statementOfWitness, 'jigawa-state');
+          }
+    
+          if (data.medicalReport) {
+            formDataToSubmit.medicalReport = await uploadFileToS3(data.medicalReport, 'jigawa-state');
+          }
+    
+          if (data.pictures) {
+            formDataToSubmit.pictures = await uploadMultipleFilesToS3(data.pictures, 'jigawa-state');
+          }
 
           setError('')
           setSuccess('')
       
-          startTransition( async () => {
-
-            if (data.FIR) {
-              formDataToSubmit.FIR = await uploadFileToS3(data.FIR, 'jigawa-state');
-            }
-      
-            if (data.statementOfComplainant) {
-              formDataToSubmit.statementOfComplainant = await uploadFileToS3(data.statementOfComplainant, 'jigawa-state');
-            }
-      
-            if (data.statementOfVictims) {
-              formDataToSubmit.statementOfVictims = await uploadFileToS3(data.statementOfVictims, 'jigawa-state');
-            }
-      
-            if (data.statementOfWitness) {
-              formDataToSubmit.statementOfWitness = await uploadFileToS3(data.statementOfWitness, 'jigawa-state');
-            }
-      
-            if (data.medicalReport) {
-              formDataToSubmit.medicalReport = await uploadFileToS3(data.medicalReport, 'jigawa-state');
-            }
-      
-            if (data.pictures) {
-              formDataToSubmit.pictures = await uploadMultipleFilesToS3(data.pictures, 'jigawa-state');
-            }
-
+          startTransition(() => {
+            // console.log('Submitting form data:', formDataToSubmit)
             submitMinistryCaseRecords(formDataToSubmit, isDraft)
             .then((data) => {
               if (data.error) {
@@ -479,7 +477,7 @@ export const MinistryCaseForm = ({courts}: {
                     </div>
 
                     <Separator />
-                      <div className="py-4">
+                      {/* <div className="py-4">
                         <h3 className="text-xl font-semibold mb-4 text-primary">Case Council</h3>
                         <Separator className="my-2 border-green-300" />
                         {fields.map((field, index) => (
@@ -572,8 +570,7 @@ export const MinistryCaseForm = ({courts}: {
                           <Plus className="mr-2 h-4 w-4" />
                           Add Case Council
                         </Button>
-                      </div>
-
+                      </div> */}
                   </div>
                   <Separator />
                   <div>

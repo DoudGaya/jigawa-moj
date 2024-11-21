@@ -8,13 +8,10 @@ const page = async ({ params }: any) => {
   const { slug } = params
 
 
-  console.log(slug)
-
 
   const existingCase = await getCaseItemById(slug) 
 
 
-  console.log(existingCase)
 
   const courts = await getAllCourts() 
 

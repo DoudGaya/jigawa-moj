@@ -138,7 +138,7 @@ export const PoliceCaseForm = () => {
             <DialogTrigger asChild>
               <Button size="lg" className=' font-poppins'>Create a Case</Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[600px] max-w-[95%] rounded-lg mx-auto max-h-[80vh] overflow-y-auto">
+            <DialogContent className="sm:max-w-[600px] md:max-w-5xl max-w-[95%] rounded-xl overflow-hidden mx-auto max-h-[90vh] overflow-y-auto">
               <DialogHeader className=' w-full flex items-center justify-center rounded-md py-2 '>
                 <DialogTitle>Create a New Case</DialogTitle>
                 <DialogDescription className=' border-b border-primary/50 mb-6 py-3'>
@@ -409,13 +409,13 @@ export const PoliceCaseForm = () => {
                   </div>
 
                   <div className="md:flex grid grid-cols-2 gap-4 md:justify-end space-x-4">
-                    <Button type="button" disabled={isPending} variant="outline" onClick={() => form.handleSubmit((data) => onSubmit(data, true))()}>
+                  {/* <Button type="button" disabled={isPending} variant="outline" onClick={() => form.handleSubmit((data) => onSubmit(data, true))()}>
                       <Save className="mr-2 h-4 w-4" />
                       Save as Draft
-                    </Button>
+                    </Button> */}
                     <Button disabled={isPending} type="submit">
                       <Send className="mr-2 h-4 w-4" />
-                      Submit
+                      {isPending ? <BeatLoader size={8} color="#fff" /> : "Submit"}
                     </Button>
                   </div>
                 </form>

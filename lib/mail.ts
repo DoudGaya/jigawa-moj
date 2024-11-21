@@ -142,7 +142,7 @@ export const sendPasswordResetEmail = async ( email: string, token: string) => {
     })
 }
 
-export const sendVrificationEmail = async ( 
+export const sendVrificationEmail = async (
     email: string, 
     token: string
 ) => {

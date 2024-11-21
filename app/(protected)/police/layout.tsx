@@ -7,7 +7,7 @@ import { Toaster } from "@/components/ui/sonner"
 import { PoliceSideBar } from './_components/PoliceSideBar';
 
 
-export default async function AdmninLayout({ children }: { children: React.ReactNode }) {
+export default async function PoliceLayout({ children }: { children: React.ReactNode }) {
 
 
   const session = await auth()

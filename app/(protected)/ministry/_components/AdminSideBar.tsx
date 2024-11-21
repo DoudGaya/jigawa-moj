@@ -44,7 +44,7 @@ const privateLinks = [
         )
     },
     {
-        id: 2,
+        id: 3,
         name: 'Users',
         url: "/ministry/users",
         icon: (
@@ -55,7 +55,7 @@ const privateLinks = [
     },
 
     {
-        id: 3,
+        id: 4,
         name: 'Courts',
         url: "/ministry/courts",
         icon: (
@@ -66,7 +66,7 @@ const privateLinks = [
     },
 
     {
-        id: 4,
+        id: 5,
         name: 'staffs',
         url: "/ministry/staffs",
         icon: (
@@ -77,7 +77,7 @@ const privateLinks = [
     },
 
     {
-        id: 1,
+        id: 6,
         name: 'cases',
         url: "/ministry/cases",
         icon: (
@@ -88,21 +88,8 @@ const privateLinks = [
         )
     },
 
-   
-    // {
-    //     id: 3,
-    //     name: 'Probates',
-    //     url: "/ministry/probates",
-    //     icon: (
-    //         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-    //             <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
-    //         </svg>
-
-    //     )
-    // },
-
     {
-        id: 4,
+        id: 7,
         name: 'Transactions',
         url: "/ministry/transactions",
         icon: (
@@ -126,7 +113,7 @@ const privateLinks = [
     },
 
     {
-        id: 1,
+        id: 2,
         name: 'Ministry',
         url: "https://moj.jg.gov.ng/",
         icon: (
@@ -162,11 +149,10 @@ export const AdminDashboardSideBar = ( ) => {
     <hr className=' border-b-1.5 border-primary ' />
    <ScrollArea>
    <div className=" flex flex-col py-4 px-2 space-y-3">
-        
         {
             privateLinks.map((single) => {
                 return (
-                    <Link href={single.url} key={single.id} className={`${single.url == pathname ? ' bg-green-500 text-white hover:bg-jgreen dark:text-black' : "hover:bg-gray-200 dark:hover:bg-gray-800 " } rounded-md space-x-2 w-full py-3 px-4 flex flex-row`}>
+                    <Link href={single.url} key={single.id} className={`${single.url.startsWith(`${pathname}`) ? ' bg-green-500 text-white hover:bg-jgreen dark:text-black' : "hover:bg-gray-200 dark:hover:bg-gray-800 " } rounded-md space-x-2 w-full py-3 px-4 flex flex-row`}>
                         <span> {single.icon} </span>
                         <span> { single.name} </span>
                     </Link>

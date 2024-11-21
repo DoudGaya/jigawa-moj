@@ -26,7 +26,7 @@ export default async function CourtLayout({ children }: { children: React.ReactN
           <CourtSideBar />
           <div className="flex flex-col w-full ">
             <TopNav />
-          <div className=" mt-20 w-full h-full">
+          <div className=" w-full h-full">
           {children}
           </div>
           </div>

@@ -70,7 +70,7 @@ export const CourtRegistrationAction = async (values: z.infer<typeof CourtRegist
     const hashedPassword = await bcrypt.hash(password, 10)
 
     const emailExist = await getUserByEmail(email)
-    
+
     if (emailExist) {
         return {error: "User already Exist"}
     }
@@ -84,7 +84,6 @@ export const CourtRegistrationAction = async (values: z.infer<typeof CourtRegist
           email,
           phone,
           gender,
-          emailVerified: new Date(),
           state,
           role: UserRole.COURT,
           localGovernment,

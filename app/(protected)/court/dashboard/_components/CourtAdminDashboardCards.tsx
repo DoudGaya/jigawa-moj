@@ -76,7 +76,7 @@ export const CourtAdminDashboardCards = () => {
 
 
   return (
-    <div className='grid grid-cols-3 w-full gap-4 mx-auto px-3 max-w-6xl'>
+    <div className='grid grid-cols-2 w-full gap-4 mx-auto px-3 max-w-7xl'>
         {
             cards.map((single) => {
                 return <DashboardCard 
@@ -90,5 +90,6 @@ export const CourtAdminDashboardCards = () => {
             })
         }
     </div>
+    
   )
 }

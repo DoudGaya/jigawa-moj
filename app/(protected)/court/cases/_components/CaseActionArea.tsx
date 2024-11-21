@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label"
 import Link from 'next/link'
 import { states, localGovernment } from '@/lib/jigawa'
 import { policeUSerSchema, FormData } from '@/lib/zod-schemas/police-schema'
-import { MinistryCaseForm } from './MinistryCaseForm'
+import { MinistryCaseForm } from './CourtCaseForm'
 
 import {
   Dialog,
@@ -28,7 +28,7 @@ import { FormSuccess } from '@/components/FormSuccess'
 import { FormError } from '@/components/FormError'
 import { useRouter } from 'next/navigation'
 import { CaseSchemaWithAllRecords, PoliceUserType, CourtWithAllRecords } from '@/typings'
-import { AdminCaseItem } from './AdminCaseItem'
+import { AdminCaseItem } from './CourtCaseItem'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { MinistryCaseSchema } from '@/lib/zod-schemas/case-schema'
 import { Separator } from '@radix-ui/react-dropdown-menu'
@@ -141,16 +141,16 @@ export function CaseActionArea( { cases, courts }: {
       </div>
      </div>
       <div className=" mt-2 h-full b">
-          {/* <ScrollArea className=' h-[calc(100vh-20rem)] p-3 rounded-lg  w-full px-4'> */}
+          <ScrollArea className=' h-[calc(100vh-20rem)] p-3 rounded-lg  w-full px-4'>
           <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
            {currentCaseItem.map((caseitem: CaseSchemaWithAllRecords, index: number) => (
             // @ts-ignore
               <AdminCaseItem caseData={caseitem} key={caseitem.id || index} />
             ))}
           </div>
-          {/* </ScrollArea> */}
-       {/* <div className=" bg-white h-full flex items-start rounded-md px-3 py-2">
-        { (
+          </ScrollArea>
+       <div className=" bg-white h-full flex items-start rounded-md px-3 py-2">
+        {(
             <div className="flex justify-center mt-4 space-x-2">
               <Button
                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
@@ -169,7 +169,7 @@ export function CaseActionArea( { cases, courts }: {
               </Button>
             </div>
           )}
-       </div> */}
+       </div>
       </div>
     </div>
   )

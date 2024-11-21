@@ -37,7 +37,7 @@ const loginLinks = [
 
 export const Footer = () => {
   return (
-    <div className=' w-full px-4 bg-gray-200 mt-20 '>
+    <div className=' w-full px-4 bg-gray-200 '>
         <div className=" grid gap-6 grid-cols-1 md:grid-cols-2 gap-x-6 max-w-5xl mx-auto py-10">
             <div className=" flex flex-col">
                 <div className=" border-b-2 border-jyellow flex flex-col  space-y-3 py-1">
@@ -60,9 +60,9 @@ export const Footer = () => {
                      </div>
                     </div>
                 </div>
-                <div className=" flex flex-row space-x-2">
+                {/* <div className=" flex flex-row space-x-2">
                     Follow us: Social media links
-                </div>
+                </div> */}
             </div>
             <div className="  font-poppins lg:pr-10 py-14">
             <div className=" space-y-4 my-4">
