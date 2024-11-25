@@ -149,8 +149,6 @@ export async function submitPoliceCase(values: z.infer<typeof policeCaseSchema>,
         }
     })
 
-    console.log(newStation)
-
     return {data: newStation, success: "Police Station created successfully"}
 }
 

@@ -173,7 +173,7 @@ export const SubmittedCase = ( {caseData}: {caseData: CaseSchemaWithAllRecords} 
                       <li key={index} className="text-sm">
                         <span className="font-medium">{hearing.caseId}</span>
                         <br />
-                        {hearing.date?.toDateString()} at {hearing.time?.toLocaleDateString()}
+                        {/* {hearing.date?.toDateString()} at {hearing.time?.toLocaleDateString()} */}
                       </li>
                     )) : "There is no available hearing"}
                   </ul>

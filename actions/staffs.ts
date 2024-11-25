@@ -2,7 +2,7 @@
 import { db } from "@/lib/db";
 import { getUserById } from '@/data/user'
 import * as z from 'zod'
-import { StaffSchema, StaffSettingsShema } from "@/lib/zod-schemas/staff-schema";
+import { StaffSchema, StaffSettingsShema, StaffUserSchema } from "@/lib/zod-schemas/staff-schema";
 import bcrypt from 'bcryptjs'
 import { getUserByEmail } from '@/data/user'
 import { sendVrificationEmail } from '@/lib/mail'
@@ -59,12 +59,11 @@ export const getStaffByEmail = async (email: string) => {
 
 // create a new staff by admin
 
-export const StaffRegistrationAction = async (values: z.infer<typeof StaffSchema>) => {
+export const staffRegistrationAction = async (values: z.infer<typeof StaffUserSchema>) => {
     const fieldValidation = StaffSchema.safeParse(values);
     if (!fieldValidation.success) {
          return { error: "field Validation failed " }
     }
-
     const {
             firstName, 
             otherNames,
@@ -100,7 +99,7 @@ export const StaffRegistrationAction = async (values: z.infer<typeof StaffSchema
         return {error: "User already Exist"}
     }
 
-    await db.user.create({
+   const newStaff = await db.user.create({
         data: {
           firstName,
           lastName,
@@ -131,7 +130,7 @@ export const StaffRegistrationAction = async (values: z.infer<typeof StaffSchema
     })
     const verificationToken = await generateVerificationToken(email)
     await sendVrificationEmail(verificationToken.email, verificationToken.token)
-    return {success: "Staff has been Registered"}
+    return { data: newStaff, success: "Staff has been Registered"}
 
 }
 
@@ -210,3 +209,4 @@ export const updateStaffById = async (id: string, values: z.infer<typeof StaffSc
 
     return {success: "Profile Updated"}
 }
+

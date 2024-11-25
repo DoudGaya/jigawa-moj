@@ -15,9 +15,10 @@ import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { FormSuccess } from "@/components/FormSuccess";
+import { nigeriaStatesLGA } from "@/lib/jigawa";
 import { FormError } from "@/components/FormError";
 import { useRouter } from "next/navigation";
-import { useId } from "react";
+
 import {
 Select,
 SelectContent,
@@ -25,11 +26,7 @@ SelectItem,
 SelectTrigger,
 SelectValue,
 } from "@/components/ui/select"
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover"
+
 
 import {
     Form,
@@ -105,10 +102,18 @@ export function AdminCreateCourtForm() {
   const [isPending, startTransition] = useTransition()
   const [error, setError] = useState<string | undefined>('')
   const [success, setSuccess] = useState < string | undefined>('')
-  const [infrastructure, setInfrastructure] = useState<Infrastructure[]>([])
+  const [selectedState, setSelectedState] = useState('');
+  const [lgas, setLgas] = useState([]);
 
-  const [name, setName] = useState<string>("")
-  const [number, setNumber] = useState<string>("")
+  // @ts-ignore
+  const handleStateChange = (value) => {
+    setSelectedState(value);
+    const stateLgas = nigeriaStatesLGA.find(s => s.state === value)?.lgas || [];
+    // @ts-ignore
+    setLgas(stateLgas);
+    form.setValue('state', value);
+    form.setValue('localGovernment', '');
+  };
 
 
   const router = useRouter()
@@ -123,22 +128,19 @@ export function AdminCreateCourtForm() {
 
 
 
-  const addToInfrastructure = (event: any) => {
-    event.preventDefault()
-    setInfrastructure((prev: any) => {
-      return [...prev, { name, number}]
-    })
+  // const addToInfrastructure = (event: any) => {
+  //   event.preventDefault()
+  //   setInfrastructure((prev: any) => {
+  //     return [...prev, { name, number}]
+  //   })
 
-    setName("")
-    setNumber("")
-  }
-
-
+  //   setName("")
+  //   setNumber("")
+  // }
 
 
-  const deleteInfrastructure = (itemToDelete: string) => {
-    setInfrastructure((prev) => prev.filter((item) => item.name !== itemToDelete));
-  };
+
+
 
 
    const form = useForm<z.infer<typeof CourtRegisterSchema>>({
@@ -337,19 +339,7 @@ export function AdminCreateCourtForm() {
         />
        </div>
        <div className=" grid text-start grid-cols-1 w-full">
-       {/* <FormField
-          control={form.control}
-          name="capacity"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Cases Capacity</FormLabel>
-              <FormControl>
-                <Input disabled={isPending} type="number" className=" outline-green-500" placeholder="0" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
+    
          <FormField
           control={form.control}
           name="courtAddress"
@@ -366,40 +356,6 @@ export function AdminCreateCourtForm() {
           )}
         />
        </div>
-       {/* <div className=" flex flex-col border-y border-primary py-2 space-y-4 my-2">
-        <div className=" flex flex-col divide-y ">
-          { infrastructure ? infrastructure.map((item: Infrastructure) => {
-              return (
-                <div key={item.name} className=" flex items-center  hover:bg-gray-100 hover:cursor-pointer space-x-4 w-full">
-                 <div className=" w-full flex justify-between px-3 rounded-md  ">
-                  <p> { item.name }</p>
-                  <p> { item.number }</p>
-                 </div>
-                  <Button className=" text-red-500 hover:text-red-300 bg-transparent  " onClick={() => deleteInfrastructure(item.name)}>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                  </svg>
-                  </Button>
-                </div>
-              )
-            }) : ""
-            }
-        </div>
-        <div className=" flex space-x-3 w-full text-start items-end">
-            <div className=" flex flex-col justify-center w-full">
-              <label htmlFor="" className=" text-sm font-semibold font-poppins">Name</label>
-              <Input type="text" id="item" name="number" onChange={(e) => {setName(e.target.value)}} value={name} className=" outline-green-500 " />
-            </div>
-            <div className=" flex flex-col ">
-              <label htmlFor="amount" className=" text-sm font-semibold font-poppins">Number</label>
-              <Input type="text" id="number" onChange={(e) => { setNumber(e.target.value)}} value={number} name="number" className=" outline-green-500 " />
-            </div>
-            <div className=" flex flex-col ">
-            <Button onClick={addToInfrastructure}>Add</Button>
-            </div>
-        </div>
-       </div> */}
-
       </fieldset>
       <fieldset className=" border  border-primary rounded-lg flex py-10 flex-col text-center space-y-4 px-6 align-middle justify-center">
         <legend className=" flex px-2 py-1 text-primary font-poppins font-semibold" >Court Admin information</legend>
@@ -500,88 +456,63 @@ export function AdminCreateCourtForm() {
           )}
         />
         </div>
-      <div className=" grid grid-cols-2 gap-2 text-start ">
-      <FormField
+        <div className="grid grid-cols-2 gap-2 text-start">
+        <FormField
           control={form.control}
           name="state"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Admin State</FormLabel>
-              <FormControl>
-                <Input disabled={isPending} className=" outline-green-500" placeholder="Eg. Jigawa State" {...field} />
-              </FormControl>
+              <Select 
+                onValueChange={handleStateChange}
+                disabled={isPending}
+                value={field.value}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a state" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {nigeriaStatesLGA.map((state) => (
+                    <SelectItem key={state.state} value={state.state}>
+                      {state.state}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
         />
-          <FormField
+        <FormField
           control={form.control}
           name="localGovernment"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Admin LGA</FormLabel>
-              <FormControl>
-                <Input disabled={isPending} className=" outline-green-500" placeholder="Eg. Babura" {...field} />
-              </FormControl>
+              <Select
+                onValueChange={field.onChange}
+                disabled={isPending || !selectedState}
+                value={field.value}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select an LGA" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {lgas.map((lga) => (
+                    <SelectItem key={lga} value={lga}>
+                      {lga}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
         />
-          {/* <FormField 
-              control={form.control}
-              name="state"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>State of Residence</FormLabel>
-                  <FormControl>
-                    <Select 
-                    onValueChange={field.onChange} 
-                    disabled={isPending}
-                    defaultValue={field.value}>
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select Your State" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {
-                          states.map((state) => {
-                            return (
-                              <SelectItem key={state.id} value={state.name}> {state.name} </SelectItem>
-                            )
-                          })
-                        }
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            /> */}
-            {/* <FormField
-              control={form.control}
-              name="localGovernment"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Local Government</FormLabel>
-                  <FormControl>
-                  <Select onValueChange={field.onChange} disabled={isPending} defaultValue={field.value}>
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder=" Admin Local Government" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {
-                          localGovernment.map((state) => {
-                            return (
-                              <SelectItem   key={state.id} value={state.name}> {state.name} </SelectItem>
-                            )
-                          })
-                        }
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            /> */}
       </div>
       <div className=" grid grid-cols-1 w-full items-start text-start">
         {/* <FormField 

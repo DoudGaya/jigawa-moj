@@ -12,7 +12,7 @@ import {
   } from "@/components/ui/table"
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import { PoliceUserType } from '@/typings'
+import { PoliceUserType, StaffUser } from '@/typings'
 import { useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { deletePolice } from '@/actions/police'
@@ -29,8 +29,8 @@ import {
   } from "@/components/ui/alert-dialog"
 
 
-export const AdminStaffItem = ( {station}: {
-    station: PoliceUserType
+export const AdminStaffItem = ( { staff }: {
+    staff: StaffUser
 } ) => {
     // const [policeStations, setPoliceStations] = useState<PoliceUserType[]>(stations || [])
     // const [currentPage, setCurrentPage] = useState(1)
@@ -50,11 +50,12 @@ const deletePoliceStation = async (id: string) => {
     }
 }
 
+console.log(staff)
 const handlePoliceDelete = () => {
   setError('')
   setSuccess('')
   startTransition(() => {
-    deletePoliceStation(station.id)
+    deletePoliceStation(staff.id)
       .then((data) => {
           setError(data?.error)
           setSuccess(data?.success)
@@ -66,13 +67,13 @@ const handlePoliceDelete = () => {
 
   return (
         <TableRow>
-                <TableCell className=' text-xs'>{station.police.stationName || 'N/A' }</TableCell>
-                <TableCell className=' text-xs'>{station.police.stationAddress || 'N/A' }</TableCell>
-                <TableCell className=' text-xs'>{station.police.stationLocalGovernment || 'N/A' }</TableCell>
-                <TableCell className=' text-xs'>{station.police.stationcontactNumber || 'N/A' }</TableCell>
-                <TableCell className=' text-xs'>{station.firstName || 'N/A' }</TableCell>
-                <TableCell className=' text-xs'>{station.phone || 'N/A' }</TableCell>
-                <TableCell className=' text-xs'>{station.police.contactEmail || 'N/A' }</TableCell>
+                <TableCell className=' text-xs'>{staff.firstName || 'N/A' }</TableCell>
+                <TableCell className=' text-xs'>{staff.lastName || 'N/A' }</TableCell>
+                <TableCell className=' text-xs'>{staff.state || 'N/A' }</TableCell>
+                <TableCell className=' text-xs'>{staff.localGovernment || 'N/A' }</TableCell>
+                <TableCell className=' text-xs'>{staff.staff.staffRole || 'N/A' }</TableCell>
+                <TableCell className=' text-xs'>{staff.staff.department || 'N/A' }</TableCell>
+                <TableCell className=' text-xs'>{staff.staff.salaryStructure || 'N/A' }</TableCell>
                 <TableCell className=' text-xs flex flex-row space-x-6'>
                     <DropdownMenu>
                       <DropdownMenuTrigger>
@@ -82,10 +83,10 @@ const handlePoliceDelete = () => {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align='end'>
                         <DropdownMenuItem className=' hover:bg-green-400/30'>
-                          <Link href={`/ministry/police/${station.id}`}>Edit</Link>
+                          <Link href={`/ministry/police/${staff.id}`}>Edit</Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem className=' hover:bg-green-400/30' >
-                          <Link href={`/ministry/police/${station.id}`}>Details</Link>
+                          <Link href={`/ministry/police/${staff.id}`}>Details</Link>
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
@@ -98,7 +99,7 @@ const handlePoliceDelete = () => {
                         </AlertDialogTrigger>
                         <AlertDialogContent>
                             <AlertDialogHeader>
-                            <AlertDialogTitle>Are you sure you want to delete {`${station.police.stationName}`} ?</AlertDialogTitle>
+                            <AlertDialogTitle>Are you sure you want to delete {`${staff.firstName}`} ?</AlertDialogTitle>
                             <AlertDialogDescription>
                                 This action cannot be undone. This will permanently delete your account
                                 and remove your data from our servers.

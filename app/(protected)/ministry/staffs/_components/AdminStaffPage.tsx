@@ -7,10 +7,14 @@ import { Button } from "@/components/ui/button"
 import { useTransition } from 'react'
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import Link from 'next/link'
-import { states, localGovernment } from '@/lib/jigawa'
-// import { policeUSerSchema } from '@/lib/schema'
-import { policeUSerSchema, FormData } from '@/lib/zod-schemas/police-schema'
+import { nigeriaStatesLGA , localGovernment } from '@/lib/jigawa'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 
 
@@ -29,93 +33,155 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+
 import { useToast } from "@/hooks/use-toast"
-import { createPoliceUser, deletePolice } from '@/actions/police'
 import { FormSuccess } from '@/components/FormSuccess'
 import { FormError } from '@/components/FormError'
 import { useRouter } from 'next/navigation'
-import { PoliceUserType } from '@/typings'
 import { AdminStaffItem } from './AdminStaffItem'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { StaffUser } from '@/typings'
+import { staffRegistrationAction } from '@/actions/staffs'
+import { StaffUserSchema } from '@/lib/zod-schemas/staff-schema'
+import * as z from 'zod'
 
 
 
-export function AdminStaffPage ( { stations }: {
-    stations: PoliceUserType[]
+import { DEFAULT_LOGGED_IN_REDIRRECT } from "@/routes";
+import { Calendar } from "@/components/ui/calendar"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { Gender } from "@prisma/client";
+
+
+import { Switch } from "@/components/ui/switch"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+
+
+
+
+
+
+
+
+export function AdminStaffPage ( { staffs }: {
+    staffs: StaffUser[]
 } ) {
-  const [policeStations, setPoliceStations] = useState<PoliceUserType[]>(stations || [])
+  const [staffsList, setStaffList] = useState<StaffUser[]>(staffs || [])
   const [currentPage, setCurrentPage] = useState(1)
   const [searchTerm, setSearchTerm] = useState('')
   const [terms, setTerms] = useState<boolean> (false)
   const [isPending, startTransition] = useTransition()
   const [error, setError] = useState<string | undefined>('')
   const [success, setSuccess] = useState < string | undefined>('')
-
+  const [selectedState, setSelectedState] = useState('');
+  const [lgas, setLgas] = useState([]);
+  const { toast } = useToast()
   const router = useRouter()
 
-  const { toast } = useToast()
+  // @ts-ignore
+  const handleStateChange = (value) => {
+    setSelectedState(value);
+    const stateLgas = nigeriaStatesLGA.find(s => s.state === value)?.lgas || [];
+    // @ts-ignore
+    setLgas(stateLgas);
+    form.setValue('state', value);
+    form.setValue('localGovernment', '');
+  };
+
+
   const itemsPerPage = 30
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-    reset,
-  } = useForm<FormData>({
-    resolver: zodResolver(policeUSerSchema),
+  const form = useForm<z.infer<typeof StaffUserSchema>>({
+    resolver: zodResolver(StaffUserSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      otherNames: "",
+      email: "",
+      phone: "",
+      state: "",
+      localGovernment: "",
+      gender: undefined,
+      staff: {
+        dateOfEmployment: "", // create 
+        maritalStatus: "", // create
+        isJudge: undefined, // is judge
+        department: "",
+        employerName: "",
+        jobTitle: "",
+        position: "",
+        employmentLocation: "",
+        staffNumber: "",
+        salaryStructure: "",
+        salaryGrade: "",
+        step: "",
+        staffRole: "",
+      },
+      password: "",
+      confirmPassword: "",
+    },
   })
+ 
+  // 2. Define a submit handler.
+  function onSubmit(values: z.infer<typeof StaffUserSchema>) {
 
-  const onSubmit = (data: FormData) => {
-
+    console.log(values)
     setError('')
     setSuccess('')
-
-    startTransition(() => {      
-      createPoliceUser(data)
+    startTransition(() => {
+      staffRegistrationAction(values)
       .then((data) => {
         setError(data.error)
         setSuccess(data.success)
         // @ts-ignore
-        setPoliceStations([...policeStations, data.data])
-    })
-})
+        setStaffList([...staffsList, data.data])
+      })
 
-    toast({
-      title: "Police Station Registered",
-      description: `${data.police.stationName} has been successfully registered.`,
+      toast({
+        title: "Staff has been Registered",
+        description: `${values.firstName} has been successfully registered.`,
+      })
+      router.refresh()
     })
-    reset()
-    router.refresh()
   }
 
-  const filteredPoliceStations = policeStations.filter(station =>
-    station?.police?.stationName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    station?.police?.stationAddress?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    station?.police?.stationLocalGovernment?.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredStaffs = staffsList.filter(staff =>
+    staff?.staff?.staffNumber?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    staff?.staff?.staffRole?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    staff?.staff?.salaryStructure?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    staff?.staff?.jobTitle?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    staff?.staff?.department?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    staff?.firstName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    staff?.lastName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    staff?.phone?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    staff?.state?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    staff?.localGovernment?.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
-
-  const totalPages = Math.ceil(filteredPoliceStations.length / itemsPerPage)
+  const totalPages = Math.ceil(filteredStaffs.length / itemsPerPage)
   const startIndex = (currentPage - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
-  const currentPoliceStations = filteredPoliceStations.slice(startIndex, endIndex)
+  const currentStaff = filteredStaffs.slice(startIndex, endIndex)
 
   return (
     <div className="container mx-auto h-full p-4">
      <div className=" bg-white py-4 px-3 rounded-lg">
-     {/* <h1 className="text-xl font-bold mb-4 ">Police Action Page  </h1> */}
       <div className=" flex w-full justify-between items-center">
       <Dialog>
         <div className=" flex space-y-2 flex-col">
-            <p className=' text-lg font-poppins'>Police Registration Section</p>
+            <p className=' text-lg font-poppins'>Staffs Registration Section</p>
            <div className="">
             <DialogTrigger asChild>
             <Button className=' font-poppins text-white'>Add New </Button>
@@ -125,170 +191,384 @@ export function AdminStaffPage ( { stations }: {
         <DialogContent className="sm:max-w-[600px] h-[70%] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className=' py-5 flex text-center bg-gray-200 rounded-lg justify-center'>
-               <p className=' flex items-start text-center font-poppins'> Police Station Registration Form </p>
+               <p className=' flex items-start text-center font-poppins'> Staff Registration Form </p>
             </DialogTitle>
           </DialogHeader>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <fieldset className=" border  border-primary rounded-lg flex py-10 flex-col text-center space-y-4 px-3">
-         <legend className=" flex px-2 py-1 text-primary font-poppins font-semibold" >Station Information</legend>
-               <div className=" grid grid-cols-2 gap-3 items-start text-start">
-                <div className=' w-full flex flex-col space-y-3'>
-                    <Label htmlFor="police.name"> Station Name</Label>
-                    <Input className=' w-full flex' {...register("police.stationName")} id="police.name" />
-                    {errors.police?.stationName && <p className="text-red-500 text-sm">{errors.police.stationName.message}</p>}
-                </div>
+              {/* THE FORM GOES HERE */}
 
-                <div className=' w-full flex flex-col space-y-3'>
-                    <Label htmlFor="police.address">Station Address</Label>
-                    <Input className=' w-full flex' {...register("police.stationAddress")} id="police.address" />
-                    {errors.police?.stationAddress && <p className="text-red-500 text-sm">{errors.police.stationAddress.message}</p>}
-                </div>
+              <Form {...form}>
+           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
 
+          <fieldset className=" border  border-primary rounded-lg flex py-10 flex-col text-center space-y-4 px-6 align-middle justify-center">
+            <legend className=" flex px-2 py-1 text-primary font-poppins font-semibold" >Personal Information</legend>
+          <div className=" grid text-start grid-cols-1 gap-2 md:grid-cols-2">
+          <FormField
+              control={form.control}
+              name="firstName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>First Name</FormLabel>
+                  <FormControl>
+                    <Input disabled={isPending} className=" outline-green-500" placeholder="Abdulrahman" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="lastName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Last Name </FormLabel>
+                  <FormControl>
+                    <Input disabled={isPending} className=" outline-green-500" placeholder="Dauda" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-                <div className=' w-full flex flex-col space-y-3'>
-                <Label htmlFor="police.state">State</Label>
-                <Select 
-                onValueChange={(value) => setValue("police.stationState", value, { shouldValidate: true })}
-                >
-                    <SelectTrigger>
-                    <SelectValue placeholder="Station State" />
-                    </SelectTrigger>
+          </div>
+          <div className="grid text-start grid-cols-1 w-full lg:grid-cols-2 gap-2">
+            <FormField
+              control={form.control}
+              name="otherNames"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Other Name(s)</FormLabel>
+                  <FormControl className=" w-full">
+                    <Input disabled={isPending} className=" outline-green-500 w-full" placeholder="Optional" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="gender"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Gender</FormLabel>
+                  <FormControl className=" w-full">
+                  <Select 
+                        onValueChange={field.onChange} 
+                        disabled={isPending}
+                        defaultValue={field.value}>
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select Your Gender" />
+                          </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value={Gender.MALE}> Male </SelectItem>
+                                <SelectItem value={Gender.FEMALE}> Female </SelectItem>
+                                <SelectItem value={Gender.OTHER}> Other </SelectItem>
+                            </SelectContent>
+                        </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            </div>
+            <div className=" grid text-start grid-cols-1 md:grid-cols-2 gap-2">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email Address</FormLabel>
+                  <FormControl>
+                    <Input disabled={isPending} className=" outline-green-500" placeholder="jigawa@mail.com" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Phone Number</FormLabel>
+                  <FormControl>
+                    <Input disabled={isPending} className=" outline-green-500" placeholder="(234) 000 000 000" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+        </div>
+        <div className="grid grid-cols-2 gap-2 text-start">
+            <FormField
+              control={form.control}
+              name="state"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Admin State</FormLabel>
+                  <Select 
+                    onValueChange={handleStateChange}
+                    disabled={isPending}
+                    value={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a state" />
+                      </SelectTrigger>
+                    </FormControl>
                     <SelectContent>
-                        {
-                            states.map((state) => (
-                                <SelectItem key={state.id} value={state.name}>{state.name}</SelectItem>
-                            ))
-                        }
+                      {nigeriaStatesLGA.map((state) => (
+                        <SelectItem key={state.state} value={state.state}>
+                          {state.state}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
-                </Select>
-                   {errors.police?.stationState && <p className="text-red-500 text-sm">{errors.police.stationState.message}</p>}
-                </div>
-
-
-                <div className=' w-full flex flex-col space-y-3'>
-                <Label htmlFor="police.stationLocalGovernment">Local Government</Label>
-                <Select 
-                  onValueChange={(value) => setValue("police.stationLocalGovernment", value, { shouldValidate: true })}>
-                    <SelectTrigger>
-                    <SelectValue placeholder="Local Government" />
-                    </SelectTrigger>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="localGovernment"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Admin LGA</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    disabled={isPending || !selectedState}
+                    value={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select an LGA" />
+                      </SelectTrigger>
+                    </FormControl>
                     <SelectContent>
-                        {
-                            localGovernment.map((lga) => (
-                                <SelectItem key={lga.id} value={lga.name}>{lga.name}</SelectItem>
-                            ))
-                        }
+                      {lgas.map((lga) => (
+                        <SelectItem key={lga} value={lga}>
+                          {lga}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
-                </Select>
-                    {/* <Label htmlFor="police.localGovernment">Local Government</Label>
-                    <Input className=' w-full flex' {...register("police.stationLocalGovernment")} id="police.localGovernment" /> */}
-                    {errors.police?.stationLocalGovernment && <p className="text-red-500 text-sm">{errors.police.stationLocalGovernment.message}</p>}
-                </div>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
-                <div className=' w-full flex flex-col space-y-3'>
-                    <Label htmlFor="police.contactNumber">Contact Number</Label>
-                    <Input className=' w-full flex' {...register("police.stationcontactNumber")} id="police.contactNumber" />
-                    {errors.police?.stationcontactNumber && <p className="text-red-500 text-sm">{errors.police.stationcontactNumber.message}</p>}
-                </div>
+          </fieldset>
 
-                <div className=' w-full flex flex-col space-y-3'>
-                    <Label htmlFor="police.contactEmail">Contact Email</Label>
-                    <Input className=' w-full flex' {...register("police.contactEmail")} id="police.contactEmail" type="email" />
-                    {errors.police?.contactEmail && <p className="text-red-500 text-sm">{errors.police.contactEmail.message}</p>}
-                </div>
-                
-               </div>
-            </fieldset>
+          <fieldset className=" border  border-primary rounded-lg space-y-4 flex py-10 px-6 flex-col text-center items-center align-middle justify-center">
+            <legend className=" flex px-2 py-1 text-primary font-poppins font-semibold" >Employment Data</legend>
+            <div className="grid text-start grid-cols-1 w-full lg:grid-cols-2 gap-2">
+          <FormField 
+              control={form.control}
+              name="staff.employerName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Employer Name</FormLabel>
+                  <FormControl>
+                    <Input type="text" disabled={isPending} className=" outline-green-500" placeholder="Jigawa State High Court" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="staff.department"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Department</FormLabel>
+                  <FormControl>
+                    <Input type="text"disabled={isPending} className=" outline-green-500" placeholder="Your Department" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className=" grid text-start w-full grid-cols-1 gap-2 md:grid-cols-2">
+          <FormField
+              control={form.control}
+              name="staff.jobTitle"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Job Title</FormLabel>
+                  <FormControl>
+                    <Input disabled={isPending} className=" outline-green-500" placeholder="Chief Judge" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="staff.position"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Job Position</FormLabel>
+                  <FormControl>
+                    <Input disabled={isPending} className=" outline-green-500" placeholder="Job Position" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <fieldset className=" border  border-primary rounded-lg flex py-10 flex-col text-center space-y-4 px-3">
-            <legend className=" flex px-2 py-1 text-primary font-poppins font-semibold" >Police Admin Information</legend>
-            <div className=" grid grid-cols-2 gap-3 items-start text-start justify-items-start">
-            <div className=' w-full flex flex-col space-y-3'>
-                <Label className=' w-full' htmlFor="user.firstName">First Name</Label>
-                <Input className=' w-full flex' {...register("firstName")} id="user.firstName" />
-                {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName.message}</p>}
-            </div>
-            <div className=' w-full flex flex-col space-y-3'>
-                <Label className=' w-full' htmlFor="user.lastName">Last Name</Label>
-                <Input className=' w-full flex' {...register("lastName")} id="user.lastName" />
-                {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName.message}</p>}
-            </div>
-            <div className=' w-full flex flex-col space-y-3'>
-              <Label htmlFor="user.phone">Phone</Label>
-              <Input className=' w-full flex' {...register("phone")} id="user.phone" />
-              {errors.phone && <p className="text-red-500 text-sm">{errors.phone.message}</p>}
-            </div>
-            <div className=' w-full flex flex-col space-y-3'>
-                <Label htmlFor="user.gender">Gender</Label>
-                <Select onValueChange={(value) => register("gender").onChange({ target: { value } })}>
-                    <SelectTrigger>
-                    <SelectValue placeholder="Select gender" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value="MALE">Male</SelectItem>
-                        <SelectItem value="FEMALE">Female</SelectItem>
-                        <SelectItem value="OTHER">Other</SelectItem>
-                    </SelectContent>
-                </Select>
-                {errors.gender && <p className="text-red-500 text-sm">{errors.gender.message}</p>}
-                </div>
+          </div>
+          <div className="grid w-full text-start grid-cols-1 gap-2 md:grid-cols-2">
+            <FormField
+              control={form.control}
+              name="staff.employmentLocation"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Employment Location</FormLabel>
+                  <FormControl>
+                    <Input disabled={isPending} className=" outline-green-500" placeholder="Jigawa Dutse" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <div className=' w-full flex flex-col space-y-3'>
-              <Label htmlFor="user.state">State</Label>
-              <Input className=' w-full flex' {...register("state")} id="user.state" />
-              {errors.state && <p className="text-red-500 text-sm">{errors.state.message}</p>}
-            </div>
-             
-                <div className=' w-full flex flex-col space-y-3'>
-              <Label htmlFor="user.localGovernment">Local Government</Label>
-              <Input className=' w-full flex' {...register("localGovernment")} id="user.localGovernment" />
-              {errors.localGovernment && <p className="text-red-500 text-sm">{errors.localGovernment.message}</p>}
-            </div>
+              <FormField
+                control={form.control}
+                name="staff.staffNumber"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Staff Number</FormLabel>
+                    <FormControl>
+                      <Input disabled={isPending} className=" outline-green-500" placeholder="S. 00000" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+          </div>
+          <div className=" grid w-full text-start grid-cols-1 md:grid-cols-3 gap-2">
+            <FormField
+              control={form.control}
+              name="staff.salaryStructure"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Salary Structure</FormLabel>
+                  <FormControl>
+                    <Input disabled={isPending} className=" outline-green-500" placeholder="CONTISS" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="staff.salaryGrade"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Salary Grade</FormLabel>
+                  <FormControl>
+                    <Input disabled={isPending} className=" outline-green-500" placeholder="Level 8" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+          <FormField
+              control={form.control}
+              name="staff.step"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Step</FormLabel>
+                  <FormControl>
+                    <Input disabled={isPending} className=" outline-green-500" placeholder="Step 3" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             </div>
-           
-         </fieldset>
-         <fieldset className=" border  border-primary rounded-lg flex py-10 flex-col text-center space-y-4 px-3">
-            <legend className=" flex px-2 py-1 text-primary font-poppins font-semibold" >Login Information</legend>
-            {/* security Information */}
-               <div className=" grid grid-cols-2 gap-3 text-start items-start ">
-               <div className=' w-full flex flex-col space-y-3'>
-                    <Label htmlFor="user.email"> Login Email</Label>
-                    <Input className=' w-full flex' {...register("email")} id="user.email" type="email" />
-                    {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
-                </div>
-                <div className=' w-full flex flex-col space-y-3'>
-                    <Label htmlFor="user.email">Confirm Email</Label>
-                    <Input className=' w-full flex' {...register("confirmEmail")} id="user.email" type="email" />
-                    {errors.confirmEmail && <p className="text-red-500 text-sm">{errors.confirmEmail.message}</p>}
-                </div>
-                <div className=' w-full flex flex-col space-y-3'>
-                    <Label htmlFor="user.password"> Login Password</Label>
-                    <Input className=' w-full flex' {...register("password")} id="user.password" type="password" />
-                    {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
-                </div>
-                <div className=' w-full flex flex-col space-y-3'>
-                    <Label htmlFor="user.confirmPassword">Confirm Password</Label>
-                    <Input className=' w-full flex' {...register("confirmPassword")} id="user.confirmPassword" type="password" />
-                    {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>}
-                </div>
-               </div>
-            {/* End security Information */}
-        </fieldset>
-            <div className="">
-                <FormSuccess message={success} />
-                <FormError message={error} />
+            <div className=" grid text-start grid-cols-1 md:grid-cols-2 gap-2">
             </div>
+          </fieldset>
 
-            <div className=" flex w-full ">
-            <Button type="submit" disabled={isPending} className=' w-full text-white'>Submit Police Station</Button>
-            </div>
-          </form>
+          <fieldset className=" border  border-primary px-6 rounded-lg flex py-6 flex-col text-center items-center align-middle justify-center">
+          <legend className=" flex px-2 py-1 text-primary font-poppins font-semibold" >Security Information</legend>
+          <div className="grid text-start w-full grid-cols-1 lg:grid-cols-2 gap-2">
+          <FormField 
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input type="password" disabled={isPending} className=" outline-green-500" placeholder="Passsord" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password Confirmation</FormLabel>
+                  <FormControl>
+                    <Input type="password"disabled={isPending} className=" outline-green-500" placeholder="Confirm Password" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+                  {/* <div className="py-6 flex text-start justify-between w-full">
+                      <FormField
+                        control={form.control}
+                        name="isTwoFactorEnabled"
+                        render={({ field }) => (
+                          <FormItem className=" w-full">
+                          <div className=" flex justify-between items-center">
+                          <div className=" flex flex-col">
+                          <FormLabel>Two factor Authenication (Optional ) </FormLabel>
+                          <FormDescription>Enable two Factor Authentication</FormDescription>
+                          </div>
+                            <FormControl>
+                              <Switch disabled={isPending} checked={field.value} onCheckedChange={field.onChange} />
+                            </FormControl>
+                          </div>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      </div> */}
+          </fieldset>
+
+
+       <div className="flex items-center space-x-2">
+      <label
+        htmlFor="terms"
+        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+      >
+        Accept terms and conditions
+      </label>
+    </div>
+          <FormSuccess message={success} />
+          <FormError message={error} />
+       <Button type="submit" disabled={isPending} className=" bg-primary hover:bg-jgreen text-white w-full">Create your Account</Button>
+      </form>
+    </Form>
+
+
         </DialogContent>
       </Dialog>
       <div className=" w-[400px]">
       <div className="mb-4 flex flex-col space-y-2">
-          <Label htmlFor="search" className=' text-lg font-poppins'>Search Police Stations</Label>
+          <Label htmlFor="search" className=' text-lg font-poppins'>Search Staff </Label>
           <Input
             id="search"
             type="text"
@@ -305,23 +585,26 @@ export function AdminStaffPage ( { stations }: {
       </div>
      </div>
       <div className="mt-8 bg-white h-full rounded-lg  px-4 py-8">
-        <h2 className="text-xl font-semibold mb-4">Registered Police Stations</h2>
+        <h2 className="text-xl font-semibold mb-4">Registered Staffs</h2>
         <Table className=' py-6'>
           <TableHeader className=' rounded-lg '>
             <TableRow className=' bg-green-500/70 hover:bg-green-500/70 rounded-t-lg font-semibold font-poppins text-white'>
-              <TableHead className=' text-xs'>Name</TableHead>
-              <TableHead className=' text-xs'>Address</TableHead>
-              <TableHead className=' text-xs'>Station LGA</TableHead>
-              <TableHead className=' text-xs'>Contact Number</TableHead>
-              <TableHead className=' text-xs'>Administrator</TableHead>
-              <TableHead className=' text-xs'>Admin Phone</TableHead>
-              <TableHead className=' text-xs'>Contact Email</TableHead>
-              <TableHead className=' text-xs'>Action</TableHead>
+              <TableHead className=' text-xs'>First Name</TableHead>
+              <TableHead className=' text-xs'>Last Name</TableHead>
+              <TableHead className=' text-xs'> State</TableHead>
+              <TableHead className=' text-xs'>L.G.A</TableHead>
+              <TableHead className=' text-xs'>Staff Number</TableHead>
+              <TableHead className=' text-xs'>Staff Role</TableHead>
+              <TableHead className=' text-xs'>Department</TableHead>
+              <TableHead className=' text-xs'>Department</TableHead>
+              <TableHead className=' text-xs'>Department</TableHead>
+              <TableHead className=' text-xs'>Department</TableHead>
+              <TableHead className=' text-xs'>Salary Staructure</TableHead>
             </TableRow>
           </TableHeader>
             <TableBody className=' overflow-auto'>
-              {currentPoliceStations.map((station, index) => (
-                <AdminStaffItem station={station} key={index} />
+              {currentStaff.map((staff, index) => (
+                <AdminStaffItem staff={staff} key={index} />
               ))}
             </TableBody>
         </Table>

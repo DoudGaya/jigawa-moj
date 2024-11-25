@@ -1,4 +1,4 @@
-import { Gender, UserRole, User, Court, Case, Infrastructure, Probate, Transaction, PoliceStation, CaseType, CaseStatus, Hearing, Files, Council, Filing } from '@prisma/client';
+import { Gender, UserRole, User, Court, Case, Infrastructure, Probate, Transaction, PoliceStation, CaseType, CaseStatus, Hearing, Files, Council, Filing, Staff } from '@prisma/client';
 
 interface CustomerType {
     id: string
@@ -100,6 +100,43 @@ interface CustomerType {
     updatedAt: Date
   }
 
+  interface StaffUser {
+    id:                         string
+    firstName:                  string
+    lastName:                   string
+    otherNames:                 string
+    email:                      string
+    password:                   string
+    phone:                      string
+    state:                      string
+    gender:                     Gender
+    localGovernment:            string
+    emailVerified:              string
+    image:                      string
+    role:                       UserRole
+    isTwoFactorEnabled:         boolean
+    staff:                      Staff                          
+  }
+
+
+    // customer:                 CustomerType
+    // staffNumber:              string | undefined
+    // staffRole:                string | undefined
+    // salaryStructure:          string | undefined
+    // jobTitle:                 string | undefined
+    // isJudge:                  boolean| undefined
+    // department:               string | undefined
+    // employerName:             string | undefined
+    // employmentLocation:       string | undefined
+    // position:                 string | undefined
+    // salaryGrade:              string | undefined
+    // step:                     string | undefined
+    // dateOfEmployment:         string | undefined
+    // userId:                   string | undefined                  
+    // courtId:                  string | undefined
+    // createdAt               
+    // updatedAt         
+    // court:                    CourtWithAllRecords
 
 
   interface UserCustomer {
