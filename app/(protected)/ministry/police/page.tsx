@@ -6,7 +6,6 @@ import { PoliceUserType } from '@/typings'
 
 
 const AdminPolicePage = async () => {
-
   const stations = await getAllPoliceStations() as PoliceUserType[]
   return (
     <div className=' flex flex-col h-full'>
