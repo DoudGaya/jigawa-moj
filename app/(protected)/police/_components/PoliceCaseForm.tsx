@@ -48,8 +48,6 @@ import { uploadFileToS3, uploadMultipleFilesToS3 } from '@/actions/amazon-s3'
 import { FormError } from '@/components/FormError'
 
 
-
-
 export const PoliceCaseForm = () => {
   
     const [isModalOpen, setIsModalOpen] = useState(false)
