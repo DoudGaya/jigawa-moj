@@ -68,13 +68,7 @@ export default function TransactionList({ searchQuery, currentPage }: Transactio
             <TableCell>{transaction.paymentFor}</TableCell>
             <TableCell>
               <Badge
-                variant={
-                  transaction.paymentStatus === 'PAID'
-                    ? 'success'
-                    : transaction.paymentStatus === 'PENDING'
-                    ? 'warning'
-                    : 'destructive'
-                }
+           
               >
                 {transaction.paymentStatus}
               </Badge>
