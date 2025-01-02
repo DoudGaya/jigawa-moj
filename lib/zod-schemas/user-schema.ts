@@ -1,5 +1,58 @@
 
+import { Gender, UserRole } from "@prisma/client"
 import { z } from "zod"
+
+
+
+export const createUserSchema = z.object({
+    firstName: z.string().min(2, { //
+      message: "Please provide your First Name",
+    }),
+
+    lastName: z.string().min(2, { //
+      message: "Please provide your Last Name",
+    }),
+
+    otherNames: z.string().optional(), // 
+   
+    email: z.string().min(3, {
+      message: "Email address must be less than 2 characters",
+    }),
+    gender: z.enum([Gender.FEMALE, Gender.MALE, Gender.OTHER]),
+
+
+    state: z.string().min(2, {
+      message: "Please Select your state",
+    }),
+    password: z.string().min(6, {
+      message: "Password must be at least 6 characters",
+    }),
+    passwordConfirmation: z.string().min(6, {
+      message: "Password confirmation must match",
+    }),
+    phone: z.string()
+  .regex(/^0\d{10}$/, {
+    message: "Phone number must be 11 digits starting with 0",
+  }),
+    // phone: z.string().min(2, {
+    //   message: "Please provide your phone number .",
+    // }),
+    localGovernment: z.string().min(2, {
+      message: "Please provide your Local Government",
+    }),
+    role: z.enum([UserRole.ADMIN, UserRole.COURT, UserRole.STAFF, UserRole.POLICE, UserRole.USER]),
+}).refine((data) => {
+    if (data.password && !data.passwordConfirmation) {
+      return false
+    }
+
+    if (data.passwordConfirmation !== data.password) {
+      return false
+    }
+    return true
+  }, {
+    message: "Password Must Match"
+})
 
 
 

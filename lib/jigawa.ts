@@ -150,6 +150,8 @@ export const nigeriaStatesLGA = [
         lgas: ["Anka", "Bakura", "Birnin Magaji/Kiyaw", "Bukkuyum", "Bungudu", "Gummi", "Gusau", "Kaura Namoda", "Maradun", "Maru", "Shinkafi", "Talata Mafara", "Tsafe", "Zurmi"]
       },
 ]
+
+
 export const states = [
     {
         id: 1,

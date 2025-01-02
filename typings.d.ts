@@ -119,6 +119,23 @@ interface CustomerType {
   }
 
 
+
+
+  interface GenericUser {
+    id:                       string                    
+    firstName:                string        | undefined
+    lastName:                 string        | undefined
+    otherNames:               string        | undefined
+    email:                    string        | undefined                  
+    password:                 string        | undefined
+    phone:                    string        | undefined
+    state:                    string        | undefined
+    gender:                   Gender        | undefined
+    localGovernment:          string        | undefined
+    role:                     UserROle                             
+  }
+
+
     // customer:                 CustomerType
     // staffNumber:              string | undefined
     // staffRole:                string | undefined
