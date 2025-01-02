@@ -28,6 +28,7 @@ export const getUserById = async (id: string) => {
                 customer: true,
                 staff: true,
                 court: true,
+                police: true
             }
         })
         return user
@@ -92,7 +93,6 @@ export const createUser = async (values: z.infer<typeof createUserSchema>) => {
         phone,
         state,
         localGovernment,
-        passwordConfirmation,
         gender,
         otherNames,
     } = validatedFields.data
@@ -113,17 +113,16 @@ export const createUser = async (values: z.infer<typeof createUserSchema>) => {
                 gender,   
             }
         })
-        
-        
+
         const token = generateVerificationToken(email)
         
         
         await sendWelcomeMailToUser(email,  password, (await token).token)
-        
         return { user: user, success: "User Created Successfully" }
     } catch (error) {
-       console.log(error)
+       console.log(error)      
     }
+
 
 }
 

@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/dialog"
 import { MInistryAddUser } from './MInistryAddUser'
 import { useToast } from "@/hooks/use-toast"
-import { deleteUser, updateUserById } from '@/data/user'
+import { createUser, deleteUser, updateUserById } from '@/data/user'
 export function MinistryUserActionArea({
   users
 }: {
@@ -69,6 +69,8 @@ export function MinistryUserActionArea({
       // Call the API to update the user
       // @ts-ignore
       const result = await updateUserById(user.id, user) as unknown as GenericUser
+
+
       
       // Update the local state
       setUserItem(prevItems => 
