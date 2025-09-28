@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "postinstall": "prisma generate",
@@ -44,12 +44,12 @@
     "input-otp": "^1.2.4",
     "lucide-react": "^0.372.0",
     "mongoose": "^8.3.2",
-    "next": "^14.2.6",
+    "next": "15.5.2",
     "next-auth": "^5.0.0-beta.18",
     "next-themes": "^0.3.0",
-    "react": "^18",
+    "react": "19.1.1",
     "react-day-picker": "^8.10.1",
-    "react-dom": "^18",
+    "react-dom": "19.1.1",
     "react-hook-form": "^7.51.3",
     "react-icons": "^5.1.0",
     "react-spinners": "^0.13.8",
@@ -67,12 +67,40 @@
     "@types/bcrypt": "^5.0.2",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/react": "19.1.11",
+    "@types/react-dom": "19.1.8",
     "@types/uuid": "^9.0.8",
     "postcss": "^8",
     "prisma": "^5.14.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
+  },
+  "overrides": {
+    "@types/react": "19.1.11",
+    "@types/react-dom": "19.1.8",
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
+  },
+  "peerDependenciesMeta": {
+    "@uploadthing/react": {
+      "optional": true
+
+
+
+
+
+
+
+
+
+
+      
+    },
+    "@react-email/render": {
+      "optional": true
+    },
+    "@uploadthing/dropzone": {
+      "optional": true
+    }
   }
 }

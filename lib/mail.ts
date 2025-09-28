@@ -2,8 +2,13 @@ import { Resend } from 'resend'
 import {SendEmailToUserComponent} from './emailsComponents/SendEmailToUser'
 // import { PoliceWelcomeMail } from './emailsComponents/PoliceWelcomeMail';
 
+// Check if RESEND_API_KEY is available
+const apiKey = process.env.RESEND_API_KEY;
+if (!apiKey) {
+    console.error('RESEND_API_KEY is not set in environment variables');
+}
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resend = new Resend(apiKey)
 const env = process.env.NODE_ENV
 let baseUrl;
 
@@ -178,7 +183,7 @@ export const sendMailToUser = async (
         to: email,
         subject: `${subject}`,
         html: `<p> ${message} </p>`,
-        react: SendEmailToUserComponent({message})
+        react: await Promise.resolve(SendEmailToUserComponent({message}))
     })
 }
 
@@ -207,7 +212,7 @@ export const sendPasswordResetEmail = async ( email: string, token: string) => {
         html: `<p>Click the link to <a href="${resetLink}">Reset your password</a></p>`
     })
 }
-
+    
 export const sendVrificationEmail = async (
     email: string, 
     token: string

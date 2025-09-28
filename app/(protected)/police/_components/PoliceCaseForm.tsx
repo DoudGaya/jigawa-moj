@@ -407,10 +407,10 @@ export const PoliceCaseForm = () => {
                   </div>
 
                   <div className="md:flex grid grid-cols-2 gap-4 md:justify-end space-x-4">
-                  {/* <Button type="button" disabled={isPending} variant="outline" onClick={() => form.handleSubmit((data) => onSubmit(data, true))()}>
+                    <Button type="button" disabled={isPending} variant="outline" onClick={() => form.handleSubmit((data) => onSubmit(data, true))()}>
                       <Save className="mr-2 h-4 w-4" />
                       Save as Draft
-                    </Button> */}
+                    </Button>
                     <Button disabled={isPending} type="submit">
                       <Send className="mr-2 h-4 w-4" />
                       {isPending ? <BeatLoader size={8} color="#fff" /> : "Submit"}

@@ -29,6 +29,19 @@ export async function generateCaseNumber() {
     return paddedNumber;
   }
 
+export async function generateFIRNumber() {
+    const counterName = 'firNumber';
+
+    const counter = await prisma.counter.upsert({
+      where: { name: counterName },
+      update: { value: { increment: 1 } },
+      create: { name: counterName, value: 1 },
+    });
+
+    const paddedNumber = counter.value.toString().padStart(6, '0');
+    return `FIR-${paddedNumber}`;
+  }
+
 
   export const getAllCases = async () => {
     try {

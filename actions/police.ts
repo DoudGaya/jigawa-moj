@@ -6,21 +6,25 @@ import { getUserByEmail, getUserById } from '@/data/user'
 import { sendWelcomeMailToPolice } from '@/lib/mail'
 import { generateVerificationToken } from '@/lib/tokens'
 import { policeUSerSchema } from "@/lib/zod-schemas/police-schema"
-import { CaseStatus, UserRole } from '@prisma/client'
+import { CaseStatus, UserRole, Tribunal } from '@prisma/client'
 import { policeCaseSchema } from "@/lib/zod-schemas/case-schema"
-import { generateCaseNumber } from "./cases"
+import { generateCaseNumber, generateFIRNumber } from "./cases"
+import { currentUser } from "@/lib/auth"
 
 
 
 
 
 export async function submitPoliceCase(values: z.infer<typeof policeCaseSchema>, isDraft: boolean) {
-    // Here you would typically save the data to your 
     const fieldValidation = policeCaseSchema.safeParse(values);
 
-
     if (!fieldValidation.success) {
-        return { error: "field Validation failed " }
+        return { error: "Field validation failed" }
+    }
+
+    const user = await currentUser();
+    if (!user || user.role !== UserRole.POLICE) {
+        return { error: "Unauthorized: Only police officers can submit cases" }
     }
 
     const {
@@ -41,43 +45,78 @@ export async function submitPoliceCase(values: z.infer<typeof policeCaseSchema>,
         statementOfWitness,
     } = fieldValidation.data
 
-    console.log({data: fieldValidation, draft: isDraft })
+    if (isDraft) {
+        // Save as draft in PoliceCaseReport
+        const draftCase = await db.policeCaseReport.create({
+            data: {
+                caseTitle: title,
+                caseDescription,
+                placeOfOffense,
+                nameOfIPO,
+                defendantAddress,
+                defendantAge,
+                defendantName,
+                defendantOccupation,
+                defendantSex,
+                firstInformationReport: FIR,
+                medicalReport,
+                pictures,
+                statementOfComplainant,
+                statementOfVictims,
+                statementOfWitness,
+                isDraft: true,
+            }
+        })
+        return { success: true, message: "Case saved as draft successfully", data: draftCase }
+    } else {
+        // Get the police station for this user
+        const policeStation = await db.policeStation.findUnique({
+            where: { userId: user.id }
+        });
 
-    const caseNumber = await generateCaseNumber()
-
-    if (!caseNumber) {
-        return {error: "Case number generation failed"}
-    }
-
-
-    // Save the data to your database
-    await db.case.create({
-        data: {
-            title,
-            caseNumber,
-            caseDescription,
-            placeOfOffense,
-            nameOfIPO,
-            defendantAddress,
-            defendantAge,
-            defendantName,
-            defendantOccupation,
-            defendantSex,
-            FIR,
-            medicalReport,
-            pictures, 
-            statementOfVictims,
-            statementOfComplainant,
-            statementOfWitness,
-            caseStatus: isDraft ? CaseStatus.Draft : CaseStatus.Submitted,
+        if (!policeStation) {
+            return { error: "Police station not found" }
         }
-    })
-    // return {success: "Case submitted successfully"} ;
-    
-    console.log("Submitting case:", values, "Is Draft:", isDraft)
-    // Return a success message or error
-    return { success: true, message: "Case submitted successfully" }
-  }
+
+        // Generate FIR and case numbers
+        const firNumber = await generateFIRNumber();
+        if (!firNumber) {
+            return { error: "FIR number generation failed" }
+        }
+
+        const caseNumber = await generateCaseNumber();
+        if (!caseNumber) {
+            return { error: "Case number generation failed" }
+        }
+
+        // Create the official case record
+        const newCase = await db.case.create({
+            data: {
+                title,
+                caseNumber,
+                caseDescription,
+                placeOfOffense,
+                nameOfIPO,
+                defendantAddress,
+                defendantAge,
+                defendantName,
+                defendantOccupation,
+                defendantSex,
+                FIR: firNumber, // FIR field contains the FIR number
+                medicalReport,
+                pictures,
+                statementOfVictims,
+                statementOfComplainant,
+                statementOfWitness,
+                caseStatus: CaseStatus.Submitted,
+                policeId: policeStation.id,
+                tribunal: "CIVIL", // Default tribunal as string
+            }
+        })
+
+        return { success: true, message: "Case submitted successfully", data: newCase }
+    }
+}
 
 
 
@@ -200,4 +239,166 @@ export const getAllPoliceStations = async () => {
         }
     )
     return stations
+}
+
+// Police Case Report Management Functions
+export const getPoliceCaseDrafts = async (policeId: string) => {
+    const drafts = await db.policeCaseReport.findMany({
+        where: {
+            isDraft: true
+        },
+        orderBy: {
+            createdAt: 'desc'
+        }
+    })
+    return drafts
+}
+
+export const getPoliceCaseReportById = async (id: string) => {
+    const report = await db.policeCaseReport.findUnique({
+        where: { id }
+    })
+    return report
+}
+
+export const updatePoliceCaseDraft = async (id: string, values: z.infer<typeof policeCaseSchema>) => {
+    const fieldValidation = policeCaseSchema.safeParse(values);
+    if (!fieldValidation.success) {
+        return { error: "Field validation failed" }
+    }
+
+    const user = await currentUser();
+    if (!user || user.role !== UserRole.POLICE) {
+        return { error: "Unauthorized" }
+    }
+
+    const {
+        title,
+        caseDescription,
+        placeOfOffense,
+        nameOfIPO,
+        defendantAddress,
+        defendantAge,
+        defendantName,
+        defendantOccupation,
+        defendantSex,
+        FIR,
+        medicalReport,
+        pictures,
+        statementOfComplainant,
+        statementOfVictims,
+        statementOfWitness,
+    } = fieldValidation.data
+
+    const updatedDraft = await db.policeCaseReport.update({
+        where: { id },
+        data: {
+            caseTitle: title,
+            caseDescription,
+            placeOfOffense,
+            nameOfIPO,
+            defendantAddress,
+            defendantAge,
+            defendantName,
+            defendantOccupation,
+            defendantSex,
+            firstInformationReport: FIR,
+            medicalReport,
+            pictures,
+            statementOfComplainant,
+            statementOfVictims,
+            statementOfWitness,
+        }
+    })
+
+    return { success: true, message: "Draft updated successfully", data: updatedDraft }
+}
+
+export const submitPoliceCaseDraft = async (id: string) => {
+    const user = await currentUser();
+    if (!user || user.role !== UserRole.POLICE) {
+        return { error: "Unauthorized" }
+    }
+
+    // Get the police station for this user
+    const policeStation = await db.policeStation.findUnique({
+        where: { userId: user.id }
+    });
+
+    if (!policeStation) {
+        return { error: "Police station not found" }
+    }
+
+    // Get the draft
+    const draft = await db.policeCaseReport.findUnique({
+        where: { id }
+    })
+
+    if (!draft) {
+        return { error: "Draft not found" }
+    }
+
+    // Generate FIR and case numbers
+    const firNumber = await generateFIRNumber();
+    if (!firNumber) {
+        return { error: "FIR number generation failed" }
+    }
+
+    const caseNumber = await generateCaseNumber();
+    if (!caseNumber) {
+        return { error: "Case number generation failed" }
+    }
+
+    // Create official case
+    const newCase = await db.case.create({
+        data: {
+            title: draft.caseTitle,
+            caseNumber,
+            caseDescription: draft.caseDescription,
+            placeOfOffense: draft.placeOfOffense,
+            nameOfIPO: draft.nameOfIPO,
+            defendantAddress: draft.defendantAddress,
+            defendantAge: draft.defendantAge,
+            defendantName: draft.defendantName,
+            defendantOccupation: draft.defendantOccupation,
+            defendantSex: draft.defendantSex,
+            FIR: firNumber, // FIR field contains the FIR number
+            medicalReport: draft.medicalReport,
+            pictures: draft.pictures || undefined,
+            statementOfVictims: draft.statementOfVictims,
+            statementOfComplainant: draft.statementOfComplainant,
+            statementOfWitness: draft.statementOfWitness,
+            caseStatus: CaseStatus.Submitted,
+            policeId: policeStation.id,
+            tribunal: "CIVIL", // Default tribunal as string
+        }
+    })
+
+    // Delete the draft
+    await db.policeCaseReport.delete({
+        where: { id }
+    })
+
+    return { success: true, message: "Case submitted successfully", data: newCase }
+}
+
+export const deletePoliceCaseDraft = async (id: string) => {
+    const user = await currentUser();
+    if (!user || user.role !== UserRole.POLICE) {
+        return { error: "Unauthorized" }
+    }
+
+    const draft = await db.policeCaseReport.findUnique({
+        where: { id }
+    })
+
+    if (!draft) {
+        return { error: "Draft not found" }
+    }
+
+    await db.policeCaseReport.delete({
+        where: { id }
+    })
+
+    return { success: true, message: "Draft deleted successfully" }
 }

@@ -1,15 +1,19 @@
 import { v4 as uuid } from "uuid"
 import { db } from "./db"
-import crypto from 'crypto'
 import { getTwoFactorTokenByEmail } from "@/data/two-factor-token"
 import { getVerificationTokenByEmail } from "@/data/verification-token"
 import { getPasswordResetTokenByEmail } from "@/data/password-reset-token"
+
+// Use Web Crypto API for Edge Runtime compatibility
+const generateRandomToken = () => {
+    return Math.floor(100000 + Math.random() * 900000).toString()
+}
 
 
 
 
 export const generateTwoFactorToken = async (email: string) => {
-    const token = crypto.randomInt(100_000, 1_000_000).toString()
+    const token = generateRandomToken()
     const expires = new Date(new Date().getTime() + 5 * 60 * 1000)
     const existingToken = await getTwoFactorTokenByEmail(email)
 

@@ -3,31 +3,39 @@ import { S3Client } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
 import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 
-import process from "process";
-
 // Configure S3 client
 const s3Client = new S3Client({
-  region: process.env.AWS_REGION,
+  region: process.env.AWS_REGION || 'us-east-1',
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!
   }
 });
 
+// Debug logging (remove in production)
+console.log('AWS S3 Config:', {
+  region: process.env.AWS_REGION,
+  hasAccessKey: !!process.env.AWS_ACCESS_KEY_ID,
+  hasSecretKey: !!process.env.AWS_SECRET_ACCESS_KEY,
+  bucket: process.env.AWS_S3_BUCKET_NAME
+});
+
 export const uploadFileToS3 = async (file: File, bucketName: string): Promise<string> => {
   const fileName = `${Date.now()}-${file.name}`;
-  
+
+  // Convert File to Uint8Array for proper upload
+  const arrayBuffer = await file.arrayBuffer();
+  const uint8Array = new Uint8Array(arrayBuffer);
+
   const upload = new Upload({
     client: s3Client,
     params: {
       Bucket: bucketName,
       Key: fileName,
-      Body: new Blob([file]),
+      Body: uint8Array,
       ContentType: file.type,
     },
   });
-
-
 
   try {
     const result = await upload.done();

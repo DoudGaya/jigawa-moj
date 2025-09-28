@@ -17,17 +17,17 @@ const loginLinks = [
         url: '/ministry/login'
     },
     {
-        id: 1,
+        id: 2,
         title: 'Police Login',
         url: '/police/login'
     },
     {
-        id: 1,
+        id: 3,
         title: 'Courts',
         url: '/courts/login'
     },
     {
-        id: 1,
+        id: 4,
         title: 'Agents',
         url: '/agents/login'
     },
