@@ -39,7 +39,7 @@ export const getAllCustomers = async ({pagenum }:{pagenum: number}) => {
     }
 }
     
-export const getAllCustomerCount = () => {
+export const getAllCustomerCount = async () => {
     return db.customer.count()
 }
 

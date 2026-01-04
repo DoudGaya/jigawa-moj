@@ -3,9 +3,53 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+
+
+
+model User {
+  id                  String      @id @default(auto()) @map("_id") @db.ObjectId
+  firstName           String? 
+  lastName            String? 
+  otherNames          String?
+  email               String?      @unique
+  password            String?
+  phone               String?
+  state               String?
+  gender              Gender?
+  localGovernment     String?
+  emailVerified       DateTime?    @map("email_verified")
+  image               String?
+  role                UserRole     @default(USER)
+  accounts            Account[]
+  court               Court?
+  customer            Customer?
+  filings             Filing[]
+  staff               Staff?
+  police              PoliceStation?
+  isTwoFactorEnabled Boolean @default(false)
+  TwoFactorConfirmation TwoFactorConfirmation?
+  transactions        Transaction[]
+  @@map("user")
+}
+
+
+model PoliceStation {
+  id                          String    @id @default(auto()) @map("_id") @db.ObjectId
+  stationName                 String?        // Name of the police station
+  stationAddress              String?        // Full address of the police station
+  stationLocalGovernment      String?        // Local government area for the station
+  stationcontactNumber        String?
+  stationState                String?    
+  contactEmail                String? // if different from user mail
+  user                        User      @relation(fields: [userId], references: [id], onDelete: Cascade) 
+  userId                      String    @db.ObjectId @unique
+  createdAt                   DateTime @default(now())
+  updatedAt                   DateTime @updatedAt
+  @@map("police")
 }
 
 
@@ -15,12 +59,258 @@ enum Gender {
   OTHER
 }
 
+
+model Account {
+  id                                       String                   @id @default(auto()) @map("_id") @db.ObjectId
+  userId                                   String                   @db.ObjectId
+  type                                     String
+  provider                                 String
+  providerAccountId                        String                   @map("provider_account_id")
+  refresh_token                            String?                  @db.String
+  access_token                             String?                  @db.String
+  expires_at                               Int?
+  token_type                               String?
+  scope                                    String?
+  id_token                                 String?                  @db.String
+  session_state                            String?
+  user                                     User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([provider, providerAccountId])
+  @@map("account")
+}
+
+
 enum UserRole {
-  USER 
+  USER
   ADMIN
   COURT
   STAFF
   POLICE
+}
+
+model VerificationToken {
+  id                                  String            @id @default(auto()) @map("_id") @db.ObjectId
+  email                               String
+  token                               String            @unique
+  expires                             DateTime
+  @@unique([email, token])
+}
+
+model PasswordResetToken {
+  id                                  String             @id @default(auto()) @map("_id") @db.ObjectId
+  email                               String
+  token                               String             @unique
+  expires                             DateTime
+  @@unique([email, token])
+}
+
+model twoFactorToken {
+  id                                  String              @id @default(auto()) @map("_id") @db.ObjectId
+  email                               String
+  token                               String              @unique
+  expires                             DateTime
+  @@unique([email, token])
+}
+
+
+model Probate {
+  id                                  String                @id @default(auto()) @map("_id") @db.ObjectId
+  assets                              Asset[]   
+  beneficiaries                       String  
+  filing                              Filing?
+  customer                            Customer              @relation(fields: [customerId], references: [id],  onDelete: Cascade)
+  customerId                          String                @db.ObjectId 
+  createdAt                           DateTime              @default(now())
+  updatedAt                           DateTime              @updatedAt
+}
+
+model Asset {
+  id                                  String                 @id @default(auto()) @map("_id") @db.ObjectId
+  name                                String?
+  value                               String?
+  probate                             Probate                @relation(fields: [probateId], references: [id],  onDelete: Cascade)
+  probateId                           String                 @db.ObjectId @unique
+}
+
+model TwoFactorConfirmation {
+  id                                  String                  @id @default(auto()) @map("_id") @db.ObjectId
+  userId                              String                  @db.ObjectId
+  user                                User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([userId])
+}
+
+
+model PoliceCaseReport {
+  id                                  String                    @id @default(auto()) @map("_id") @db.ObjectId
+  defendantName                       String
+  caseTitle                           String
+  caseDescription                     String?
+  defendantAddress                    String
+  defendantAge                        String
+  defendantSex                        String
+  defendantOccupation                 String
+  placeOfOffense                      String
+  nameOfIPO                           String
+  firstInformationReport              String?     
+  statementOfComplainant              String?     
+  statementOfVictims                  String?     
+  statementOfWitness                  String?     
+  medicalReport                       String?     
+  pictures                            String[]    
+  isDraft                             Boolean                 @default(false)
+  createdAt                           DateTime                @default(now())
+}
+
+
+
+model Counter {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  name  String @unique
+  value Int
+}
+
+
+
+model Case {    
+  id                                    String             @id @default(auto()) @map("_id") @db.ObjectId   
+  title                                 String?
+  caseDescription                       String?
+  placeOfOffense                        String?
+  nameOfIPO                             String?
+  dateOfFiling                          DateTime? @default(now())
+  yearOfFIR                             String?
+  underActs                             String?
+  underSections                         String?
+  
+  
+  // defendant informations 
+
+  defendantAddress                      String?
+  defendantAge                          String?
+  defendantSex                          String?
+  defendantOccupation                   String?
+  defendantName                         String?
+
+  // case informations & Attachments
+
+  caseCouncil                           Council[]    
+  FIR                                   String?
+  statementOfComplainant                String?
+  statementOfVictims                    String?
+  statementOfWitness                    String?
+  medicalReport                         String?
+  pictures                              String[]
+  caseNumber                            String
+  courtRoom                             String?
+  courtDate                             DateTime?
+  caseType                              CaseType? // enum
+  caseStatus                            CaseStatus // enum
+  judgeName                             String?
+  judgeEmail                            String?
+  judgePhone                            String?
+  
+
+// court informations and Tribunal
+
+  tribunal                              String?
+  courtId                               String?            @db.ObjectId
+  hearings                              Hearing[]
+  court                                 Court?             @relation(fields: [courtId], references: [id])
+
+  // other informations 
+
+
+  files                                 Files[]
+  filing                                Filing?
+  transaction                           Transaction[]
+  createdAt                             DateTime           @default(now())
+  updatedAt                             DateTime           @updatedAt
+  @@map("case")
+}
+
+
+
+model Council {
+  id                                    String       @id @default(auto()) @map("_id") @db.ObjectId
+  caseId                                String       @db.ObjectId
+  name                                  String?
+  email                                 String?
+  phone                                 String?
+  role                                  String?
+  address                               String?
+  case                                  Case         @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  createdAt                             DateTime     @default(now())
+  updatedAt                             DateTime     @updatedAt
+}
+
+
+// model Parties {
+//   id                  String @id @default(auto()) @map("_id") @db.ObjectId
+//   case                Case @relation(fields: [caseId], references: [id], onDelete: Cascade)
+//   caseId              String @db.ObjectId
+//   partyName           String
+//   partyRole           PartyRole
+//   partyAddress        String?
+//   partyPhone          String?
+//   partyEmail          String?
+//   partyOccupation     String?
+//   partyAge            String
+// }
+
+
+
+
+model Hearing {
+    id                  String      @id @default(auto()) @map("_id") @db.ObjectId
+    case                Case        @relation(fields: [caseId], references: [id], onDelete: Cascade) 
+    caseId              String      @db.ObjectId
+    time                DateTime?
+    date                DateTime?
+}
+
+
+
+
+model Files {
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  fileTitle       String?
+  fileDescription String?
+  fileUrl         String
+  case            Case @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  caseId          String @db.ObjectId @unique
+  @@map("file")
+}
+
+model Customer {
+  id                  String          @id @default(auto()) @map("_id") @db.ObjectId
+  city                String?
+  address             String?
+  occupation          String?
+  employmentStatus    String?
+  maritalStatus       String?
+  probates            Probate[]
+  user                User              @relation(fields: [userId], references: [id], onDelete: Cascade )
+  userId              String            @db.ObjectId @unique
+  transactions        Transaction[]
+  // cases               Case[]
+  @@map("customer")
+}
+
+model Transaction {
+  id                  String     @id @default(auto()) @map("_id") @db.ObjectId
+  amount              String
+  paymentRef          String     @unique
+  paymentFor          String
+  paymentStatus       PaymentStatus
+  case                Case?      @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  caseId              String?    @db.ObjectId
+  filing              Filing?    @relation(fields: [filingId], references: [id], onDelete: Cascade)
+  filingId            String?    @db.ObjectId
+  customer            Customer?  @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  customerId          String?    @db.ObjectId
+  user                User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId              String?    @db.ObjectId
+  paymentDate         DateTime   @default(now())
+  @@map("transaction")
 }
 
 enum PaymentStatus {
@@ -28,6 +318,7 @@ enum PaymentStatus {
   PAID
   FAILED
 }
+
 
 enum CaseStatus {
   Pending
@@ -45,6 +336,23 @@ enum CaseType {
   Other
 }
 
+model Court {
+  id                      String   @id @default(auto()) @map("_id") @db.ObjectId
+  courtName               String
+  tribunal                Tribunal
+  city                    String?
+  courtLocalGovernment    String?
+  jurisdiction            String?
+  courtAddress            String?
+  level                   String? // Supreme Court, High Court, District Court
+  user                    User @relation(fields: [userId], references: [id])
+  userId                  String @db.ObjectId @unique
+  cases                   Case[]
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+  @@map("court")
+}
+
 enum Tribunal {
   SHARIA
   CIVIL
@@ -55,10 +363,111 @@ enum Tribunal {
   OTHER
 }
 
+// model Infrastructure {
+//   id              String @id @default(auto()) @map("_id") @db.ObjectId
+//   name            String?
+//   number          String?
+//   court           Court @relation(fields: [courtId], references: [id], onDelete: Cascade)
+//   courtId         String @db.ObjectId
+//   @@map("infrastructure")
+// }
+
+
+model Staff {
+  id                                  String                      @id @default(auto()) @map("_id") @db.ObjectId
+  staffNumber                         String?
+  staffRole                           String?
+  salaryStructure                     String?
+  jobTitle                            String? 
+  isJudge                             Boolean?
+  department                          String?
+  employerName                        String?
+  employmentLocation                  String?
+  position                            String?
+  salaryGrade                         String?
+  step                                String?
+  dateOfEmployment                    DateTime?
+  user                                User                        @relation(fields: [userId], references: [id], onDelete: Cascade) 
+  userId                              String                      @db.ObjectId @unique
+  courtId                             String?                     @db.ObjectId  
+  createdAt                           DateTime                    @default(now())
+  updatedAt                           DateTime                    @updatedAt
+  @@map("staff")
+}
+
+
+enum StaffRole {
+  JUDGES
+  ADMIN
+  LAWYER
+}
+
+model Inmate {
+  id                    String @id @default(auto()) @map("_id") @db.ObjectId
+  firstName             String
+  lastName              String
+  age                   String
+  maritalStatus         String
+  dateOfIncarceration   DateTime
+  relativePhone         String
+  relativeFullName      String
+  phoneNumber           String
+  relativeaddress       String
+  expectedReleaseDate   DateTime
+  // case                  Case @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  caseId                String @unique @db.ObjectId
+}
+
+model Filing {
+  id                  String        @id @default(auto()) @map("_id") @db.ObjectId
+  case                Case?         @relation(fields: [caseId], references: [id])
+  caseId              String?       @db.ObjectId @unique
+  probate             Probate?      @relation(fields: [probateId], references: [id])
+  probateId           String?       @db.ObjectId @unique
+  affidavit           Affidavit?    @relation(fields: [affidavitId], references: [id])
+  affidavitId         String?       @db.ObjectId @unique
+  declaration         DeclarationOfAge? @relation(fields: [declarationId], references: [id])
+  declarationId       String?       @db.ObjectId @unique
+  filingType          FilingType
+  user                User          @relation(fields: [userId], references: [id])
+  userId              String        @db.ObjectId
+  filedAt             DateTime      @default(now())
+  status              FilingStatus
+  transactions        Transaction[]
+  @@map("filing")
+}
+
+model Affidavit {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  content     String
+  deponentName String
+  swornAt     String   // Court or location
+  filing      Filing?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model DeclarationOfAge {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  declarantName String
+  dateOfBirth DateTime
+  placeOfBirth String
+  relationship String // Relationship to the person whose age is being declared (if applicable, or "SELF")
+  personName  String // Name of person whose age is declared
+  filing      Filing?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+
 enum FilingType {
   CASE
   PROBATE
+  AFFIDAVIT
+  DECLARATION_OF_AGE
 }
+
 
 enum FilingStatus {
   Submitted
@@ -67,302 +476,3 @@ enum FilingStatus {
   Rejected
 }
 
-model User {
-  id                       String                    @id @default(uuid())
-  firstName                String?
-  lastName                 String?
-  otherNames               String?
-  email                    String?                   @unique
-  password                 String?
-  phone                    String?
-  state                    String?
-  gender                   Gender?
-  localGovernment          String?
-  emailVerified            DateTime?
-  image                    String?
-  role                     UserRole                  @default(USER)
-  isTwoFactorEnabled       Boolean                   @default(false)
-  accounts                 Account[]
-  court                    Court?
-  customer                 Customer?
-  filings                  Filing[]
-  staff                    Staff?
-  police                   PoliceStation?
-  TwoFactorConfirmation    TwoFactorConfirmation?
-}
-
-model PoliceStation {
-  id                       String                    @id @default(uuid())
-  stationName              String?
-  stationAddress           String?
-  cases                     Case[]
-  stationLocalGovernment   String?
-  stationcontactNumber     String?
-  stationState             String?
-  contactEmail             String?
-  user                     User                      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId                   String                    @unique
-  createdAt                DateTime                  @default(now())
-  updatedAt                DateTime                  @updatedAt
-}
-
-model Account {
-  id                       String                    @id @default(uuid())
-  userId                   String
-  type                     String
-  provider                 String
-  providerAccountId        String                    @map("provider_account_id")
-  refresh_token            String?                   @db.Text
-  access_token             String?                   @db.Text
-  expires_at               Int?
-  token_type               String?
-  scope                    String?
-  id_token                 String?                   @db.Text
-  session_state            String?
-  user                     User                      @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-}
-
-model VerificationToken {
-  id                       String                    @id @default(uuid())
-  email                    String
-  token                    String                    @unique
-  expires                  DateTime
-
-  @@unique([email, token])
-}
-
-model PasswordResetToken {
-  id                       String                    @id @default(uuid())
-  email                    String
-  token                    String                    @unique
-  expires                  DateTime
-
-  @@unique([email, token])
-}
-
-model twoFactorToken {
-  id                       String                    @id @default(uuid())
-  email                    String
-  token                    String                    @unique
-  expires                  DateTime
-
-  @@unique([email, token])
-}
-
-model Probate {
-  id                       String                    @id @default(uuid())
-  assets                   Asset[]
-  beneficiaries            String
-  filing                   Filing?
-  customer                 Customer                  @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  customerId               String
-  createdAt                DateTime                  @default(now())
-  updatedAt                DateTime                  @updatedAt
-}
-
-model Asset {
-  id                       String                    @id @default(uuid())
-  name                     String?
-  value                    String?
-  probate                  Probate                   @relation(fields: [probateId], references: [id], onDelete: Cascade)
-  probateId                String                    @unique
-}
-
-model TwoFactorConfirmation {
-  id                       String                    @id @default(uuid())
-  userId                   String                    @unique
-  user                     User                      @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model PoliceCaseReport {
-  id                       String                    @id @default(uuid())
-  defendantName            String
-  caseTitle                String
-  caseDescription          String?
-  defendantAddress         String
-  defendantAge             String
-  defendantSex             String
-  defendantOccupation      String
-  placeOfOffense           String
-  nameOfIPO                String
-  firstInformationReport   String?
-  statementOfComplainant   String?
-  statementOfVictims       String?
-  statementOfWitness       String?
-  medicalReport            String?
-  pictures                 Json?
-  isDraft                  Boolean                   @default(false)
-  createdAt                DateTime                  @default(now())
-}
-
-model Counter {
-  id                       String                    @id @default(uuid())
-  name                     String                    @unique
-  value                    Int
-}
-
-model Case {
-  id                       String                    @id @default(uuid())
-  title                    String?
-  caseDescription          String?
-  placeOfOffense           String?
-  nameOfIPO                String?
-  dateOfFiling             DateTime?                 @default(now())
-  yearOfFIR                String?
-  underActs                String?
-  underSections            String?
-  defendantAddress         String?
-  defendantAge             String?
-  defendantSex             String?
-  defendantOccupation      String?
-  polcieStation            PoliceStation?      @relation(fields: [policeId], references: [id])
-  policeId                 String?
-  defendantName            String?
-  caseCouncil              Council[]
-  FIR                      String?
-  statementOfComplainant   String?
-  statementOfVictims       String?
-  statementOfWitness       String?
-  medicalReport            String?
-  pictures                 Json?
-  caseNumber               String
-  courtRoom                String?
-  courtDate                DateTime?
-  caseType                 CaseType?
-  caseStatus               CaseStatus
-  judgeName                String?
-  judgeEmail               String?
-  judgePhone               String?
-  tribunal                 String?
-  courtId                  String?
-  hearings                 Hearing[]
-  court                    Court?                    @relation(fields: [courtId], references: [id])
-  files                    Files[]
-  filing                   Filing?
-  transaction              Transaction[]
-  createdAt                DateTime                  @default(now())
-  updatedAt                DateTime                  @updatedAt
-}
-
-model Council {
-  id                       String                    @id @default(uuid())
-  caseId                   String
-  name                     String?
-  email                    String?
-  phone                    String?
-  role                     String?
-  address                  String?
-  case                     Case                      @relation(fields: [caseId], references: [id], onDelete: Cascade)
-  createdAt                DateTime                  @default(now())
-  updatedAt                DateTime                  @updatedAt
-}
-
-model Hearing {
-  id                       String                    @id @default(uuid())
-  case                     Case                      @relation(fields: [caseId], references: [id], onDelete: Cascade)
-  caseId                   String
-  time                     String?
-  date                     String?
-}
-
-model Files {
-  id                       String                    @id @default(uuid())
-  fileTitle                String?
-  fileDescription          String?
-  fileUrl                  String
-  case                     Case                      @relation(fields: [caseId], references: [id], onDelete: Cascade)
-  caseId                   String                    @unique
-}
-
-model Customer {
-  id                       String                    @id @default(uuid())
-  city                     String?
-  address                  String?
-  occupation               String?
-  employmentStatus         String?
-  maritalStatus            String?
-  probates                 Probate[]
-  user                     User                      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId                   String                    @unique
-  transactions             Transaction[]
-}
-
-model Transaction {
-  id                       String                    @id @default(uuid())
-  amount                   String
-  paymentRef               String
-  paymentFor               String
-  paymentStatus            PaymentStatus
-  case                     Case                      @relation(fields: [caseId], references: [id], onDelete: Cascade)
-  caseId                   String                    @unique
-  customer                 Customer                  @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  customerId               String
-  paymentDate              DateTime                  @default(now())
-}
-
-model Court {
-  id                       String                    @id @default(uuid())
-  courtName                String
-  tribunal                 Tribunal
-  city                     String?
-  courtLocalGovernment     String?
-  jurisdiction             String?
-  courtAddress             String?
-  level                    String?
-  user                     User                      @relation(fields: [userId], references: [id])
-  userId                   String                    @unique
-  cases                    Case[]
-  createdAt                DateTime                  @default(now())
-  updatedAt                DateTime                  @updatedAt
-}
-
-model Staff {
-  id                       String                    @id @default(uuid())
-  staffNumber              String?
-  staffRole                String?
-  salaryStructure          String?
-  jobTitle                 String?
-  isJudge                  Boolean?
-  department               String?
-  employerName             String?
-  employmentLocation       String?
-  position                 String?
-  salaryGrade              String?
-  step                     String?
-  dateOfEmployment         DateTime?
-  user                     User                      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId                   String                    @unique
-  courtId                  String?
-  createdAt                DateTime                  @default(now())
-  updatedAt                DateTime                  @updatedAt
-}
-
-model Inmate {
-  id                       String                    @id @default(uuid())
-  firstName                String
-  lastName                 String
-  age                      String
-  maritalStatus            String
-  dateOfIncarceration      DateTime
-  relativePhone            String
-  relativeFullName         String
-  phoneNumber              String
-  relativeaddress          String
-  expectedReleaseDate      DateTime
-  caseId                   String                    @unique
-}
-
-model Filing {
-  id                       String                    @id @default(uuid())
-  case                     Case?                     @relation(fields: [caseId], references: [id])
-  caseId                   String                    @unique
-  probate                  Probate?                  @relation(fields: [probateId], references: [id])
-  probateId                String                    @unique
-  filingType               FilingType
-  user                     User                      @relation(fields: [userId], references: [id])
-  userId                   String                    @unique
-  filedAt                  DateTime                  @default(now())
-  status                   FilingStatus
-}

@@ -111,11 +111,11 @@ export const AdminCustomerEditCard = ( {customer}: {
     defaultValues: {
       firstName: customer?.firstName || undefined,
       lastName: customer?.lastName || undefined,
-      otherNames: customer?.otherNames,
+      otherNames: customer?.otherNames || undefined,
       email: customer?.email || undefined,
       phone: customer?.phone || undefined,
       gender: customer.gender || undefined,
-      state: customer?.state,
+      state: customer?.state || undefined,
       localGovernment: customer?.localGovernment || undefined,
       maritalStatus: customer.customer?.maritalStatus || undefined,
       occupation: customer?.customer?.occupation || undefined,
@@ -391,7 +391,7 @@ export const AdminCustomerEditCard = ( {customer}: {
                 <FormItem>
                   <FormLabel>City (Optional) </FormLabel>
                   <FormControl>
-                    <Input type="text" disabled={isPending} className=" outline-green-500" placeholder="Jigawa, Dutse ( Optional ) " {...field} />
+                    <Input type="text" disabled={isPending} className=" outline-green-500" placeholder="jigawa, Dutse ( Optional ) " {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -408,7 +408,7 @@ export const AdminCustomerEditCard = ( {customer}: {
                     <FormLabel>Your Full Address</FormLabel>
                     <FormControl>
                     <Textarea
-                        placeholder="No. 3 Gagarawa Avenue, Jigawa Dutse. "
+                        placeholder="No. 3 Gagarawa Avenue, jigawa Dutse. "
                         className="resize-none w-full"
                         {...field}
                       />

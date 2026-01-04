@@ -35,7 +35,7 @@ export const TopNav = () => {
       <Popover>
       <PopoverTrigger asChild>
         <div className=' cursor-pointer' >
-            <Image alt='' src={ jigawa} className=' h-10 w-10 rounded-full border-2 border-primary object-center object-cover' />
+            <Image alt='' src={jigawa} className=' h-10 w-10 rounded-full border-2 border-primary object-center object-cover' />
         </div>
       </PopoverTrigger>
       <PopoverContent align='end' className=" w-56 items-start justify-start self-start">

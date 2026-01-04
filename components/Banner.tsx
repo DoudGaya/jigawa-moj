@@ -60,7 +60,7 @@ export const Banner = () => {
                 </CarouselContent>
                 <CarouselNext />
             </Carousel>
-        <h1 className=' text-2xl md:text-2xl font-poppins text-[#1E1815] max-w-2xl mx-auto font-semibold'>Welcome to Jigawa State Ministry of Justice <span className=" text-primary"> eFiling </span>Facility</h1>
+        <h1 className=' text-2xl md:text-2xl font-poppins text-[#1E1815] max-w-2xl mx-auto font-semibold'>Welcome to jigawa State Ministry of Justice <span className=" text-primary"> eFiling </span>Facility</h1>
       {
         user ? (
             <p className=" font-poppins text-md my-4 font-semibold">Welcome back {user.firstName}, Go to <Link className=" text-primary" href={'/user/dashboard'}> Dashboard </Link> </p>

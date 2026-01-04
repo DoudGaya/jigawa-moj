@@ -7,10 +7,11 @@ import { PaginationContainer } from './_components/PaginationContainer';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
 export interface SearchParamsProps {
-  searchParams: {[key: string]: string | string[] | undefined}
+  searchParams: Promise<{[key: string]: string | string[] | undefined}>
 }
 
-const page = async ({searchParams}: SearchParamsProps) => {
+const page = async (props: SearchParamsProps) => {
+  const searchParams = await props.searchParams;
 
 
   const pagenum = searchParams.pagenum ?? 0 as number

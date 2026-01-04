@@ -141,7 +141,7 @@ export function CustomerCreateProbateForm() {
   //               <FormItem>
   //                 <FormLabel>Court Name</FormLabel>
   //                 <FormControl>
-  //                   <Input type="text" disabled={isPending} className=" outline-green-500" placeholder="Magistrate Court Jigawa" {...field} />
+  //                   <Input type="text" disabled={isPending} className=" outline-green-500" placeholder="Magistrate Court jigawa" {...field} />
   //                 </FormControl>
   //                 <FormMessage />
   //               </FormItem>
@@ -159,7 +159,7 @@ export function CustomerCreateProbateForm() {
   //                     <FormLabel>Describe Your Case</FormLabel>
   //                     <FormControl>
   //                     <Textarea
-  //                         placeholder="No. 3 Gagarawa Avenue, Jigawa Dutse. "
+  //                         placeholder="No. 3 Gagarawa Avenue, jigawa Dutse. "
   //                         className="resize-none w-full"
   //                         {...field}
   //                       />

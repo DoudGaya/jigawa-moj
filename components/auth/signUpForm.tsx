@@ -304,7 +304,7 @@ export function SignUpForm() {
                   <FormLabel>Your Full Address</FormLabel>
                   <FormControl>
                   <Textarea
-                      placeholder="No. 3 Gagarawa Avenue, Jigawa Dutse. "
+                      placeholder="No. 3 Gagarawa Avenue, jigawa Dutse. "
                       className="resize-none w-full"
                       {...field}
                     />
@@ -327,7 +327,7 @@ export function SignUpForm() {
                 <FormItem>
                   <FormLabel>City (Optional) </FormLabel>
                   <FormControl>
-                    <Input type="text" disabled={isPending} className=" outline-green-500" placeholder="Jigawa, Dutse ( Optional ) " {...field} />
+                    <Input type="text" disabled={isPending} className=" outline-green-500" placeholder="jigawa, Dutse ( Optional ) " {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -67,7 +67,7 @@ export const PublicNavigations = () => {
         <nav className=" max-w-6xl mx-auto w-full flex justify-between">
         <Link href={'/'} className=" flex flex-row space-x-3 items-center">
             <Image src={logo} alt='Court of Arm' className=' md:h-8 md:w-8 rounded-full' />
-            <p className=' font-poppins font-semibold '>Jigawa State Ministry of Justice</p>
+            <p className=' font-poppins font-semibold '>Zamfara Ministry of Justice</p>
         </Link>
             <div className=" flex divide-x-2 divide-primary items-center">  
                     <div className=" mx-2">
@@ -135,7 +135,7 @@ export const PublicNavigations = () => {
     <   div className=" w-full md:hidden border-b flex justify-between shadow-sm z-10 items-center fixed left-0 top-0 bg-white px-8 py-3">
             <Link href={'/'} className=' flex items-center space-x-3 '>
                 <Image src={logo} alt='Court of arm' className= 'h-12 w-12  object-contain' />
-                <p className=' font-poppins text-sm font-semibold'>Justice | Jigawa </p>
+                <p className=' font-poppins text-sm font-semibold'>Jusrtice | Zamfara </p>
             </Link>
             <div className=" flex justify-between">
                 <SheetTrigger>
@@ -151,7 +151,7 @@ export const PublicNavigations = () => {
             <SheetTitle className=" flex items-center ">
                 <div className=" flex items-center  space-x-2 ">
                     <Image src={logo} alt='Court of Arm' className= 'h-12 w-12  object-contain' />
-                    <p className=' font-poppins text-sm font-semibold'>Justice | Jigawa </p>
+                    <p className=' font-poppins text-sm font-semibold'>Jusrtice | Zamfara </p>
                 </div>
             </SheetTitle>
             <SheetDescription>

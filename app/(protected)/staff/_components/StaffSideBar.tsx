@@ -89,7 +89,7 @@ export const StaffSideBar = ( ) => {
     <div className=' w-full hidden md:flex flex-col border-r dark:border-gray-600 md:w-[16rem] py-3 drop-shadow-sm px-4 dark:text-white bg-white dark:bg-black'>
     <div className="flex space-x-2 items-center hover:bg-gray-100/80 cursor-pointer p-2 rounded-md ">
         <Image src={jigawa} alt='Stablebricks logo' className='w-10 border-primary rounded-full border-2 h-10 block object-contain' />
-        <p className=' font-poppins font-semibold text-xs'>Justice | Jigawa</p>
+        <p className=' font-poppins font-semibold text-xs'>Jusrtice | Zamfara</p>
     </div>
     <div className=" flex flex-col py-4 px-2 space-y-3">
         {
@@ -121,7 +121,7 @@ export const StaffSideBar = ( ) => {
     <div className=" w-full md:hidden border-b flex justify-between shadow-sm z-10 items-center fixed left-0 top-0 px-4 py-3">
             <Link href={'/'} className=' flex space-x-2 items-center'>
                 <Image src={jigawa} alt='Stablebricks logo' className='w-8 border-primary rounded-full border-2 h-8 block object-contain' />
-                <p className=' font-poppins font-semibold text-xs'>Justice | Jigawa</p>
+                <p className=' font-poppins font-semibold text-xs'>Jusrtice | Zamfara</p>
                 </Link>
             <div className=" flex justify-between">
                 <SheetTrigger>
@@ -136,8 +136,8 @@ export const StaffSideBar = ( ) => {
             <SheetHeader>
             <SheetTitle className=" flex ">
                 <div className=" flex items-center space-x-2">
-                    <Image src={jigawa} alt='Jigawa State Ministry of Justice' className='w-8 border-primary rounded-full border-2 h-8 block object-contain' />
-                    <p className=' font-poppins font-semibold text-xs'>Justice | Jigawa</p>
+                    <Image src={jigawa} alt='jigawa State Ministry of Justice' className='w-8 border-primary rounded-full border-2 h-8 block object-contain' />
+                    <p className=' font-poppins font-semibold text-xs'>Jusrtice | Zamfara</p>
                 </div>
             </SheetTitle>
             <SheetDescription className=' flex h-full flex-col justify-between '>

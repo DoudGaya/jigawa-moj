@@ -9,7 +9,7 @@ export const logOut = async () => {
   
   if (session) {
     // Clear all auth-related cookies
-    const cookieStore = cookies()
+    const cookieStore = await cookies()
     cookieStore.getAll().forEach((cookie) => {
       if (cookie.name.includes("next-auth")) {
         cookieStore.delete(cookie.name)

@@ -20,16 +20,16 @@
 //               <table width="600" cellPadding="0" cellSpacing="0" style={{ backgroundColor: '#ffffff', borderRadius: '8px', overflow: 'hidden' }}>
 //                 <tr>
 //                   <td style={{ padding: '40px 30px', textAlign: 'center', backgroundColor: '#10b981' }}>
-//                     <img src="https://via.placeholder.com/150x50?text=MOJ+Logo" alt="Jigawa State Ministry of Justice Logo" style={{ maxWidth: '150px', height: 'auto' }} />
+//                     <img src="https://via.placeholder.com/150x50?text=MOJ+Logo" alt="jigawa State Ministry of Justice Logo" style={{ maxWidth: '150px', height: 'auto' }} />
 //                   </td>
 //                 </tr>
 //                 <tr>
 //                   <td style={{ padding: '40px 30px' }}>
 //                     <h1 style={{ color: '#10b981', marginBottom: '20px', fontSize: '24px', fontWeight: '600' }}>
-//                       Jigawa State Ministry of Justice
+//                       jigawa State Ministry of Justice
 //                     </h1>
 //                     <p style={{ color: '#4b5563', fontSize: '16px', lineHeight: '1.5' }}>
-//                       Welcome to Jigawa State Ministry of Justice. You can now log in to your account using the following credentials:
+//                       Welcome to jigawa State Ministry of Justice. You can now log in to your account using the following credentials:
 //                     </p>
 //                     <p style={{ color: '#4b5563', fontSize: '16px', lineHeight: '1.5' }}>
 //                       Email: {email}<br />
@@ -45,7 +45,7 @@
 //                 <tr>
 //                   <td style={{ backgroundColor: '#10b981', padding: '20px 30px', textAlign: 'center' }}>
 //                     <p style={{ color: '#ffffff', fontSize: '14px', margin: '0' }}>
-//                       © 2024 Jigawa State Ministry of Justice. All rights reserved.
+//                       © 2024 jigawa State Ministry of Justice. All rights reserved.
 //                     </p>
 //                   </td>
 //                 </tr>

@@ -14,7 +14,7 @@ const page = () => {
             </div>
                 <div className=" flex flex-col items-center text-center">
                     <small className=' font-poppins text-2xl font-semibold'>Ministry Portal</small>
-                    <h1> Jigawa State Judiciary </h1>
+                    <h1> jigawa State Judiciary </h1>
                 </div>
             <div className=" w-full">
               <RoleLoginForm />
@@ -38,7 +38,7 @@ export default page
 //             <Image src={jigawaRound} alt='' className=' h-36 w-36'  />
 //             <div className=" w-full ">
 //               <RoleLoginForm />
-//               {/* <p className=' font-poppins text-2xl'>Jigawa State Ministry of Justice</p> */}
+//               {/* <p className=' font-poppins text-2xl'>jigawa State Ministry of Justice</p> */}
 //             </div>
 //         </div>
 //     </div>

@@ -1,0 +1,84 @@
+import { getUserFilings } from "@/actions/filings";
+import { auth } from "@/auth";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { format } from "date-fns";
+import { redirect } from "next/navigation";
+
+const HistoryPage = async () => {
+  const session = await auth();
+  if (!session?.user?.id) return redirect("/login");
+
+  const filings = await getUserFilings(session.user.id);
+
+  return (
+    <div className="container mx-auto py-10">
+      <h1 className="text-3xl font-bold mb-8">Filing History</h1>
+      <Card>
+        <CardHeader>
+          <CardTitle>Your Filings</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Date</TableHead>
+                <TableHead>Type</TableHead>
+                <TableHead>Title / Name</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Payment</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {filings.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                    No filings found.
+                  </TableCell>
+                </TableRow>
+              ) : (
+                filings.map((filing) => (
+                  <TableRow key={filing.id}>
+                    <TableCell>{format(new Date(filing.filedAt), "MMM d, yyyy")}</TableCell>
+                    <TableCell className="capitalize">
+                      {filing.filingType.replace(/_/g, " ").toLowerCase()}
+                    </TableCell>
+                    <TableCell>
+                      {filing.affidavit?.title || filing.declaration?.declarantName || "N/A"}
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant={
+                        filing.status === "Accepted" ? "default" :
+                        filing.status === "Rejected" ? "destructive" :
+                        "secondary"
+                      }>
+                        {filing.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      {filing.transactions[0]?.paymentStatus === "PAID" ? (
+                        <Badge variant="outline" className="text-green-600 border-green-600">Paid</Badge>
+                      ) : (
+                        <Badge variant="outline" className="text-yellow-600 border-yellow-600">Pending</Badge>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+export default HistoryPage;

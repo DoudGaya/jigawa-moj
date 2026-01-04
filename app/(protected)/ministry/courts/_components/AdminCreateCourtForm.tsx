@@ -66,7 +66,7 @@ const courtLevel = [
 const jurisdiction = [
   {
     id: 1,
-    name: "Jigawa State",
+    name: "jigawa State",
   },
   {
     id: 2,
@@ -103,13 +103,11 @@ export function AdminCreateCourtForm() {
   const [error, setError] = useState<string | undefined>('')
   const [success, setSuccess] = useState < string | undefined>('')
   const [selectedState, setSelectedState] = useState('');
-  const [lgas, setLgas] = useState([]);
+  const [lgas, setLgas] = useState<string[]>([]);
 
-  // @ts-ignore
-  const handleStateChange = (value) => {
+  const handleStateChange = (value: string) => {
     setSelectedState(value);
     const stateLgas = nigeriaStatesLGA.find(s => s.state === value)?.lgas || [];
-    // @ts-ignore
     setLgas(stateLgas);
     form.setValue('state', value);
     form.setValue('localGovernment', '');
@@ -205,7 +203,7 @@ export function AdminCreateCourtForm() {
                 <FormItem>
                   <FormLabel>Court Name</FormLabel>
                   <FormControl>
-                    <Input type="text" disabled={isPending} className=" outline-green-500" placeholder="Magistrate Court Jigawa" {...field} />
+                    <Input type="text" disabled={isPending} className=" outline-green-500" placeholder="Magistrate Court jigawa" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -523,7 +521,7 @@ export function AdminCreateCourtForm() {
                   <FormLabel>Your Full Address</FormLabel>
                   <FormControl>
                   <Textarea
-                      placeholder="No. 3 Gagarawa Avenue, Jigawa Dutse. "
+                      placeholder="No. 3 Gagarawa Avenue, jigawa Dutse. "
                       className="resize-none w-full"
                       {...field}
                     />

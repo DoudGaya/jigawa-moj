@@ -14,7 +14,7 @@ const page = () => {
             </div>
                 <div className=" flex flex-col items-center text-center">
                     <small className=' font-poppins text-2xl font-semibold'>Police Portal</small>
-                    <h1> Jigawa State Judiciary </h1>
+                    <h1> jigawa State Judiciary </h1>
                 </div>
             <div className=" w-full">
               <RoleLoginForm />

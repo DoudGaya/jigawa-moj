@@ -9,13 +9,11 @@ import { getAllStaffs } from '@/actions/staffs'
 const AdminStaffHome = async () => {
 
   // const stations = await getAllPoliceStations() as PoliceUserType[]
-  // @ts-ignore
-  const staffs = await getAllStaffs() as Staff[]
+  const staffs = await getAllStaffs()
   return (
     <div className=' flex flex-col h-full'>
       <AdminStaffPage 
-        // @ts-ignore
-      staffs={staffs} />
+      staffs={staffs || []} />
     </div>
   )
 }

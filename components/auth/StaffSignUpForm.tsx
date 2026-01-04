@@ -286,7 +286,7 @@ export function StaffSignUpForm () {
             <FormItem>
               <FormLabel>Employer Name</FormLabel>
               <FormControl>
-                <Input type="text" disabled={isPending} className=" outline-green-500" placeholder="Jigawa State High Court" {...field} />
+                <Input type="text" disabled={isPending} className=" outline-green-500" placeholder="jigawa State High Court" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -343,7 +343,7 @@ export function StaffSignUpForm () {
             <FormItem>
               <FormLabel>Employment Location</FormLabel>
               <FormControl>
-                <Input disabled={isPending} className=" outline-green-500" placeholder="Jigawa Dutse" {...field} />
+                <Input disabled={isPending} className=" outline-green-500" placeholder="jigawa Dutse" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

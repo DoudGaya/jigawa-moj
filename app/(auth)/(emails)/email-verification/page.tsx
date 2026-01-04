@@ -46,7 +46,7 @@ const EmailVerification = () => {
     <div className=' h-[80vh] flex items-center justify-center w-full '>
       <div className=" max-w-xl flex items-center space-y-2 justify-center flex-col text-center shadow-lg px-4 py-6 rounded-lg drop-shadow-sm">
         <Image src={jigawa} alt='' className=' h-16 w-16 rounded-full border-2 border-primary' />
-        <h1 className=' text-xl font-poppins font-semibold'>Welcome to Jigawa State Ministry of Justice</h1>
+        <h1 className=' text-xl font-poppins font-semibold'>Welcome to jigawa State Ministry of Justice</h1>
           {(!success && !error ) ? (
             <div className=" flex space-y-2 items-center text-center flex-col py-3">
               <p className=' font-poppins'>Confirming your Email</p>

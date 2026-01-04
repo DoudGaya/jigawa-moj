@@ -39,7 +39,7 @@ export default async function Dashboard() {
         </div>
       </div>
       <div className="w-full font-poppins py-3 flex text-center justify-center">
-        <span className=" text-sm text-gray-700">Powered by Jigawa State ICT and Digital Economy Office </span>
+        <span className=" text-sm text-gray-700">Powered by Zamfara State ICT and Digital Economy Office </span>
       </div>
     </div>
   )

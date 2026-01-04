@@ -41,26 +41,26 @@ export const AdminCustomerDetails = ({customer}: {customer: UserCustomer}) => {
 
             <div className=" flex flex-col items-end text-end space-y-1 ">
               <small className=' text-xs uppercase font-poppins font-semibold text-gray-800/50'>Marital Status</small>
-              <p className=' text-sm font-poppins text-gray-900/70 font-semibold'>{ customer.customer.maritalStatus || "N/A" }</p>
+              <p className=' text-sm font-poppins text-gray-900/70 font-semibold'>{ customer.customer?.maritalStatus || "N/A" }</p>
             </div>
           </div>
 
           <div className=" flex justify-between ">
               <div className=" flex flex-col items-start text-start  space-y-1 ">
                 <small className=' text-xs uppercase font-poppins font-semibold text-gray-900/50'>Employment Status</small>
-                <p className=' text-sm font-poppins text-gray-800/80 font-semibold'>{ customer.customer.employmentStatus || "N/A"  }</p>
+                <p className=' text-sm font-poppins text-gray-800/80 font-semibold'>{ customer.customer?.employmentStatus || "N/A"  }</p>
               </div>
 
               <div className=" flex flex-col items-end text-end space-y-1 ">
                 <small className=' text-xs uppercase font-poppins font-semibold text-gray-800/50'>Employment</small>
-                <p className=' text-sm font-poppins text-gray-900/70 font-semibold'>{ customer.customer.occupation || "N/A" }</p>
+                <p className=' text-sm font-poppins text-gray-900/70 font-semibold'>{ customer.customer?.occupation || "N/A" }</p>
               </div>
           </div>
 
           <div className=" flex w-full">
               <div className=" flex flex-col items-start text-start  space-y-2 ">
                 <small className=' text-xs uppercase font-poppins font-semibold text-gray-900/50'>Address</small>
-                <p className=' text-xs font-poppins text-gray-800/80 '>{ customer.customer.address || "N/A" }</p>
+                <p className=' text-xs font-poppins text-gray-800/80 '>{ customer.customer?.address || "N/A" }</p>
               </div>
           </div>
 
@@ -80,7 +80,7 @@ export const AdminCustomerDetails = ({customer}: {customer: UserCustomer}) => {
                     </svg>
               </button>
             <div className=" flex space-x-1 justify-center items-center ">
-              <p className=' text-sm font-poppins text-gray-900/70 font-semibold'>{customer.customer.cases.length }</p>
+              <p className=' text-sm font-poppins text-gray-900/70 font-semibold'>{customer.customer?.cases?.length || 0 }</p>
             </div>
           </div>
 
@@ -93,7 +93,7 @@ export const AdminCustomerDetails = ({customer}: {customer: UserCustomer}) => {
               </button>
 
             <div className=" flex flex-col items-end text-end space-y-1 ">
-              <p className=' text-sm font-poppins text-gray-900/70 font-semibold'>{ customer.customer.transactions.length }</p>
+              <p className=' text-sm font-poppins text-gray-900/70 font-semibold'>{ customer.customer?.transactions.length || 0 }</p>
             </div>
           </div>
 
@@ -106,7 +106,7 @@ export const AdminCustomerDetails = ({customer}: {customer: UserCustomer}) => {
               </button>
 
             <div className=" flex flex-col items-end text-end space-y-1 ">
-              <p className=' text-sm font-poppins text-gray-900/70 font-semibold'>{ customer.customer.probates.length }</p>
+              <p className=' text-sm font-poppins text-gray-900/70 font-semibold'>{ customer.customer?.probates.length || 0 }</p>
             </div>
           </div>
        </div> 

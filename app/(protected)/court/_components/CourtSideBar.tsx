@@ -88,8 +88,8 @@ export const CourtSideBar = ( ) => {
 <>
     <div className=' w-full hidden border-r dark:border-gray-700 dark:bg-black/80 dark:text-white md:flex flex-col md:w-[18rem] py-2 drop-shadow-sm px-4 bg-white'>
     <Link href={'/admin/dashboard'} className=" hover:bg-gray-200 p-2 m-2 rounded-lg flex flex-row space-x-3 items-center font-poppins">
-        <Image src={logo} alt='Jigawa State Ministry of Justice ' className=' h-10 w-10 rounded-full border-2 border-primary object-contain' />
-        <p className=' font-semibold text-sm'>Jigawa | Justice</p>
+        <Image src={logo} alt='jigawa State Ministry of Justice ' className=' h-10 w-10 rounded-full border-2 border-primary object-contain' />
+        <p className=' font-semibold text-sm'>jigawa | Justice</p>
     </Link>
     <hr className=' border-b-1.5 border-primary ' />
    <ScrollArea>
@@ -124,7 +124,7 @@ export const CourtSideBar = ( ) => {
     <Sheet>
     <div className=" w-full md:hidden border-b flex justify-between shadow-sm z-10 items-center fixed left-0 top-0 bg-white px-8 py-3">
             <Link href={'/'}>
-                <Image src={logo} alt='Jigawa State Ministry of Justice ' className=' h-10 object-left object-contain' />
+                <Image src={logo} alt='jigawa State Ministry of Justice ' className=' h-10 object-left object-contain' />
             </Link>
             <div className=" flex justify-between">
                 <SheetTrigger>
@@ -139,7 +139,7 @@ export const CourtSideBar = ( ) => {
             <SheetHeader>
             <SheetTitle className=" flex items-center  ">
                 <div className=" px-2 flex items-center">
-                    <Image alt='Jigawa State Ministry of Justice ' className=' h-10 object-contain object-left' src={logo} />
+                    <Image alt='jigawa State Ministry of Justice ' className=' h-10 object-contain object-left' src={logo} />
                 </div>
             </SheetTitle>
             <SheetDescription>

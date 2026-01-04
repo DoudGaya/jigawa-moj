@@ -5,8 +5,11 @@ import { UserCustomer } from '@/typings'
 
 const page = async (params: any) => {
   const id = params.params.customerUserId as string
-  // @ts-ignore
-  const customer = await getCustomerByUserId(id) as UserCustomer
+  const customer = await getCustomerByUserId(id)
+
+  if (!customer) {
+    return <div>Customer not found</div>
+  }
 
   return (
    <div className="">

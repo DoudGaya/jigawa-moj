@@ -152,7 +152,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
   return (
     <div className=' max-w-6xl w-full mx-auto'>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit((data) => onSubmit(data, false))} className="">
+        <form onSubmit={form.handleSubmit((data) => onSubmit(data as unknown as z.infer<typeof MinistryCaseSchema>, false))} className="">
           <div className=" w-full bg-white py-4 px-6 rounded-md ">
             <h1 className=' text-xl font-bold font-poppins'>Update Case Record</h1>
           </div>
@@ -166,7 +166,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
               <Separator className='my-2 bg-green-300' />
               <div className="grid grid-cols-1 my-4 gap-4">
                 <FormField
-                  control={form.control}
+                  control={form.control as any}
                   name="title"
                   render={({ field }) => (
                     <FormItem>
@@ -179,7 +179,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
                   )}
                 />
                 <FormField
-                  control={form.control}
+                  control={form.control as any}
                   name="caseDescription"
                   render={({ field }) => (
                     <FormItem>
@@ -195,7 +195,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
 
               <div className="grid grid-cols-1 my-4 md:grid-cols-2 gap-4">
                 <FormField
-                  control={form.control}
+                  control={form.control as any}
                   name="placeOfOffense"
                   render={({ field }) => (
                     <FormItem>
@@ -208,7 +208,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
                   )}
                 />
                 <FormField
-                  control={form.control}
+                  control={form.control as any}
                   name="nameOfIPO"
                   render={({ field }) => (
                     <FormItem>
@@ -221,7 +221,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
                   )}
                 />
                 <FormField
-                  control={form.control}
+                  control={form.control as any}
                   name="underActs"
                   render={({ field }) => (
                     <FormItem>
@@ -234,7 +234,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
                   )}
                 />
                 <FormField
-                  control={form.control}
+                  control={form.control as any}
                   name="underSections"
                   render={({ field }) => (
                     <FormItem>
@@ -259,7 +259,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
                 <Separator className=' bg-green-300' />
               <div className="grid py-4 gap-4">
                 <FormField
-                  control={form.control}
+                  control={form.control as any}
                   name="defendantName"
                   render={({ field }) => (
                     <FormItem>
@@ -272,7 +272,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
                   )}
                 />
                 <FormField
-                  control={form.control}
+                  control={form.control as any}
                   name="defendantAddress"
                   render={({ field }) => (
                     <FormItem>
@@ -287,7 +287,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
 
                 <div className=" gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
                   <FormField
-                    control={form.control}
+                    control={form.control as any}
                     name="defendantAge"
                     render={({ field }) => (
                       <FormItem>
@@ -300,7 +300,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
                     )}
                   />
                   <FormField
-                    control={form.control}
+                    control={form.control as any}
                     name="defendantSex"
                     render={({ field }) => (
                       <FormItem>
@@ -322,7 +322,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
                     )}
                   />
                   <FormField
-                    control={form.control}
+                    control={form.control as any}
                     name="defendantOccupation"
                     render={({ field }) => (
                       <FormItem>
@@ -345,7 +345,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
               <Separator className='my-2 bg-green-300' />
               <div className="grid grid-cols-1 md:grid-cols-2 my-4 gap-4">
                 <FormField
-                  control={form.control}
+                  control={form.control as any}
                   name="courtId"
                   render={({ field }) => (
                     <FormItem>
@@ -367,7 +367,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
                   )}
                 />
                 <FormField
-                  control={form.control}
+                  control={form.control as any}
                   name="courtRoom"
                   render={({ field }) => (
                     <FormItem>
@@ -384,7 +384,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
               <Separator className=' my-2 bg-green-300' />
                 <div className="grid grid-cols-1 md:grid-cols-3 my-4 gap-4">
                   <FormField
-                    control={form.control}
+                    control={form.control as any}
                     name="judgeName"
                     render={({ field }) => (
                       <FormItem>
@@ -397,7 +397,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
                     )}
                   />
                   <FormField
-                    control={form.control}
+                    control={form.control as any}
                     name="judgePhone"
                     render={({ field }) => (
                       <FormItem>
@@ -411,7 +411,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
                   />
                   <div className=" grid gap-3 ">
                   <FormField
-                    control={form.control}
+                    control={form.control as any}
                     name="judgeEmail"
                     render={({ field }) => (
                       <FormItem>
@@ -431,7 +431,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
             <h3 className="text-lg font-semibold mb-4">File Uploads (Only if you want to update)</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormField
-                  control={form.control}
+                  control={form.control as any}
                   name="FIR"
                   render={({ field: { value, onChange, ...field } }) => (
                     <FormItem>
@@ -449,7 +449,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
                   )}
                 />
                 <FormField
-                  control={form.control}
+                  control={form.control as any}
                   name="statementOfComplainant"
                   render={({ field: { value, onChange, ...field } }) => (
                     <FormItem>
@@ -467,7 +467,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
                   )}
                 />
                 <FormField
-                  control={form.control}
+                  control={form.control as any}
                   name="statementOfVictims"
                   render={({ field: { value, onChange, ...field } }) => (
                     <FormItem>
@@ -485,7 +485,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
                   )}
                 />
                 <FormField
-                  control={form.control}
+                  control={form.control as any}
                   name="statementOfWitness"
                   render={({ field: { value, onChange, ...field } }) => (
                     <FormItem>
@@ -503,7 +503,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
                   )}
                 />
                 <FormField
-                  control={form.control}
+                  control={form.control as any}
                   name="medicalReport"
                   render={({ field: { value, onChange, ...field } }) => (
                     <FormItem>
@@ -521,7 +521,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
                   )}
                 />
                 <FormField
-                  control={form.control}
+                  control={form.control as any}
                   name="pictures"
                   render={({ field: { value, onChange, ...field } }) => (
                     <FormItem>
@@ -556,7 +556,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
                   {councilFields.map((field, index) => (
                     <div key={field.id} className=" bg-white rounded-lg grid-cols-2 gap-4 grid px-4 py-4 border border-green-300">
                       <FormField
-                        control={form.control}
+                        control={form.control as any}
                         name={`caseCouncil.${index}.name`}
                         render={({ field }) => (
                           <FormItem>
@@ -569,7 +569,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
                         )}
                       />
                       <FormField
-                        control={form.control}
+                        control={form.control as any}
                         name={`caseCouncil.${index}.email`}
                         render={({ field }) => (
                           <FormItem>
@@ -582,7 +582,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
                         )}
                       />
                       <FormField
-                        control={form.control}
+                        control={form.control as any}
                         name={`caseCouncil.${index}.phone`}
                         render={({ field }) => (
                           <FormItem>
@@ -595,7 +595,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
                         )}
                       />
                       <FormField
-                        control={form.control}
+                        control={form.control as any}
                         name={`caseCouncil.${index}.role`}
                         render={({ field }) => (
                           <FormItem>
@@ -610,7 +610,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
                       <div className=" w-full flex space-x-3 col-span-2">
                       <FormField
 
-                        control={form.control}
+                        control={form.control as any}
                         name={`caseCouncil.${index}.address`}
                         render={({ field }) => (
                           <FormItem className='w-full'>
@@ -655,7 +655,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
               {hearingFields.map((field, index) => (
                 <div key={field.id} className="grid bg-white rounded-lg px-3 py-4 grid-cols-2 md:grid-cols-3 gap-4 mb-4">
                   <FormField
-                    control={form.control}
+                    control={form.control as any}
                     name={`hearings.${index}.date`}
                     render={({ field }) => (
                       <FormItem>
@@ -668,7 +668,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
                     )}
                   />
                   <FormField
-                    control={form.control}
+                    control={form.control as any}
                     name={`hearings.${index}.time`}
                     render={({ field }) => (
                       <FormItem>
@@ -681,7 +681,7 @@ export default function MinistryCaseEditForm({ existingCase, courts }: {
                     )}
                   />
                   {/* <FormField
-                    control={form.control}
+                    control={form.control as any}
                     // @ts-ignore
                     name={`hearings.${index}.description`}
                     render={({ field }) => (

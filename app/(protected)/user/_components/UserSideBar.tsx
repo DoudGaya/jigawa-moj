@@ -95,8 +95,8 @@ export const UserDashboardSideBar = ( ) => {
 <>
     <div className=' w-full hidden md:flex flex-col border-r dark:border-gray-600 md:w-[16rem] py-3 drop-shadow-sm px-4 dark:text-white bg-white dark:bg-black'>
     <div className="flex space-x-2 items-center hover:bg-gray-100/80 cursor-pointer p-2 rounded-md ">
-        <Image src={jigawa} alt='Jigawa State' className='w-10 border-primary rounded-full border-2 h-10 block object-contain' />
-        <p className=' font-poppins font-semibold text-xs'>Justice | Jigawa</p>
+        <Image src={jigawa} alt='jigawa State' className='w-10 border-primary rounded-full border-2 h-10 block object-contain' />
+        <p className=' font-poppins font-semibold text-xs'>Jusrtice | Zamfara</p>
     </div>
     <div className=" flex flex-col py-4 px-2 space-y-3">
         {
@@ -128,8 +128,8 @@ export const UserDashboardSideBar = ( ) => {
     <div className=" w-full md:hidden border-b flex justify-between shadow-sm z-10 items-center fixed left-0 top-0 bg-white px-6 py-3">
             <Link href={'/'}>
                  <div className="flex space-x-2 items-center hover:bg-gray-100/80 cursor-pointer p-2 rounded-md ">
-                    <Image src={jigawa} alt='Jigawa State' className='w-10 border-primary rounded-full border-2 h-10 block object-contain' />
-                    <p className=' font-poppins font-semibold text-xs'>Justice | Jigawa</p>
+                    <Image src={jigawa} alt='jigawa State' className='w-10 border-primary rounded-full border-2 h-10 block object-contain' />
+                    <p className=' font-poppins font-semibold text-xs'>Jusrtice | Zamfara</p>
                 </div>
             </Link>
             <div className=" flex justify-between">
@@ -146,8 +146,8 @@ export const UserDashboardSideBar = ( ) => {
             <SheetTitle className=" flex items-center  ">
                 <div className=" px-2 flex items-center">
                      <div className="flex space-x-2 items-center hover:bg-gray-100/80 cursor-pointer rounded-md ">
-                        <Image src={jigawa} alt='Jigawa State' className='w-10 border-primary rounded-full border-2 h-10 block object-contain' />
-                        <p className=' font-poppins font-semibold text-xs'>Justice | Jigawa</p>
+                        <Image src={jigawa} alt='jigawa State' className='w-10 border-primary rounded-full border-2 h-10 block object-contain' />
+                        <p className=' font-poppins font-semibold text-xs'>Jusrtice | Zamfara</p>
                     </div>
                 </div>
             </SheetTitle>

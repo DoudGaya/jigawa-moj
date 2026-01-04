@@ -10,8 +10,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Jigawa | Justice",
-  description: "Jigawa State Ministry of justice service portal",
+  title: "Zamfara | Justice",
+  description: "jigawa State Ministry of justice service portal",
 };
 
 export default async function RootLayout({

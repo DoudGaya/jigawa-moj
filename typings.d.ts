@@ -2,15 +2,15 @@ import { Gender, UserRole, User, Court, Case, Infrastructure, Probate, Transacti
 
 interface CustomerType {
     id: string
-    city: string
-    address: string
-    occupation: string
-    employmentStatus:string
-    maritalStatus: string
+    city: string | null
+    address: string | null
+    occupation: string | null
+    employmentStatus:string | null
+    maritalStatus: string | null
     userId: string
     probates: Probate[]
     transactions: Transaction[]
-    cases: Case[]
+    cases?: Case[]
   }
 
 
@@ -102,20 +102,20 @@ interface CustomerType {
 
   interface StaffUser {
     id:                         string
-    firstName:                  string
-    lastName:                   string
-    otherNames:                 string
-    email:                      string
-    password:                   string
-    phone:                      string
-    state:                      string
-    gender:                     Gender
-    localGovernment:            string
-    emailVerified:              string
-    image:                      string
+    firstName:                  string | null
+    lastName:                   string | null
+    otherNames:                 string | null
+    email:                      string | null
+    password:                   string | null
+    phone:                      string | null
+    state:                      string | null
+    gender:                     Gender | null
+    localGovernment:            string | null
+    emailVerified:              Date | null
+    image:                      string | null
     role:                       UserRole
     isTwoFactorEnabled:         boolean
-    staff:                      Staff                          
+    staff:                      Staff | null
   }
 
 
@@ -158,20 +158,20 @@ interface CustomerType {
 
   interface UserCustomer {
     id: string
-    firstName: string
-    lastName: string
-    otherNames:string
-    email: string
-    password: string
-    phone: string
-    state: string
-    gender: Gender
-    localGovernment: string
-    emailVerified: string
-    image: string
+    firstName: string | null
+    lastName: string | null
+    otherNames:string | null
+    email: string | null
+    password: string | null
+    phone: string | null
+    state: string | null
+    gender: Gender | null
+    localGovernment: string | null
+    emailVerified: Date | null
+    image: string | null
     role: UserRole
     isTwoFactorEnabled: boolean
-    customer: CustomerType
+    customer: CustomerType | null
 
   }
 

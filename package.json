@@ -1,5 +1,5 @@
 {
-  "name": "Jigawa-Justice",
+  "name": "jigawa-Justice",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "postinstall": "prisma generate",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:seed": "ts-node --compiler-options \"{\\\"module\\\":\\\"CommonJS\\\"}\" prisma/seed.ts"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.1.0",
@@ -28,10 +29,12 @@
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-switch": "^1.1.0",
+    "@radix-ui/react-tabs": "^1.1.13",
     "@radix-ui/react-toast": "^1.2.2",
     "@tanstack/react-table": "^8.20.1",
     "@uploadthing/react": "^6.7.2",
     "@vercel/og": "^0.6.2",
+    "axios": "^1.13.2",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
@@ -44,7 +47,7 @@
     "input-otp": "^1.2.4",
     "lucide-react": "^0.372.0",
     "mongoose": "^8.3.2",
-    "next": "15.5.2",
+    "next": "^15.5.9",
     "next-auth": "^5.0.0-beta.18",
     "next-themes": "^0.3.0",
     "react": "19.1.1",
@@ -73,6 +76,7 @@
     "postcss": "^8",
     "prisma": "^5.14.0",
     "tailwindcss": "^3.4.1",
+    "ts-node": "^10.9.2",
     "typescript": "^5"
   },
   "overrides": {
@@ -84,17 +88,6 @@
   "peerDependenciesMeta": {
     "@uploadthing/react": {
       "optional": true
-
-
-
-
-
-
-
-
-
-
-      
     },
     "@react-email/render": {
       "optional": true

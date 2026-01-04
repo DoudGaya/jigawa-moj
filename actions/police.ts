@@ -51,13 +51,13 @@ export async function submitPoliceCase(values: z.infer<typeof policeCaseSchema>,
             data: {
                 caseTitle: title,
                 caseDescription,
-                placeOfOffense,
-                nameOfIPO,
-                defendantAddress,
-                defendantAge,
-                defendantName,
-                defendantOccupation,
-                defendantSex,
+                placeOfOffense: placeOfOffense ?? "",
+                nameOfIPO: nameOfIPO ?? "",
+                defendantAddress: defendantAddress ?? "",
+                defendantAge: defendantAge ?? "",
+                defendantName: defendantName ?? "",
+                defendantOccupation: defendantOccupation ?? "",
+                defendantSex: defendantSex ?? "",
                 firstInformationReport: FIR,
                 medicalReport,
                 pictures,
@@ -109,7 +109,6 @@ export async function submitPoliceCase(values: z.infer<typeof policeCaseSchema>,
                 statementOfComplainant,
                 statementOfWitness,
                 caseStatus: CaseStatus.Submitted,
-                policeId: policeStation.id,
                 tribunal: "CIVIL", // Default tribunal as string
             }
         })
@@ -369,7 +368,6 @@ export const submitPoliceCaseDraft = async (id: string) => {
             statementOfComplainant: draft.statementOfComplainant,
             statementOfWitness: draft.statementOfWitness,
             caseStatus: CaseStatus.Submitted,
-            policeId: policeStation.id,
             tribunal: "CIVIL", // Default tribunal as string
         }
     })

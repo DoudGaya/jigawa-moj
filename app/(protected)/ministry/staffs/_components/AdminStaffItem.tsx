@@ -71,9 +71,9 @@ const handlePoliceDelete = () => {
                 <TableCell className=' text-xs'>{staff.lastName || 'N/A' }</TableCell>
                 <TableCell className=' text-xs'>{staff.state || 'N/A' }</TableCell>
                 <TableCell className=' text-xs'>{staff.localGovernment || 'N/A' }</TableCell>
-                <TableCell className=' text-xs'>{staff.staff.staffRole || 'N/A' }</TableCell>
-                <TableCell className=' text-xs'>{staff.staff.department || 'N/A' }</TableCell>
-                <TableCell className=' text-xs'>{staff.staff.salaryStructure || 'N/A' }</TableCell>
+                <TableCell className=' text-xs'>{staff.staff?.staffRole || 'N/A' }</TableCell>
+                <TableCell className=' text-xs'>{staff.staff?.department || 'N/A' }</TableCell>
+                <TableCell className=' text-xs'>{staff.staff?.salaryStructure || 'N/A' }</TableCell>
                 <TableCell className=' text-xs flex flex-row space-x-6'>
                     <DropdownMenu>
                       <DropdownMenuTrigger>
