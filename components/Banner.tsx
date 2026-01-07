@@ -14,10 +14,10 @@ import { ChevronRight, Gavel, Building, Shield, Users, FileText } from 'lucide-r
 import Link from "next/link"
 
 const caroselImages = [
-    { id: 2, image: image2 },
+    // { id: 2, image: image2 },
     { id: 3, image: image3 },
     { id: 4, image: image4 },
-    { id: 1, image: image1 },
+    // { id: 1, image: image1 },
 ]
 import {
   Carousel,
@@ -49,8 +49,8 @@ export const Banner = () => {
                         {
                     caroselImages.map((item): any => {
                         return (
-                            <CarouselItem key={item.id} className="basis-1/3">
-                               <div className=" h-[200px] overflow-hidden rounded-md">
+                            <CarouselItem key={item.id} className="basis-1/3]">
+                               <div className=" h-[300px] overflow-hidden rounded-md">
                                 <Image src={item.image} className=" h-full object-cover object-center w-full" alt="" />
                                </div>
                             </CarouselItem>
@@ -60,7 +60,7 @@ export const Banner = () => {
                 </CarouselContent>
                 <CarouselNext />
             </Carousel>
-        <h1 className=' text-2xl md:text-2xl font-poppins text-[#1E1815] max-w-2xl mx-auto font-semibold'>Welcome to jigawa State Ministry of Justice <span className=" text-primary"> eFiling </span>Facility</h1>
+        <h1 className=' text-2xl md:text-2xl font-poppins text-[#1E1815] max-w-2xl mx-auto font-semibold'>Welcome to Zamfara State Justice <span className=" text-primary"> eFiling </span>Facility</h1>
       {
         user ? (
             <p className=" font-poppins text-md my-4 font-semibold">Welcome back {user.firstName}, Go to <Link className=" text-primary" href={'/user/dashboard'}> Dashboard </Link> </p>

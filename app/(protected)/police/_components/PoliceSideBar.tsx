@@ -71,7 +71,7 @@ export const PoliceSideBar = () => {
           <SheetHeader>
             <SheetTitle className='flex space-x-2 items-center  '>
                 <Image src={logo} className=' rounded-full h-10 w-10 border-2 border-primary object-contain object-center ' alt=''  />
-                <span className=' font-poppins font-semibold text-sm'>jigawa | Justice</span>
+                <span className=' font-poppins font-semibold text-sm'>Zamfara| Justice</span>
             </SheetTitle>
           </SheetHeader>
           <nav className="mt-4 flex flex-col py-10 my-10 justify-between space-y-8">
@@ -96,7 +96,7 @@ export const PoliceSideBar = () => {
         <aside className="hidden w-64 bg-white h-full px-6 py-1 lg:block">
           <div className='flex space-x-2 items-center border-b py-2  '>
                 <Image src={logo} className=' rounded-full h-10 w-10 border-2 border-primary object-contain object-center ' alt=''  />
-                <span className=' font-poppins font-semibold text-sm'>jigawa | Justice</span>
+                <span className=' font-poppins font-semibold text-sm'>Zamfara| Justice</span>
             </div>
             <nav className="flex flex-col my-10 space-y-2">
             {

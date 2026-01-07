@@ -43,11 +43,22 @@ export const getUserDashboardStats = async () => {
       return acc + (isNaN(amount) ? 0 : amount)
     }, 0)
 
+    // 4. Get Pending Filings
+    const pendingFilingsCount = await db.filing.count({
+      where: {
+        userId: user.id,
+        status: {
+          in: ["Submitted", "UnderReview"],
+        },
+      },
+    })
+
     return {
       success: {
         cases: casesCount,
         allProjects: allProjectsCount,
         totalInvestment: totalInvestment,
+        pendingFilings: pendingFilingsCount,
       },
     }
   } catch (error) {

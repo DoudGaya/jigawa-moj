@@ -92,7 +92,7 @@ export const login = async (values: z.infer<typeof loginSchema>) => {
 
     const roleBasedRedirects: RoleRoutes = {
         ADMIN: '/ministry/dashboard',
-        CUSTOMER: '/user/dashobard',
+        CUSTOMER: '/user/dashboard',
         STAFF: '/staff/dashboard',
         COURT: '/court/dashboard',
         POLICE: '/police/dashboard',

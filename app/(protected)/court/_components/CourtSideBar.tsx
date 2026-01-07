@@ -65,7 +65,7 @@ const privateLinks = [
     },
 
     {
-        id: 1,
+        id: 2,
         name: 'Ministry',
         url: "https://moj.jg.gov.ng/",
         icon: (
@@ -89,7 +89,7 @@ export const CourtSideBar = ( ) => {
     <div className=' w-full hidden border-r dark:border-gray-700 dark:bg-black/80 dark:text-white md:flex flex-col md:w-[18rem] py-2 drop-shadow-sm px-4 bg-white'>
     <Link href={'/admin/dashboard'} className=" hover:bg-gray-200 p-2 m-2 rounded-lg flex flex-row space-x-3 items-center font-poppins">
         <Image src={logo} alt='jigawa State Ministry of Justice ' className=' h-10 w-10 rounded-full border-2 border-primary object-contain' />
-        <p className=' font-semibold text-sm'>jigawa | Justice</p>
+        <p className=' font-semibold text-sm'>Zamfara| Justice</p>
     </Link>
     <hr className=' border-b-1.5 border-primary ' />
    <ScrollArea>
