@@ -21,7 +21,7 @@ if (env === 'production') {
 
 export const sendTwoFactorEmail = async (email: string, token: string) => {
     await resend.emails.send({
-        from: "jigawa State Ministry of Justice <norepl@stablebricks.com>",
+        from: "Zamfara State Ministry of Justice <norepl@stablebricks.com>",
         to: email,
         subject: "Confirm Your Email",
         html: `<p> Your 2FA code is ${token}`
@@ -32,7 +32,7 @@ export const sendTwoFactorEmail = async (email: string, token: string) => {
 
 export const sendMailToCourtAdmin = async (email: string, message: string, subject: string) => {
     await resend.emails.send({
-        from: "jigawa State Ministry of Justice <norepl@stablebricks.com>",
+        from: "Zamfara State Ministry of Justice <norepl@stablebricks.com>",
         to: email,
         subject: `${subject}`,
         html: `<p> ${message} </p>`
@@ -44,9 +44,9 @@ export const sendMailToCourtAdmin = async (email: string, message: string, subje
 export const sendWelcomeMailToPolice = async (email: string, password: string, verificationToken: string) => {
     const confirmationLink = `${baseUrl}/email-verification?token=${verificationToken}`
     await resend.emails.send({
-        from: "jigawa State Ministry of Justice <norepl@stablebricks.com>",
+        from: "Zamfara State Ministry of Justice <norepl@stablebricks.com>",
         to: email,
-        subject: `Welcome to jigawa State Ministry of Justice`,
+        subject: `Welcome to Zamfara State Ministry of Justice`,
         html: `
          <html>
       <head>
@@ -66,13 +66,13 @@ export const sendWelcomeMailToPolice = async (email: string, password: string, v
               <table width="600" cellPadding="0" cellSpacing="0" style={{ backgroundColor: '#ffffff', borderRadius: '8px', overflow: 'hidden' }}>
                 <tr>
                   <td style={{ padding: '40px 30px', textAlign: 'center', backgroundColor: '#10b981' }}>
-                    <img src="https://via.placeholder.com/150x50?text=MOJ+Logo" alt="jigawa State Ministry of Justice Logo" style={{ maxWidth: '150px', height: 'auto' }} />
+                    <img src="https://via.placeholder.com/150x50?text=MOJ+Logo" alt="Zamfara State Ministry of Justice Logo" style={{ maxWidth: '150px', height: 'auto' }} />
                   </td>
                 </tr>
                 <tr>
                   <td style={{ padding: '40px 30px' }}>
                     <h1 style={{ color: '#10b981', marginBottom: '20px', fontSize: '24px', fontWeight: '600' }}>
-                      jigawa State Ministry of Justice
+                      Zamfara State Ministry of Justice
                     </h1>
                     <p style={{ color: '#4b5563', fontSize: '16px', lineHeight: '1.5' }}>
                       Welcome to Zamfara State Ministry of Justice. You can now log in to your account using the following credentials:
@@ -91,7 +91,7 @@ export const sendWelcomeMailToPolice = async (email: string, password: string, v
                 <tr>
                   <td style={{ backgroundColor: '#10b981', padding: '20px 30px', textAlign: 'center' }}>
                     <p style={{ color: '#ffffff', fontSize: '14px', margin: '0' }}>
-                      © 2024 jigawa State Ministry of Justice. All rights reserved.
+                      © 2024 Zamfara State Ministry of Justice. All rights reserved.
                     </p>
                   </td>
                 </tr>
@@ -112,7 +112,7 @@ export const sendWelcomeMailToUser = async (email: string, password: string, ver
   await resend.emails.send({
       from: "Zamfara State Ministry of Justice <norepl@stablebricks.com>",
       to: email,
-      subject: `Welcome to jigawa State Ministry of Justice`,
+      subject: `Welcome to Zamfara State Ministry of Justice`,
       html: `
        <html>
     <head>
@@ -138,10 +138,10 @@ export const sendWelcomeMailToUser = async (email: string, password: string, ver
               <tr>
                 <td style={{ padding: '40px 30px' }}>
                   <h1 style={{ color: '#10b981', marginBottom: '20px', fontSize: '24px', fontWeight: '600' }}>
-                    jigawa State Ministry of Justice
+                    Zamfara State Ministry of Justice
                   </h1>
                   <p style={{ color: '#4b5563', fontSize: '16px', lineHeight: '1.5' }}>
-                    Welcome to jigawa State Ministry of Justice. You can now log in to your account using the following credentials:
+                    Welcome to Zamfara State Ministry of Justice. You can now log in to your account using the following credentials:
                   </p>
                   <p style={{ color: '#4b5563', fontSize: '16px', lineHeight: '1.5' }}>
                     Email: ${email}<br />
@@ -179,7 +179,7 @@ export const sendMailToUser = async (
     subject: string
 ) => {
     await resend.emails.send({
-        from: "jigawa State Ministry of Justice <norepl@stablebricks.com>",
+        from: "Zamfara State Ministry of Justice <norepl@stablebricks.com>",
         to: email,
         subject: `${subject}`,
         html: `<p> ${message} </p>`,
@@ -195,7 +195,7 @@ export const sendMailToStaff = async (
     subject: string
 ) => {
     await resend.emails.send({
-        from: "jigawa State Ministry of Justice <norepl@stablebricks.com>",
+        from: "Zamfara State Ministry of Justice <norepl@stablebricks.com>",
         to: email,
         subject: `${subject}`,
         html: `<p> ${message} </p>`
@@ -206,7 +206,7 @@ export const sendPasswordResetEmail = async ( email: string, token: string) => {
     const resetLink =  `${baseUrl}/new-password?token=${token}`
 
     await resend.emails.send({
-        from: 'jigawa State Ministry of Justice <norepl@stablebricks.com>',
+        from: 'Zamfara State Ministry of Justice <norepl@stablebricks.com>',
         to: email,
         subject: "Forgot Password Request",
         html: `<p>Click the link to <a href="${resetLink}">Reset your password</a></p>`
@@ -220,7 +220,7 @@ export const sendVrificationEmail = async (
 
     const confirmationLink = `${baseUrl}/email-verification?token=${token}`
     await resend.emails.send({
-        from: 'jigawa State Ministry of Justice <norepl@stablebricks.com>',
+        from: 'Zamfara State Ministry of Justice <norepl@stablebricks.com>',
         to: email,
         subject: "Verify your Account",
         html: `<p>Click the link to <a href="${confirmationLink}">Confirm your Email </a></p>`

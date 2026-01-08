@@ -45,7 +45,7 @@ export const Footer = () => {
                         <Image src={nigeria} alt='' className=' h-14 w-14  rounded-full border-2 border-primary' />
                         <Image src={jigawa} alt='' className=' h-14 w-14 rounded-full border-2 border-primary' />
                     </div>
-                    <p className=' font-poppins font-semibold'>jigawa State Minsiry of justice </p>
+                    <p className=' font-poppins font-semibold'>Zamfara State Minsiry of justice </p>
                 </div>
                 <div className=" space-y-4 my-4">
                     {/* <h1 className=' font-poppins text-yellow-500  '>ABOUT US</h1> */}

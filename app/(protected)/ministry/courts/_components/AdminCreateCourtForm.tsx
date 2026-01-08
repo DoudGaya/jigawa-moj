@@ -66,7 +66,7 @@ const courtLevel = [
 const jurisdiction = [
   {
     id: 1,
-    name: "jigawa State",
+    name: "Zamfara State",
   },
   {
     id: 2,
@@ -521,7 +521,7 @@ export function AdminCreateCourtForm() {
                   <FormLabel>Your Full Address</FormLabel>
                   <FormControl>
                   <Textarea
-                      placeholder="No. 3 Gagarawa Avenue, jigawa Dutse. "
+                      placeholder="No. 3 Gagarawa Avenue, Zamfara Dutse. "
                       className="resize-none w-full"
                       {...field}
                     />

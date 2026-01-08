@@ -82,7 +82,7 @@ export const CourtRegisterSchema = z.object({
     city: z.string().min(2, {
       message: "Location must be more than 2 characters"
     }),
-    jurisdiction: z.string().default("jigawa State"),
+    jurisdiction: z.string().default("Zamfara State"),
     // capacity: z.string().min(2, {
     //   message: 'Must be a minimum of two digits'
     // }),

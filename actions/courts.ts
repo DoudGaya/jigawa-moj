@@ -92,7 +92,7 @@ export const CourtRegistrationAction = async (values: z.infer<typeof CourtRegist
                 courtName,
                 tribunal,
                 level,
-                jurisdiction: jurisdiction || "jigawa State",
+                jurisdiction: jurisdiction || "Zamfara State",
                 courtLocalGovernment,
                 city,
                 courtAddress,

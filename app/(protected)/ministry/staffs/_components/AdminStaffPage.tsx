@@ -370,7 +370,7 @@ export function AdminStaffPage ( { staffs }: {
                 <FormItem>
                   <FormLabel>Employer Name</FormLabel>
                   <FormControl>
-                    <Input type="text" disabled={isPending} className=" outline-green-500" placeholder="jigawa State High Court" {...field} />
+                    <Input type="text" disabled={isPending} className=" outline-green-500" placeholder="Zamfara State High Court" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -427,7 +427,7 @@ export function AdminStaffPage ( { staffs }: {
                 <FormItem>
                   <FormLabel>Employment Location</FormLabel>
                   <FormControl>
-                    <Input disabled={isPending} className=" outline-green-500" placeholder="jigawa Dutse" {...field} />
+                    <Input disabled={isPending} className=" outline-green-500" placeholder="Zamfara Dutse" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

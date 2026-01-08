@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Zamfara | Justice",
-  description: "jigawa State Ministry of justice service portal",
+  description: "Zamfara State Ministry of justice service portal",
 };
 
 export default async function RootLayout({

@@ -2,7 +2,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import jigawa from '@/public/img/icons/jigawa-icon.png'
+import Zamfara from '@/public/img/icons/jigawa-icon.png'
 import { usePathname } from 'next/navigation'
 
 import {
@@ -136,7 +136,7 @@ export const StaffSideBar = ( ) => {
             <SheetHeader>
             <SheetTitle className=" flex ">
                 <div className=" flex items-center space-x-2">
-                    <Image src={jigawa} alt='jigawa State Ministry of Justice' className='w-8 border-primary rounded-full border-2 h-8 block object-contain' />
+                    <Image src={jigawa} alt='Zamfara State Ministry of Justice' className='w-8 border-primary rounded-full border-2 h-8 block object-contain' />
                     <p className=' font-poppins font-semibold text-xs'>Jusrtice | Zamfara</p>
                 </div>
             </SheetTitle>

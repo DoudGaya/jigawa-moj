@@ -36,7 +36,7 @@ const userSchema = z
 const policeSchema = z.object({
   stationName: z.string().nonempty("Police station name is required"),
   stationAddress: z.string().nonempty("Address is required"),
-  stationState: z.string().optional().default("jigawa State"),
+  stationState: z.string().optional().default("Zamfara State"),
   stationLocalGovernment: z.string( {
     message: "Local government area is required",
   }),

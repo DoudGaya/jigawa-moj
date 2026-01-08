@@ -10,7 +10,6 @@ import {
     TableCell,
     TableRow,
   } from "@/components/ui/table"
-import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { PoliceUserType } from '@/typings'
 import { useTransition } from 'react'
@@ -106,8 +105,8 @@ const handlePoliceDelete = () => {
                             </AlertDialogHeader>
                             <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction className=' bg-transparent px-0'>
-                                <Button className=' bg-red-500 text-white hover:bg-red-400' onClick={handlePoliceDelete}>Delete Police Station</Button>
+                            <AlertDialogAction className=' bg-red-500 text-white hover:bg-red-400' onClick={handlePoliceDelete}>
+                                Delete Police Station
                             </AlertDialogAction>
                             </AlertDialogFooter>
                         </AlertDialogContent>

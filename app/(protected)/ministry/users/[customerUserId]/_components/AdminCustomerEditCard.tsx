@@ -408,7 +408,7 @@ export const AdminCustomerEditCard = ( {customer}: {
                     <FormLabel>Your Full Address</FormLabel>
                     <FormControl>
                     <Textarea
-                        placeholder="No. 3 Gagarawa Avenue, jigawa Dutse. "
+                        placeholder="No. 3 Gagarawa Avenue, Zamfara Dutse. "
                         className="resize-none w-full"
                         {...field}
                       />

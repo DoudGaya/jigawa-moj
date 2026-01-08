@@ -1,4 +1,4 @@
-# jigawa State Ministry of Justice Digital Portal
+# Zamfara State Ministry of Justice Digital Portal
 
 [![Next.js](https://img.shields.io/badge/Next.js-15.5.2-black)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19.1.1-blue)](https://reactjs.org/)
@@ -9,7 +9,7 @@
 
 ## 🌟 Overview
 
-The **jigawa State Ministry of Justice Digital Portal** is a comprehensive, enterprise-grade web application designed to digitize and modernize judicial processes in jigawa State, Nigeria. This platform transforms traditional paper-based justice systems into efficient, transparent, and accessible digital workflows, serving citizens, law enforcement, judicial officers, and ministry administrators.
+The **Zamfara State Ministry of Justice Digital Portal** is a comprehensive, enterprise-grade web application designed to digitize and modernize judicial processes in Zamfara State, Nigeria. This platform transforms traditional paper-based justice systems into efficient, transparent, and accessible digital workflows, serving citizens, law enforcement, judicial officers, and ministry administrators.
 
 ## 🎯 Key Features
 
@@ -352,7 +352,7 @@ Ensure all environment variables are set in your production environment:
 
 ## 🤝 Contributing
 
-We welcome contributions to improve the jigawa State Ministry of Justice Portal!
+We welcome contributions to improve the Zamfara State Ministry of Justice Portal!
 
 ### **Development Workflow**
 1. Fork the repository
@@ -370,22 +370,22 @@ We welcome contributions to improve the jigawa State Ministry of Justice Portal!
 
 ## 📄 License
 
-This project is proprietary software developed for the jigawa State Ministry of Justice. All rights reserved.
+This project is proprietary software developed for the Zamfara State Ministry of Justice. All rights reserved.
 
 ## 📞 Support & Contact
 
 For technical support or inquiries:
 - **Email**: support@jigawa-moj.gov.ng
 - **Phone**: +234 (0) XXX XXX XXXX
-- **Address**: jigawa State Ministry of Justice, Dutse, Nigeria
+- **Address**: Zamfara State Ministry of Justice, Dutse, Nigeria
 
 ## 🙏 Acknowledgments
 
-- **jigawa State Government** for the vision and support
+- **Zamfara State Government** for the vision and support
 - **Ministry of Justice** for domain expertise
 - **Open Source Community** for the amazing tools and libraries
 - **Development Team** for their dedication and hard work
 
 ---
 
-**Built with ❤️ for Justice, Transparency, and Efficiency in jigawa State**
+**Built with ❤️ for Justice, Transparency, and Efficiency in Zamfara State**

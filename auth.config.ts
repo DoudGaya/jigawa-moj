@@ -19,34 +19,17 @@ export default {
         }),
         Credentials({
             async authorize( credentials) {
-                console.log("Login attempt for:", credentials?.email);
                 const validatedFields = loginSchema.safeParse(credentials)
 
                 if (validatedFields.success) {
                     const {email, password } = validatedFields.data
                     const user = await getUserByEmail(email)
 
-                    if(!user) {
-                        console.log("User not found");
-                        return null;
-                    } 
-                    if (!user.password) {
-                        console.log("User has no password");
-                        return null;
-                    }
+                    if(!user || !user?.password) return null 
                     
-                    const passwordMatched = await bcrypt.compare( password, user.password )
-                    console.log("DEBUG AUTH:", {
-                        input: password,
-                        inputLen: password.length,
-                        hash: user.password,
-                        hashLen: user.password.length,
-                        match: passwordMatched
-                    });
+                    const passwordMatched = await bcrypt.compare( password, user?.password )
 
                     if(passwordMatched) return user 
-                } else {
-                    console.log("Validation failed");
                 }
 
                 return null

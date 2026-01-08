@@ -1,4 +1,4 @@
-Project: jigawa Ministry of Justice – E-Filing System with Paystack Integration
+Project: Zamfara Ministry of Justice – E-Filing System with Paystack Integration
 
 Context
 - Tech stack: Next.js 15 (App Router, React Server Components), TypeScript, Tailwind CSS, shadcn/ui, Prisma (MongoDB), NextAuth v5.
