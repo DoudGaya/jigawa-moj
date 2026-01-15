@@ -37,11 +37,11 @@ export const Banner = () => {
        <div className=" my-auto  mx-auto max-w-7xl w-full flex flex-col px-6">
         <div className=" flex items-center py-2 space-x-4 justify-center">
             <div className="">
-                <Image src={nigeria} alt="" className=" h-28 w-28 border-4 border-primary rounded-full" />
+                <Image src={nigeria} alt="" className=" h-32 w-32 border-4 border-stone-700 rounded-full" />
             </div>
-            <div className="">
+            {/* <div className="">
                 <Image src={jigawa} alt="" className=" h-28 w-28 border-4 border-primary rounded-full" />
-            </div>
+            </div> */}
         </div>
             <Carousel className=" w-full">
                 <CarouselPrevious />
