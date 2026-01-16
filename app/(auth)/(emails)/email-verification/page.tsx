@@ -7,7 +7,7 @@ import { emailVerification } from '@/actions/email-verification'
 import { FormError } from '@/components/FormError'
 import { FormSuccess } from '@/components/FormSuccess'
 import Image from 'next/image'
-import Zamfara from '@/public/img/icons/jigawa-icon.png'
+import jigawa from '@/public/img/icons/jigawa-icon.png'
 
 const EmailVerification = () => {
 

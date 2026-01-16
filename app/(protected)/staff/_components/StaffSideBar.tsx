@@ -2,7 +2,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import Zamfara from '@/public/img/icons/jigawa-icon.png'
+import jigawa from '@/public/img/icons/jigawa-icon.png'
 import { usePathname } from 'next/navigation'
 
 import {

@@ -43,7 +43,7 @@ export const Footer = () => {
                 <div className=" border-b-2 border-jyellow flex flex-col  space-y-3 py-1">
                     <div className=" flex flex-row space-x-3">
                         <Image src={nigeria} alt='' className=' h-14 w-14  rounded-full border-2 border-primary' />
-                        <Image src={jigawa} alt='' className=' h-14 w-14 rounded-full border-2 border-primary' />
+                        {/* <Image src={jigawa} alt='' className=' h-14 w-14 rounded-full border-2 border-primary' /> */}
                     </div>
                     <p className=' font-poppins font-semibold'>Zamfara State Minsiry of justice </p>
                 </div>
